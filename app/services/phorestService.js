@@ -116,6 +116,49 @@ class PhorestService {
     }
   }
 
+  async searchClientByPhone(phone) {
+    try {
+      // Clean phone number (remove spaces, dashes, etc.)
+      const cleanPhone = phone.replace(/[^\d+]/g, '');
+      
+      const response = await this.api.get(`/${this.config.businessId}/client`, {
+        params: { 
+          phone: cleanPhone,
+          size: 10 
+        }
+      });
+      return response.data._embedded?.clients || [];
+    } catch (error) {
+      this.handleError(error);
+    }
+  }
+
+  async findClientByEmailOrPhone(email, phone = null) {
+    try {
+      let client = null;
+      
+      // Try email first
+      if (email) {
+        const emailResults = await this.searchClientByEmail(email);
+        if (emailResults.length > 0) {
+          client = emailResults[0];
+        }
+      }
+      
+      // If no email match and phone provided, try phone
+      if (!client && phone) {
+        const phoneResults = await this.searchClientByPhone(phone);
+        if (phoneResults.length > 0) {
+          client = phoneResults[0];
+        }
+      }
+      
+      return client;
+    } catch (error) {
+      this.handleError(error);
+    }
+  }
+
   async createClient(clientData) {
     try {
       await this.ensureBranchId();
@@ -155,9 +198,15 @@ class PhorestService {
     try {
       await this.ensureBranchId();
       
+      // Add default date range (last 30 days - API limit is 31 days max)
+      const now = new Date();
+      const thirtyDaysAgo = new Date(now.getTime() - (30 * 24 * 60 * 60 * 1000));
+      
       const defaultParams = {
-        size: 50,
+        size: 200, // Get more results to find client appointments
         page: 0,
+        from_date: thirtyDaysAgo.toISOString().split('T')[0], // YYYY-MM-DD format
+        to_date: now.toISOString().split('T')[0],
         ...params
       };
       
@@ -177,10 +226,14 @@ class PhorestService {
 
   async getClientAppointments(clientId, params = {}) {
     try {
+      // Try the appointments endpoint with client filter
+      await this.ensureBranchId();
+      
       const response = await this.api.get(
-        `/${this.config.businessId}/client/${clientId}/appointment`,
+        `/${this.config.businessId}/branch/${this.branchId}/appointment`,
         {
           params: {
+            clientId: clientId,
             size: 50,
             page: 0,
             ...params
@@ -190,7 +243,15 @@ class PhorestService {
       
       return response.data._embedded?.appointments || [];
     } catch (error) {
-      this.handleError(error);
+      // If that fails, try without client filter and filter manually
+      console.log('📝 Client-specific appointments endpoint not available, filtering manually');
+      try {
+        const allAppointments = await this.getAppointments({ size: 200 });
+        return allAppointments.appointments.filter(apt => apt.clientId === clientId);
+      } catch (fallbackError) {
+        console.log('📝 Could not retrieve appointments, returning empty array');
+        return [];
+      }
     }
   }
 
@@ -216,24 +277,57 @@ class PhorestService {
   // PURCHASE/TRANSACTION TRACKING
   async getClientPurchases(clientId, params = {}) {
     try {
-      const response = await this.api.get(
-        `/${this.config.businessId}/client/${clientId}/purchase`,
-        {
-          params: {
-            size: 50,
-            page: 0,
-            ...params
+      // First try the direct client purchase endpoint
+      try {
+        const response = await this.api.get(
+          `/${this.config.businessId}/client/${clientId}/purchase`,
+          {
+            params: {
+              size: 50,
+              page: 0,
+              ...params
+            }
           }
-        }
-      );
-      
-      return {
-        purchases: response.data._embedded?.purchases || [],
-        pagination: response.data.page || {},
-        totalSpent: this.calculateTotalSpent(response.data._embedded?.purchases || [])
-      };
+        );
+        
+        return {
+          purchases: response.data._embedded?.purchases || [],
+          pagination: response.data.page || {},
+          totalSpent: this.calculateTotalSpent(response.data._embedded?.purchases || [])
+        };
+      } catch (directError) {
+        // If direct endpoint fails, try branch-level purchases and filter
+        console.log('📝 Client-specific purchases endpoint not available, checking branch purchases');
+        await this.ensureBranchId();
+        
+        const response = await this.api.get(
+          `/${this.config.businessId}/branch/${this.branchId}/purchase`,
+          {
+            params: {
+              clientId: clientId,
+              size: 100,
+              page: 0,
+              ...params
+            }
+          }
+        );
+        
+        const purchases = response.data._embedded?.purchases || [];
+        const clientPurchases = purchases.filter(p => p.clientId === clientId);
+        
+        return {
+          purchases: clientPurchases,
+          pagination: response.data.page || {},
+          totalSpent: this.calculateTotalSpent(clientPurchases)
+        };
+      }
     } catch (error) {
-      this.handleError(error);
+      console.log('📝 Could not retrieve purchases, returning empty data');
+      return {
+        purchases: [],
+        pagination: {},
+        totalSpent: 0
+      };
     }
   }
 
@@ -484,6 +578,106 @@ class PhorestService {
     } catch (error) {
       this.handleError(error);
     }
+  }
+
+  // SKIN SOCIETE USER SYNC SYSTEM
+  
+  /**
+   * Complete user sync - gets all Phorest data for a client
+   */
+  async syncUserData(email, phone = null) {
+    try {
+      console.log(`🔄 Syncing user data for: ${email} ${phone ? `/ ${phone}` : ''}`);
+      
+      // Find client in Phorest
+      const client = await this.findClientByEmailOrPhone(email, phone);
+      
+      if (!client) {
+        console.log('❌ No Phorest client found');
+        return {
+          found: false,
+          client: null,
+          appointments: [],
+          purchases: [],
+          loyaltyStatus: null
+        };
+      }
+      
+      console.log(`✅ Found client: ${client.firstName} ${client.lastName} (ID: ${client.clientId})`);
+      
+      // Get client's appointment history
+      const appointments = await this.getClientAppointments(client.clientId, { size: 100 });
+      console.log(`📅 Found ${appointments.length} appointments`);
+      
+      // Get client's purchase history  
+      const purchaseData = await this.getClientPurchases(client.clientId, { size: 100 });
+      console.log(`💰 Found ${purchaseData.purchases.length} purchases, total: $${purchaseData.totalSpent}`);
+      
+      // Calculate loyalty status
+      const loyaltyStatus = await this.getClientLoyaltyStatus(client.clientId);
+      console.log(`🏆 Loyalty tier: ${loyaltyStatus.tier} (${loyaltyStatus.points} points)`);
+      
+      return {
+        found: true,
+        client: {
+          ...client,
+          phorestId: client.clientId,
+          fullName: `${client.firstName} ${client.lastName}`,
+          homeClinic: client.homeBranchId ? await this.getBranchName(client.homeBranchId) : 'Not set'
+        },
+        appointments: this.formatAppointments(appointments),
+        purchases: this.formatPurchases(purchaseData.purchases),
+        loyaltyStatus,
+        summary: {
+          totalAppointments: appointments.length,
+          totalPurchases: purchaseData.purchases.length,
+          totalSpent: purchaseData.totalSpent,
+          loyaltyTier: loyaltyStatus.tier,
+          loyaltyPoints: loyaltyStatus.points,
+          memberSince: client.createdDate ? new Date(client.createdDate).getFullYear() : 'Unknown'
+        }
+      };
+    } catch (error) {
+      console.error('❌ User sync failed:', error.message);
+      this.handleError(error);
+    }
+  }
+
+  async getBranchName(branchId) {
+    try {
+      const branches = await this.getBranches();
+      const branch = branches.find(b => b.branchId === branchId);
+      return branch ? branch.name : 'Unknown Branch';
+    } catch (error) {
+      return 'Unknown Branch';
+    }
+  }
+
+  formatAppointments(appointments) {
+    return appointments.map(apt => ({
+      id: apt.appointmentId,
+      date: apt.startTime ? new Date(apt.startTime).toLocaleDateString() : 'Unknown',
+      time: apt.startTime ? new Date(apt.startTime).toLocaleTimeString() : 'Unknown',
+      service: apt.serviceName || 'Unknown Service',
+      staff: apt.staffName || 'Not specified',
+      status: apt.status || 'Unknown',
+      duration: apt.duration || 0,
+      cost: apt.totalCost || 0,
+      notes: apt.notes || '',
+      branch: apt.branchName || 'Unknown Branch'
+    }));
+  }
+
+  formatPurchases(purchases) {
+    return purchases.map(purchase => ({
+      id: purchase.purchaseId,
+      date: purchase.purchaseDate ? new Date(purchase.purchaseDate).toLocaleDateString() : 'Unknown',
+      amount: purchase.totalAmount || 0,
+      items: purchase.items || [],
+      source: purchase.source || 'in-store',
+      notes: purchase.notes || '',
+      orderNumber: purchase.orderNumber || null
+    }));
   }
 
   // SKIN SOCIETE SPECIFIC INTEGRATIONS
