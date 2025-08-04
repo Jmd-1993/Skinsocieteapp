@@ -1,0 +1,483 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// User and Authentication
+model User {
+  id              String           @id @default(cuid())
+  clerkId         String           @unique
+  email           String           @unique
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  
+  profile         Profile?
+  orders          Order[]
+  appointments    Appointment[]
+  reviews         Review[]
+  cartItems       CartItem[]
+  pointsTransactions PointTransaction[]
+  userChallenges  UserChallenge[]
+  referralsSent   Referral[]       @relation("ReferralSender")
+  referralsReceived Referral[]     @relation("ReferralReceiver")
+}
+
+model Profile {
+  id              String           @id @default(cuid())
+  userId          String           @unique
+  user            User             @relation(fields: [userId], references: [id])
+  
+  firstName       String?
+  lastName        String?
+  phone           String?
+  dateOfBirth     DateTime?
+  skinType        String?
+  skinConcerns    String[]
+  allergies       String[]
+  
+  // Loyalty program
+  loyaltyTierId   String?
+  loyaltyTier     LoyaltyTier?     @relation(fields: [loyaltyTierId], references: [id])
+  totalSpent      Decimal          @default(0)
+  totalPoints     Int              @default(0)
+  currentStreak   Int              @default(0)
+  lastCheckIn     DateTime?
+  
+  // Preferences
+  notifications   Boolean          @default(true)
+  newsletter      Boolean          @default(true)
+  
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+}
+
+// E-commerce Models
+model Product {
+  id              String           @id @default(cuid())
+  name            String
+  slug            String           @unique
+  description     String
+  shortDescription String?
+  
+  // Pricing
+  price           Decimal
+  compareAtPrice  Decimal?
+  costPrice       Decimal?
+  
+  // Inventory
+  sku             String           @unique
+  barcode         String?
+  stockQuantity   Int              @default(0)
+  trackInventory  Boolean          @default(true)
+  
+  // Categories and organization
+  categoryId      String
+  category        Category         @relation(fields: [categoryId], references: [id])
+  brandId         String?
+  brand           Brand?           @relation(fields: [brandId], references: [id])
+  tags            String[]
+  
+  // Media
+  images          String[]
+  featuredImage   String?
+  
+  // Status
+  status          ProductStatus    @default(DRAFT)
+  featured        Boolean          @default(false)
+  
+  // SEO
+  metaTitle       String?
+  metaDescription String?
+  
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  
+  orderItems      OrderItem[]
+  cartItems       CartItem[]
+  reviews         Review[]
+}
+
+enum ProductStatus {
+  DRAFT
+  ACTIVE
+  ARCHIVED
+}
+
+model Category {
+  id              String           @id @default(cuid())
+  name            String
+  slug            String           @unique
+  description     String?
+  parentId        String?
+  parent          Category?        @relation("CategoryParent", fields: [parentId], references: [id])
+  children        Category[]       @relation("CategoryParent")
+  image           String?
+  
+  products        Product[]
+  
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+}
+
+model Brand {
+  id              String           @id @default(cuid())
+  name            String
+  slug            String           @unique
+  description     String?
+  logo            String?
+  website         String?
+  
+  products        Product[]
+  
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+}
+
+// Orders
+model Order {
+  id              String           @id @default(cuid())
+  orderNumber     String           @unique
+  userId          String
+  user            User             @relation(fields: [userId], references: [id])
+  
+  // Pricing
+  subtotal        Decimal
+  tax             Decimal
+  shipping        Decimal
+  discount        Decimal          @default(0)
+  total           Decimal
+  
+  // Status
+  status          OrderStatus      @default(PENDING)
+  paymentStatus   PaymentStatus    @default(PENDING)
+  fulfillmentStatus FulfillmentStatus @default(UNFULFILLED)
+  
+  // Shipping
+  shippingAddress Json
+  billingAddress  Json
+  shippingMethod  String?
+  trackingNumber  String?
+  
+  // Payment
+  paymentMethod   String?
+  stripePaymentId String?
+  
+  // Points earned
+  pointsEarned    Int              @default(0)
+  
+  notes           String?
+  
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  
+  items           OrderItem[]
+}
+
+enum OrderStatus {
+  PENDING
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+  REFUNDED
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  FAILED
+  REFUNDED
+}
+
+enum FulfillmentStatus {
+  UNFULFILLED
+  PARTIALLY_FULFILLED
+  FULFILLED
+  CANCELLED
+}
+
+model OrderItem {
+  id              String           @id @default(cuid())
+  orderId         String
+  order           Order            @relation(fields: [orderId], references: [id])
+  productId       String
+  product         Product          @relation(fields: [productId], references: [id])
+  
+  quantity        Int
+  price           Decimal
+  total           Decimal
+  
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+}
+
+// Cart
+model CartItem {
+  id              String           @id @default(cuid())
+  userId          String
+  user            User             @relation(fields: [userId], references: [id])
+  productId       String
+  product         Product          @relation(fields: [productId], references: [id])
+  
+  quantity        Int              @default(1)
+  
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  
+  @@unique([userId, productId])
+}
+
+// Clinic Services
+model Service {
+  id              String           @id @default(cuid())
+  name            String
+  slug            String           @unique
+  description     String
+  shortDescription String?
+  
+  duration        Int              // in minutes
+  price           Decimal
+  depositAmount   Decimal?
+  
+  categoryId      String
+  category        ServiceCategory  @relation(fields: [categoryId], references: [id])
+  
+  // Restrictions
+  requiresConsultation Boolean     @default(false)
+  minimumAge      Int?
+  
+  // Media
+  images          String[]
+  featuredImage   String?
+  
+  // Status
+  active          Boolean          @default(true)
+  featured        Boolean          @default(false)
+  
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  
+  appointments    Appointment[]
+}
+
+model ServiceCategory {
+  id              String           @id @default(cuid())
+  name            String
+  slug            String           @unique
+  description     String?
+  
+  services        Service[]
+  
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+}
+
+// Appointments
+model Appointment {
+  id              String           @id @default(cuid())
+  userId          String
+  user            User             @relation(fields: [userId], references: [id])
+  serviceId       String
+  service         Service          @relation(fields: [serviceId], references: [id])
+  
+  therapistId     String?
+  therapist       Therapist?       @relation(fields: [therapistId], references: [id])
+  
+  dateTime        DateTime
+  duration        Int              // in minutes
+  
+  status          AppointmentStatus @default(PENDING)
+  
+  notes           String?
+  internalNotes   String?
+  
+  // Payment
+  price           Decimal
+  depositPaid     Boolean          @default(false)
+  fullyPaid       Boolean          @default(false)
+  
+  // Points earned
+  pointsEarned    Int              @default(0)
+  
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+}
+
+enum AppointmentStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  COMPLETED
+  NO_SHOW
+}
+
+model Therapist {
+  id              String           @id @default(cuid())
+  name            String
+  email           String           @unique
+  phone           String?
+  
+  specialties     String[]
+  bio             String?
+  image           String?
+  
+  active          Boolean          @default(true)
+  
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  
+  appointments    Appointment[]
+}
+
+// Reviews
+model Review {
+  id              String           @id @default(cuid())
+  userId          String
+  user            User             @relation(fields: [userId], references: [id])
+  productId       String
+  product         Product          @relation(fields: [productId], references: [id])
+  
+  rating          Int              // 1-5
+  title           String?
+  comment         String
+  
+  helpful         Int              @default(0)
+  verified        Boolean          @default(false)
+  
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  
+  @@unique([userId, productId])
+}
+
+// Loyalty & Gamification
+model LoyaltyTier {
+  id              String           @id @default(cuid())
+  name            String           // Glow Starter, Radiance Member, etc
+  slug            String           @unique
+  
+  minimumSpend    Decimal
+  pointsMultiplier Float           @default(1.0)
+  
+  // Perks
+  perks           String[]
+  
+  // Visual
+  color           String?
+  icon            String?
+  
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  
+  profiles        Profile[]
+}
+
+model Challenge {
+  id              String           @id @default(cuid())
+  title           String
+  description     String
+  
+  type            ChallengeType
+  target          Int              // target value to achieve
+  points          Int              // points awarded on completion
+  
+  startDate       DateTime?
+  endDate         DateTime?
+  
+  active          Boolean          @default(true)
+  recurring       Boolean          @default(false)
+  
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  
+  userChallenges  UserChallenge[]
+}
+
+enum ChallengeType {
+  PURCHASE_AMOUNT
+  PURCHASE_COUNT
+  REVIEW_COUNT
+  REFERRAL_COUNT
+  STREAK_DAYS
+  PRODUCT_CATEGORY
+  SERVICE_BOOKING
+}
+
+model UserChallenge {
+  id              String           @id @default(cuid())
+  userId          String
+  user            User             @relation(fields: [userId], references: [id])
+  challengeId     String
+  challenge       Challenge        @relation(fields: [challengeId], references: [id])
+  
+  progress        Int              @default(0)
+  completed       Boolean          @default(false)
+  completedAt     DateTime?
+  
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  
+  @@unique([userId, challengeId])
+}
+
+model PointTransaction {
+  id              String           @id @default(cuid())
+  userId          String
+  user            User             @relation(fields: [userId], references: [id])
+  
+  points          Int              // positive for earned, negative for redeemed
+  type            PointTransactionType
+  description     String
+  
+  // References
+  orderId         String?
+  appointmentId   String?
+  challengeId     String?
+  
+  createdAt       DateTime         @default(now())
+}
+
+enum PointTransactionType {
+  PURCHASE
+  APPOINTMENT
+  CHALLENGE
+  REFERRAL
+  REVIEW
+  DAILY_CHECKIN
+  REDEMPTION
+  ADJUSTMENT
+}
+
+// Referrals
+model Referral {
+  id              String           @id @default(cuid())
+  senderId        String
+  sender          User             @relation("ReferralSender", fields: [senderId], references: [id])
+  receiverId      String?
+  receiver        User?            @relation("ReferralReceiver", fields: [receiverId], references: [id])
+  
+  code            String           @unique
+  email           String?
+  
+  status          ReferralStatus   @default(PENDING)
+  completedAt     DateTime?
+  
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+}
+
+enum ReferralStatus {
+  PENDING
+  COMPLETED
+  EXPIRED
+}
