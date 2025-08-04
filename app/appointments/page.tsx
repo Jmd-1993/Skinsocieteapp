@@ -51,6 +51,8 @@ export default function AppointmentsPage() {
   const [clientData, setClientData] = useState<ClientData | null>(null);
   const [homeClinic, setHomeClinic] = useState<Branch | null>(null);
   const [selectedService, setSelectedService] = useState<Service | null>(null);
+  const [phorestServices, setPhorestServices] = useState<Service[]>([]);
+  const [servicesLoading, setServicesLoading] = useState(true);
 
   // Fetch client's home clinic from Phorest
   useEffect(() => {
@@ -79,6 +81,56 @@ export default function AppointmentsPage() {
         console.log('✅ Client data loaded:', client?.firstName, client?.lastName);
         console.log('✅ Home clinic:', homeBranch?.name);
         
+        // Fetch actual services from Phorest
+        console.log('🔧 Fetching services from Phorest...');
+        try {
+          const services = await service.getServices();
+          console.log('✅ Found', services.length, 'services in Phorest');
+          
+          // Transform Phorest services to our format with better categorization
+          const transformedServices = services.map((phorestService: any) => {
+            const serviceName = phorestService.name || phorestService.serviceName;
+            
+            // Categorize services based on name
+            let category = 'Treatment';
+            let description = phorestService.description || `Professional ${serviceName} service`;
+            
+            if (serviceName.toLowerCase().includes('dermal filler')) {
+              category = 'Injectable';
+              description = `Advanced dermal filler treatment for natural enhancement and volume restoration`;
+            } else if (serviceName.toLowerCase().includes('bio remodelling') || serviceName.toLowerCase().includes('bio remodeling')) {
+              category = 'Injectable';
+              description = `Skin quality improvement with advanced bio-remodelling technology`;
+            } else if (serviceName.toLowerCase().includes('bio stimulator')) {
+              category = 'Injectable';
+              description = `Collagen stimulation treatment for natural skin rejuvenation`;
+            } else if (serviceName.toLowerCase().includes('fat dissolving')) {
+              category = 'Advanced';
+              description = `Non-surgical fat reduction treatment for targeted body contouring`;
+            } else if (serviceName.toLowerCase().includes('dissolve')) {
+              category = 'Corrective';
+              description = `Professional treatment to safely dissolve previous injectable treatments`;
+            }
+            
+            return {
+              id: phorestService.serviceId || phorestService.id,
+              name: serviceName,
+              description,
+              duration: phorestService.duration || 60,
+              price: phorestService.price || 0,
+              category
+            };
+          });
+          
+          setPhorestServices(transformedServices);
+          console.log('✅ Services loaded:', transformedServices.length);
+        } catch (servicesError) {
+          console.error('⚠️ Error fetching services, using fallback:', servicesError);
+          // Keep fallback services if API fails
+        } finally {
+          setServicesLoading(false);
+        }
+        
       } catch (error) {
         console.error('⚠️ Error fetching Phorest data:', error);
         // Fallback data for Skin Societé Cottesloe
@@ -90,6 +142,7 @@ export default function AppointmentsPage() {
           phone: '(08) 9384 1234',
           email: 'cottesloe@skinsociete.com.au'
         });
+        setServicesLoading(false);
       } finally {
         setLoading(false);
       }
@@ -289,9 +342,28 @@ export default function AppointmentsPage() {
 
         {/* Services Grid */}
         <div className="mb-8">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">Available Services</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {services.map(service => (
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-2xl font-bold text-gray-900">Available Services</h2>
+            {phorestServices.length > 0 && (
+              <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-medium">
+                ✅ Live from Phorest
+              </span>
+            )}
+          </div>
+          
+          {servicesLoading ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[1, 2, 3, 4, 5, 6].map(i => (
+                <div key={i} className="bg-white rounded-xl p-6 animate-pulse">
+                  <div className="h-6 bg-gray-200 rounded mb-3"></div>
+                  <div className="h-4 bg-gray-200 rounded mb-4"></div>
+                  <div className="h-10 bg-gray-200 rounded"></div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {(phorestServices.length > 0 ? phorestServices : services).map(service => (
               <div key={service.id} 
                    className="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-100
                             transform transition-all duration-300 hover:shadow-xl hover:scale-[1.02]
@@ -333,8 +405,9 @@ export default function AppointmentsPage() {
                   </button>
                 </div>
               </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Call to Action */}
@@ -364,13 +437,35 @@ export default function AppointmentsPage() {
         </div>
 
         {/* Phorest Integration Status */}
-        <div className="mt-8 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
-          <div className="flex items-center gap-2 text-yellow-800">
-            <div className="w-2 h-2 bg-yellow-500 rounded-full animate-pulse"></div>
-            <span className="text-sm font-medium">
-              Booking system integration with Phorest in progress. 
-              You can select services and will be redirected to complete your booking.
-            </span>
+        <div className="mt-8 space-y-4">
+          {phorestServices.length > 0 ? (
+            <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
+              <div className="flex items-center gap-2 text-green-800">
+                <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+                <span className="text-sm font-medium">
+                  ✅ Successfully loaded {phorestServices.length} services from your Phorest system!
+                </span>
+              </div>
+            </div>
+          ) : (
+            <div className="p-4 bg-blue-50 border border-blue-200 rounded-lg">
+              <div className="flex items-center gap-2 text-blue-800">
+                <div className="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
+                <span className="text-sm font-medium">
+                  Loading services from Phorest... (showing demo services as fallback)
+                </span>
+              </div>
+            </div>
+          )}
+          
+          <div className="p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+            <div className="flex items-center gap-2 text-yellow-800">
+              <div className="w-2 h-2 bg-yellow-500 rounded-full animate-pulse"></div>
+              <span className="text-sm font-medium">
+                Booking system integration with Phorest in progress. 
+                You can select services and will be redirected to complete your booking.
+              </span>
+            </div>
           </div>
         </div>
       </div>
