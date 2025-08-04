@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: skin-societe
+    env: node
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars:
+      - key: PHOREST_USERNAME
+        value: global/josh@skinsociete.com.au
+      - key: PHOREST_PASSWORD
+        value: ROW^pDL%kxSq
+      - key: PHOREST_BUSINESS_ID
+        value: IX2it2QrF0iguR-LpZ6BHQ
+      - key: NODE_ENV
+        value: production
