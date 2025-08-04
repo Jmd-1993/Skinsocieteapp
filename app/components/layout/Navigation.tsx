@@ -8,7 +8,8 @@ import {
   TrendingUp, 
   Gift, 
   User,
-  Home
+  Home,
+  Trophy
 } from "lucide-react";
 import { cn } from "@/app/lib/utils";
 
@@ -17,6 +18,7 @@ const navItems = [
   { name: "Shop", href: "/products", icon: ShoppingBag },
   { name: "Book", href: "/appointments", icon: Calendar },
   { name: "Progress", href: "/progress", icon: TrendingUp },
+  { name: "Leaderboard", href: "/leaderboard", icon: Trophy },
   { name: "Rewards", href: "/rewards", icon: Gift },
   { name: "Profile", href: "/profile", icon: User },
 ];
@@ -29,7 +31,7 @@ export function Navigation() {
       {/* Mobile Bottom Navigation */}
       <nav className="md:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 z-50">
         <div className="flex justify-around">
-          {navItems.slice(0, 5).map((item) => {
+          {navItems.slice(0, 6).map((item) => {
             const isActive = pathname === item.href || pathname.startsWith(item.href + "/");
             return (
               <Link

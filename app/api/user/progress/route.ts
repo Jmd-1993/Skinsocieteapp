@@ -1,46 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-
-interface UserProgress {
-  userId: string;
-  points: number;
-  streak: number;
-  lastActivity: string;
-  achievements: string[];
-  dailyTasks: {
-    [date: string]: {
-      morningCleanse: boolean;
-      vitaminC: boolean;
-      eveningRoutine: boolean;
-    };
-  };
-  stats: {
-    totalOrders: number;
-    totalVisits: number;
-    totalSpent: number;
-    daysActive: number;
-  };
-}
-
-// In-memory storage for demo (in production, use a database)
-const userProgressStore = new Map<string, UserProgress>();
-
-// Initialize default progress for new users
-function createDefaultProgress(userId: string): UserProgress {
-  return {
-    userId,
-    points: 0,
-    streak: 0,
-    lastActivity: new Date().toISOString(),
-    achievements: [],
-    dailyTasks: {},
-    stats: {
-      totalOrders: 0,
-      totalVisits: 0,
-      totalSpent: 0,
-      daysActive: 0
-    }
-  };
-}
+import { userProgressStore, createDefaultProgress } from '@/app/lib/progress-store';
 
 // Get user progress
 export async function GET(request: NextRequest) {
@@ -123,6 +82,17 @@ export async function POST(request: NextRequest) {
           progress.dailyTasks[today][task] = true;
           progress.points += 25; // 25 points per task
           progress.lastActivity = now;
+
+          // Notify leaderboard of score update (async, don't wait)
+          fetch('/api/leaderboard', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              userId: userKey,
+              action: 'task_completed',
+              points: 25
+            })
+          }).catch(() => {}); // Ignore errors
 
           // Check if all tasks completed for streak
           const allTasksComplete = Object.values(progress.dailyTasks[today]).every(Boolean);
