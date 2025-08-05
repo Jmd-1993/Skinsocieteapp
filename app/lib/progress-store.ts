@@ -6,9 +6,20 @@ interface UserProgress {
   achievements: string[];
   dailyTasks: {
     [date: string]: {
-      morningCleanse: boolean;
-      vitaminC: boolean;
-      eveningRoutine: boolean;
+      morningCleanse?: boolean;
+      vitaminC?: boolean;
+      eveningRoutine?: boolean;
+      [key: string]: boolean | undefined;
+    };
+  };
+  weeklyChallenges?: {
+    [week: string]: {
+      [challengeId: string]: number;
+    };
+  };
+  seasonalChallenges?: {
+    [eventId: string]: {
+      [challengeId: string]: number;
     };
   };
   stats: {

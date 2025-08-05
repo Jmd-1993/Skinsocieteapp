@@ -17,7 +17,7 @@ const navItems = [
   { name: "Home", href: "/", icon: Home },
   { name: "Shop", href: "/products", icon: ShoppingBag },
   { name: "Book", href: "/appointments", icon: Calendar },
-  { name: "Progress", href: "/progress", icon: TrendingUp },
+  { name: "Challenges", href: "/challenges", icon: TrendingUp },
   { name: "Leaderboard", href: "/leaderboard", icon: Trophy },
   { name: "Rewards", href: "/rewards", icon: Gift },
   { name: "Profile", href: "/profile", icon: User },
