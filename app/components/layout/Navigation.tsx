@@ -18,8 +18,8 @@ const navItems = [
   { name: "Shop", href: "/products", icon: ShoppingBag },
   { name: "Book", href: "/appointments", icon: Calendar },
   { name: "Challenges", href: "/challenges", icon: TrendingUp },
+  { name: "Rewards", href: "/spending-challenges", icon: Gift },
   { name: "Leaderboard", href: "/leaderboard", icon: Trophy },
-  { name: "Rewards", href: "/rewards", icon: Gift },
   { name: "Profile", href: "/profile", icon: User },
 ];
 

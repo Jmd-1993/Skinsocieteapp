@@ -15,7 +15,7 @@ import {
   CheckCircle
 } from "lucide-react";
 import Link from "next/link";
-import { ProductCard } from "./products/ProductCard";
+import { SocialFeed } from "./social/SocialFeed";
 import { useAuth } from "../lib/auth-context";
 
 interface UserProgress {
@@ -43,7 +43,6 @@ interface UserProgress {
 export function InteractiveHomepage() {
   const { user } = useAuth();
   const [progress, setProgress] = useState<UserProgress | null>(null);
-  const [featuredProducts, setFeaturedProducts] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   // Fetch user progress
@@ -79,21 +78,6 @@ export function InteractiveHomepage() {
 
     fetchProgress();
   }, [user]);
-
-  // Fetch featured products
-  useEffect(() => {
-    const fetchFeaturedProducts = async () => {
-      try {
-        const response = await fetch('/api/products?featured=true');
-        const data = await response.json();
-        setFeaturedProducts(data.slice(0, 4));
-      } catch (error) {
-        console.error('Failed to fetch featured products:', error);
-      }
-    };
-
-    fetchFeaturedProducts();
-  }, []);
 
   // Handle task completion
   const completeTask = async (task: 'morningCleanse' | 'vitaminC' | 'eveningRoutine') => {
@@ -344,58 +328,8 @@ export function InteractiveHomepage() {
           </div>
         </div>
 
-        {/* Featured Products */}
-        <div className="bg-white rounded-xl p-6 border border-gray-200">
-          <div className="flex items-center justify-between mb-6">
-            <div>
-              <h3 className="text-lg font-semibold">Featured Products</h3>
-              <p className="text-sm text-gray-600">Premium Medik8 skincare at 15% below RRP</p>
-            </div>
-            <Link
-              href="/products"
-              className="text-pink-600 hover:text-pink-700 text-sm font-medium flex items-center gap-1"
-            >
-              View All Products
-              <ArrowRight className="h-4 w-4" />
-            </Link>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {featuredProducts.length > 0 ? (
-              featuredProducts.map((product) => (
-                <ProductCard
-                  key={product.id}
-                  product={{
-                    ...product,
-                    rrp: product.compareAtPrice,
-                    featured: true,
-                    category: typeof product.category === 'object' ? product.category.name : product.category,
-                    brand: typeof product.brand === 'object' ? product.brand : { name: product.brand },
-                    benefits: [
-                      "Premium Medik8 formula",
-                      "Clinically proven results", 
-                      "Loss-leader pricing",
-                      "Professional grade skincare"
-                    ],
-                    usage: "Apply as directed. Follow with SPF in the morning.",
-                    skinType: ["All Skin Types"]
-                  }}
-                  className="transform hover:scale-105"
-                />
-              ))
-            ) : (
-              [1, 2, 3, 4].map((i) => (
-                <div key={i} className="group cursor-pointer">
-                  <div className="aspect-square bg-gray-100 rounded-lg mb-3 flex items-center justify-center animate-pulse">
-                    <ShoppingBag className="h-8 w-8 text-gray-400" />
-                  </div>
-                  <div className="h-4 bg-gray-200 rounded mb-1 animate-pulse"></div>
-                  <div className="h-3 bg-gray-200 rounded mb-2 w-2/3 animate-pulse"></div>
-                  <div className="h-4 bg-gray-200 rounded animate-pulse"></div>
-                </div>
-              ))
-            )}
-          </div>
-        </div>
+        {/* Community Feed */}
+        <SocialFeed />
 
         {/* Active Challenges */}
         <div className="bg-white rounded-xl p-6 border border-gray-200">

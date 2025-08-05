@@ -22,6 +22,26 @@ interface UserProgress {
       [challengeId: string]: number;
     };
   };
+  spendingChallenges?: {
+    active: Array<{
+      challengeId: string;
+      startedAt: string;
+      currentSpend: number;
+      completedRequirements: string[];
+      products: Array<{
+        productId: string;
+        name: string;
+        price: number;
+        purchasedAt: string;
+      }>;
+    }>;
+    completed: Array<{
+      challengeId: string;
+      completedAt: string;
+      finalSpend: number;
+      rewardsEarned: any;
+    }>;
+  };
   stats: {
     totalOrders: number;
     totalVisits: number;
