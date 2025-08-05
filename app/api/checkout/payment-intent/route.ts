@@ -1,19 +1,20 @@
 import { NextRequest, NextResponse } from 'next/server';
-import Stripe from 'stripe';
-
-// Initialize Stripe with your secret key (with fallback for build time)
-const stripeSecretKey = process.env.STRIPE_SECRET_KEY || 'sk_test_placeholder';
-const stripe = new Stripe(stripeSecretKey, {
-  apiVersion: '2023-10-16',
-  typescript: true,
-});
+import { getStripeServer, isStripeConfigured } from '@/app/lib/stripe-server';
 
 export async function POST(request: NextRequest) {
   try {
     // Check if Stripe is properly configured
-    if (!process.env.STRIPE_SECRET_KEY || process.env.STRIPE_SECRET_KEY === 'sk_test_placeholder') {
+    if (!isStripeConfigured()) {
       return NextResponse.json(
         { error: 'Stripe is not configured. Please add STRIPE_SECRET_KEY to environment variables.' },
+        { status: 500 }
+      );
+    }
+
+    const stripe = getStripeServer();
+    if (!stripe) {
+      return NextResponse.json(
+        { error: 'Failed to initialize Stripe' },
         { status: 500 }
       );
     }
@@ -68,9 +69,9 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error('Payment intent creation error:', error);
     
-    if (error instanceof Stripe.errors.StripeError) {
+    if (error && typeof error === 'object' && 'type' in error && 'message' in error) {
       return NextResponse.json(
-        { error: error.message },
+        { error: (error as any).message },
         { status: 400 }
       );
     }

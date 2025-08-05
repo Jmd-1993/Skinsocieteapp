@@ -1,23 +1,26 @@
 import { NextRequest, NextResponse } from 'next/server';
-import Stripe from 'stripe';
-
-// Initialize Stripe with fallback for build time
-const stripeSecretKey = process.env.STRIPE_SECRET_KEY || 'sk_test_placeholder';
-const stripe = new Stripe(stripeSecretKey, {
-  apiVersion: '2023-10-16',
-});
-
-const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET || 'whsec_placeholder';
+import { getStripeServer, isStripeConfigured } from '@/app/lib/stripe-server';
+import type Stripe from 'stripe';
 
 export async function POST(request: NextRequest) {
   try {
     // Check if Stripe is properly configured
-    if (!process.env.STRIPE_SECRET_KEY || process.env.STRIPE_SECRET_KEY === 'sk_test_placeholder') {
+    if (!isStripeConfigured()) {
       return NextResponse.json(
         { error: 'Stripe webhook is not configured. Please add STRIPE_SECRET_KEY to environment variables.' },
         { status: 500 }
       );
     }
+
+    const stripe = getStripeServer();
+    if (!stripe) {
+      return NextResponse.json(
+        { error: 'Failed to initialize Stripe' },
+        { status: 500 }
+      );
+    }
+
+    const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET || 'whsec_placeholder';
 
     const body = await request.text();
     const sig = request.headers.get('stripe-signature');
