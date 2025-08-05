@@ -7,6 +7,7 @@ import Image from 'next/image';
 import { useCartStore } from '@/app/lib/cart';
 import { useAuth } from '@/app/lib/auth-context';
 import { MainLayout } from '@/app/components/layout/MainLayout';
+import { StripeCheckoutForm } from '@/app/components/checkout/StripeCheckoutForm';
 
 interface CheckoutForm {
   email: string;
@@ -33,6 +34,8 @@ export default function CheckoutPage() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [orderComplete, setOrderComplete] = useState(false);
   const [orderId, setOrderId] = useState('');
+  const [stripeClientSecret, setStripeClientSecret] = useState<string | null>(null);
+  const [showStripeForm, setShowStripeForm] = useState(false);
 
   const [form, setForm] = useState<CheckoutForm>({
     email: user?.email || '',
@@ -71,12 +74,57 @@ export default function CheckoutPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Validate form
+    if (!form.email || !form.firstName || !form.lastName || !form.address || !form.city || !form.postcode) {
+      alert('Please fill in all required fields');
+      return;
+    }
+
     setIsProcessing(true);
 
     try {
-      // Simulate payment processing
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
+      // Create payment intent with Stripe
+      const response = await fetch('/api/checkout/payment-intent', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          amount: finalTotal,
+          items: items.map(item => ({
+            id: item.productId,
+            name: item.name,
+            quantity: item.quantity,
+            price: item.price,
+          })),
+          customerEmail: form.email,
+          customerName: `${form.firstName} ${form.lastName}`,
+          shipping: {
+            address: form.address,
+            city: form.city,
+            state: form.state,
+            postcode: form.postcode,
+          },
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to create payment intent');
+      }
+
+      const { clientSecret, paymentIntentId } = await response.json();
+      setStripeClientSecret(clientSecret);
+      setShowStripeForm(true);
+
+    } catch (error) {
+      console.error('Payment setup failed:', error);
+      alert('Failed to initialize payment. Please try again.');
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
+  const handleStripeSuccess = async (paymentIntentId: string) => {
+    try {
       // Generate order ID
       const newOrderId = `SS${Date.now().toString().slice(-6)}`;
       setOrderId(newOrderId);
@@ -94,7 +142,8 @@ export default function CheckoutPage() {
           data: {
             amount: finalTotal,
             items: items.length,
-            orderId: newOrderId
+            orderId: newOrderId,
+            paymentIntentId,
           }
         })
       });
@@ -102,12 +151,16 @@ export default function CheckoutPage() {
       // Clear cart and show success
       clearCart();
       setOrderComplete(true);
-
     } catch (error) {
-      console.error('Payment failed:', error);
-    } finally {
-      setIsProcessing(false);
+      console.error('Order completion failed:', error);
     }
+  };
+
+  const handleStripeError = (error: string) => {
+    console.error('Payment error:', error);
+    alert(`Payment failed: ${error}`);
+    setShowStripeForm(false);
+    setStripeClientSecret(null);
   };
 
   if (orderComplete) {
@@ -251,94 +304,101 @@ export default function CheckoutPage() {
             </div>
 
             {/* Payment Method */}
-            <div className="bg-white rounded-lg p-6 shadow-sm border">
-              <h2 className="text-lg font-semibold text-gray-900 mb-4">Payment Method</h2>
-              
-              {/* Payment Options */}
-              <div className="grid grid-cols-3 gap-3 mb-6">
-                {[
-                  { id: 'card', name: 'Credit Card', icon: CreditCard },
-                  { id: 'paypal', name: 'PayPal', icon: Shield },
-                  { id: 'afterpay', name: 'Afterpay', icon: CreditCard }
-                ].map((method) => (
-                  <button
-                    key={method.id}
-                    type="button"
-                    onClick={() => updateForm('paymentMethod', method.id as any)}
-                    className={`p-3 border rounded-lg text-sm font-medium transition-colors ${
-                      form.paymentMethod === method.id
-                        ? 'border-pink-500 bg-pink-50 text-pink-700'
-                        : 'border-gray-300 hover:border-gray-400'
-                    }`}
-                  >
-                    <method.icon className="h-5 w-5 mx-auto mb-1" />
-                    {method.name}
-                  </button>
-                ))}
-              </div>
-
-              {/* Card Details */}
-              {form.paymentMethod === 'card' && (
-                <div className="space-y-4">
-                  <input
-                    type="text"
-                    placeholder="Card number"
-                    value={form.cardNumber}
-                    onChange={(e) => updateForm('cardNumber', e.target.value)}
-                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
-                    required
-                  />
-                  <div className="grid grid-cols-2 gap-4">
-                    <input
-                      type="text"
-                      placeholder="MM/YY"
-                      value={form.expiryDate}
-                      onChange={(e) => updateForm('expiryDate', e.target.value)}
-                      className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
-                      required
-                    />
-                    <input
-                      type="text"
-                      placeholder="CVV"
-                      value={form.cvv}
-                      onChange={(e) => updateForm('cvv', e.target.value)}
-                      className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
-                      required
-                    />
-                  </div>
-                  <input
-                    type="text"
-                    placeholder="Name on card"
-                    value={form.cardName}
-                    onChange={(e) => updateForm('cardName', e.target.value)}
-                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
-                    required
-                  />
+            {!showStripeForm ? (
+              <div className="bg-white rounded-lg p-6 shadow-sm border">
+                <h2 className="text-lg font-semibold text-gray-900 mb-4">Payment Method</h2>
+                
+                {/* Payment Options */}
+                <div className="grid grid-cols-3 gap-3 mb-6">
+                  {[
+                    { id: 'card', name: 'Credit Card', icon: CreditCard },
+                    { id: 'paypal', name: 'PayPal', icon: Shield, disabled: true },
+                    { id: 'afterpay', name: 'Afterpay', icon: CreditCard }
+                  ].map((method) => (
+                    <button
+                      key={method.id}
+                      type="button"
+                      disabled={method.disabled}
+                      onClick={() => updateForm('paymentMethod', method.id as any)}
+                      className={`p-3 border rounded-lg text-sm font-medium transition-colors ${
+                        form.paymentMethod === method.id
+                          ? 'border-pink-500 bg-pink-50 text-pink-700'
+                          : method.disabled
+                          ? 'border-gray-200 bg-gray-50 text-gray-400 cursor-not-allowed'
+                          : 'border-gray-300 hover:border-gray-400'
+                      }`}
+                    >
+                      <method.icon className="h-5 w-5 mx-auto mb-1" />
+                      {method.name}
+                      {method.disabled && <div className="text-xs">Coming Soon</div>}
+                    </button>
+                  ))}
                 </div>
-              )}
 
-              {/* Options */}
-              <div className="mt-6 space-y-3">
-                <label className="flex items-center gap-3">
-                  <input
-                    type="checkbox"
-                    checked={form.saveDetails}
-                    onChange={(e) => updateForm('saveDetails', e.target.checked)}
-                    className="w-4 h-4 text-pink-600 border-gray-300 rounded focus:ring-pink-500"
-                  />
-                  <span className="text-sm text-gray-700">Save payment details for next time</span>
-                </label>
-                <label className="flex items-center gap-3">
-                  <input
-                    type="checkbox"
-                    checked={form.marketing}
-                    onChange={(e) => updateForm('marketing', e.target.checked)}
-                    className="w-4 h-4 text-pink-600 border-gray-300 rounded focus:ring-pink-500"
-                  />
-                  <span className="text-sm text-gray-700">Send me skincare tips and exclusive offers</span>
-                </label>
+                {/* Info Message */}
+                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 text-sm text-blue-800">
+                  <p className="font-medium mb-1">Secure Payment with Stripe</p>
+                  <p>Your payment details will be securely processed by Stripe. We never store your card information.</p>
+                </div>
+
+                {/* Options */}
+                <div className="mt-6 space-y-3">
+                  <label className="flex items-center gap-3">
+                    <input
+                      type="checkbox"
+                      checked={form.saveDetails}
+                      onChange={(e) => updateForm('saveDetails', e.target.checked)}
+                      className="w-4 h-4 text-pink-600 border-gray-300 rounded focus:ring-pink-500"
+                    />
+                    <span className="text-sm text-gray-700">Save payment details for next time</span>
+                  </label>
+                  <label className="flex items-center gap-3">
+                    <input
+                      type="checkbox"
+                      checked={form.marketing}
+                      onChange={(e) => updateForm('marketing', e.target.checked)}
+                      className="w-4 h-4 text-pink-600 border-gray-300 rounded focus:ring-pink-500"
+                    />
+                    <span className="text-sm text-gray-700">Send me skincare tips and exclusive offers</span>
+                  </label>
+                </div>
               </div>
-            </div>
+            ) : (
+              <div className="bg-white rounded-lg p-6 shadow-sm border">
+                <h2 className="text-lg font-semibold text-gray-900 mb-4">Complete Payment</h2>
+                
+                {/* Customer Info Summary */}
+                <div className="bg-gray-50 rounded-lg p-4 mb-6 text-sm">
+                  <p className="font-medium text-gray-900 mb-2">Billing Details</p>
+                  <p className="text-gray-600">{form.firstName} {form.lastName}</p>
+                  <p className="text-gray-600">{form.email}</p>
+                  <p className="text-gray-600">{form.address}</p>
+                  <p className="text-gray-600">{form.city}, {form.state} {form.postcode}</p>
+                </div>
+
+                {/* Stripe Payment Form */}
+                {stripeClientSecret && (
+                  <StripeCheckoutForm
+                    amount={finalTotal}
+                    clientSecret={stripeClientSecret}
+                    onSuccess={handleStripeSuccess}
+                    onError={handleStripeError}
+                  />
+                )}
+
+                {/* Back Button */}
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowStripeForm(false);
+                    setStripeClientSecret(null);
+                  }}
+                  className="w-full mt-4 text-gray-600 py-2 text-sm hover:text-gray-900 transition-colors"
+                >
+                  ← Back to billing details
+                </button>
+              </div>
+            )}
           </div>
 
           {/* Order Summary */}
@@ -414,27 +474,29 @@ export default function CheckoutPage() {
               </div>
 
               {/* Complete Order Button */}
-              <form onSubmit={handleSubmit} className="mt-6">
-                <button
-                  type="submit"
-                  disabled={isProcessing}
-                  className="w-full bg-pink-600 text-white py-3 rounded-lg font-medium
-                           hover:bg-pink-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed
-                           flex items-center justify-center gap-2"
-                >
-                  {isProcessing ? (
-                    <>
-                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                      Processing...
-                    </>
-                  ) : (
-                    <>
-                      <Shield className="h-4 w-4" />
-                      Complete Order - ${finalTotal.toFixed(2)}
-                    </>
-                  )}
-                </button>
-              </form>
+              {!showStripeForm && (
+                <form onSubmit={handleSubmit} className="mt-6">
+                  <button
+                    type="submit"
+                    disabled={isProcessing}
+                    className="w-full bg-pink-600 text-white py-3 rounded-lg font-medium
+                             hover:bg-pink-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed
+                             flex items-center justify-center gap-2"
+                  >
+                    {isProcessing ? (
+                      <>
+                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                        Initializing payment...
+                      </>
+                    ) : (
+                      <>
+                        <Shield className="h-4 w-4" />
+                        Proceed to Payment - ${finalTotal.toFixed(2)}
+                      </>
+                    )}
+                  </button>
+                </form>
+              )}
 
               {/* Security Info */}
               <div className="mt-4 flex items-center gap-2 text-xs text-gray-500">
