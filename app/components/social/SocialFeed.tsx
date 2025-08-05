@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useRef, useCallback } from 'react';
+import { useEffect, useRef, useCallback, useState } from 'react';
 import { useSocialFeedStore } from '@/app/lib/social-feed-store';
 import { PostCard } from './PostCard';
+import { CreatePostModal } from './CreatePostModal';
 import { PostType, PostCategory, FeedSort } from '@/app/types/social-feed';
 import { Filter, TrendingUp, Clock, Heart, Star, Plus, RefreshCw } from 'lucide-react';
 import { cn } from '@/app/lib/utils';
@@ -41,6 +42,7 @@ export function SocialFeed({ className }: SocialFeedProps) {
     setFilter
   } = useSocialFeedStore();
 
+  const [showCreateModal, setShowCreateModal] = useState(false);
   const loadMoreRef = useRef<HTMLDivElement>(null);
   const observer = useRef<IntersectionObserver>();
 
@@ -84,6 +86,28 @@ export function SocialFeed({ className }: SocialFeedProps) {
     refreshFeed();
   };
 
+  const handleCreatePost = async (formData: FormData) => {
+    try {
+      const response = await fetch('/api/social-feed', {
+        method: 'POST',
+        body: formData
+      });
+
+      const result = await response.json();
+      
+      if (result.success) {
+        setShowCreateModal(false);
+        // Refresh the feed to show the new post
+        refreshFeed();
+      } else {
+        alert('Failed to create post: ' + result.error);
+      }
+    } catch (error) {
+      console.error('Error creating post:', error);
+      alert('Failed to create post. Please try again.');
+    }
+  };
+
   if (error) {
     return (
       <div className={cn("flex flex-col items-center justify-center p-8", className)}>
@@ -120,7 +144,10 @@ export function SocialFeed({ className }: SocialFeedProps) {
             >
               <RefreshCw className={cn("h-5 w-5", isLoading && "animate-spin")} />
             </button>
-            <button className="flex items-center gap-2 px-4 py-2 bg-pink-600 text-white rounded-lg hover:bg-pink-700 transition-colors">
+            <button 
+              onClick={() => setShowCreateModal(true)}
+              className="flex items-center gap-2 px-4 py-2 bg-pink-600 text-white rounded-lg hover:bg-pink-700 transition-colors"
+            >
               <Plus className="h-4 w-4" />
               Share Your Story
             </button>
@@ -185,7 +212,10 @@ export function SocialFeed({ className }: SocialFeedProps) {
             <p className="text-gray-600 mb-4">
               Be the first to share your skincare journey!
             </p>
-            <button className="px-6 py-3 bg-pink-600 text-white rounded-lg hover:bg-pink-700 transition-colors">
+            <button 
+              onClick={() => setShowCreateModal(true)}
+              className="px-6 py-3 bg-pink-600 text-white rounded-lg hover:bg-pink-700 transition-colors"
+            >
               Create Your First Post
             </button>
           </div>
@@ -225,6 +255,13 @@ export function SocialFeed({ className }: SocialFeedProps) {
           </div>
         )}
       </div>
+
+      {/* Create Post Modal */}
+      <CreatePostModal
+        isOpen={showCreateModal}
+        onClose={() => setShowCreateModal(false)}
+        onPost={handleCreatePost}
+      />
     </div>
   );
 }

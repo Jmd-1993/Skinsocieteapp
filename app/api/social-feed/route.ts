@@ -269,31 +269,69 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   try {
-    const postData = await request.json();
+    const formData = await request.formData();
     
-    // In a real app, you'd get this from the authenticated user
+    // Extract form data
+    const type = formData.get('type') as PostType || 'routine';
+    const caption = formData.get('caption') as string || '';
+    const location = formData.get('location') as string || '';
+    const tagsString = formData.get('tags') as string || '[]';
+    const tags = JSON.parse(tagsString);
+    
+    // Handle image uploads (in real app, you'd upload to cloud storage)
+    const images = [];
+    const imageFiles = formData.getAll('images') as File[];
+    
+    for (let i = 0; i < imageFiles.length; i++) {
+      const file = imageFiles[i];
+      if (file && file.size > 0) {
+        // In real app, upload to cloud storage and get URL
+        // For now, use placeholder
+        images.push({
+          id: `img-${Date.now()}-${i}`,
+          url: '/api/placeholder/400/500',
+          alt: `User uploaded image ${i + 1}`,
+          isMain: i === 0
+        });
+      }
+    }
+    
+    // In a real app, you'd get this from the authenticated session
     const currentUser = {
       id: 'current-user',
-      firstName: 'Test',
-      lastName: 'User',
-      username: 'testuser',
+      firstName: 'You',
+      lastName: '',
+      username: 'you',
       avatar: '/api/placeholder/40/40',
-      tier: 'Glow Starter',
+      tier: 'Beauty Enthusiast', 
       isVerified: false,
       followerCount: 0
     };
     
+    // Map category based on post type
+    let category: PostCategory = 'skincare';
+    if (type === 'routine' || type === 'progress' || type === 'tip') {
+      category = 'skincare';
+    } else if (type === 'review') {
+      category = 'products';
+    }
+    
+    // Process tags
+    const processedTags = tags.map((tagName: string, index: number) => ({
+      id: `tag-${Date.now()}-${index}`,
+      name: tagName,
+      category: category
+    }));
+    
     const newPost: SocialPost = {
       id: `post-${Date.now()}`,
-      type: postData.type,
-      category: postData.category,
+      type,
+      category,
       author: currentUser,
-      caption: postData.caption,
-      images: postData.images || [],
-      products: postData.products || [],
-      tags: postData.tags || [],
-      location: postData.location,
-      challengeId: postData.challengeId,
+      caption,
+      images,
+      tags: processedTags,
+      location: location || undefined,
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
       isEdited: false,
@@ -302,18 +340,18 @@ export async function POST(request: NextRequest) {
         comments: 0,
         saves: 0,
         shares: 0,
-        views: 0,
+        views: 1,
         isLikedByCurrentUser: false,
         isSavedByCurrentUser: false,
         isFollowingAuthor: false
       },
-      isPrivate: postData.isPrivate || false,
+      isPrivate: false,
       isReported: false,
       isFeatured: false,
-      moderationStatus: 'approved', // In real app, might be 'pending'
+      moderationStatus: 'approved',
       engagementScore: 0,
       trendingScore: 0,
-      qualityScore: 70 // Default quality score
+      qualityScore: 70
     };
     
     postsStore.set(newPost.id, newPost);
