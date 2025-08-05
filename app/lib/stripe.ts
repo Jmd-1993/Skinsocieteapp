@@ -4,7 +4,13 @@ let stripePromise: Promise<Stripe | null>;
 
 export const getStripe = () => {
   if (!stripePromise) {
-    stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
+    const publishableKey = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY;
+    if (!publishableKey || publishableKey === 'pk_test_placeholder') {
+      console.warn('Stripe publishable key not configured');
+      stripePromise = Promise.resolve(null);
+    } else {
+      stripePromise = loadStripe(publishableKey);
+    }
   }
   return stripePromise;
 };
