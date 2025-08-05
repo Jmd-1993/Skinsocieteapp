@@ -604,6 +604,9 @@ class PhorestService {
       }
       
       console.log(`✅ Found client: ${client.firstName} ${client.lastName} (ID: ${client.clientId})`);
+      console.log('📋 Available client fields:', Object.keys(client));
+      console.log('📱 Client phone fields:', { phone: client.phone, mobile: client.mobile, telephone: client.telephone });
+      console.log('📅 Client date fields:', { dateOfBirth: client.dateOfBirth, dob: client.dob, birthDate: client.birthDate });
       
       // Get client's appointment history
       const appointments = await this.getClientAppointments(client.clientId, { size: 100 });
