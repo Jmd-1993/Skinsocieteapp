@@ -125,7 +125,7 @@ export default function ProfilePage() {
   };
 
   const getPhone = () => {
-    return phorestData?.client.phone || '+61 400 000 000';
+    return phorestData?.client.phone || phorestData?.client.mobile || 'Not provided';
   };
 
   const getEmail = () => {
@@ -133,7 +133,7 @@ export default function ProfilePage() {
   };
 
   const getLocation = () => {
-    return phorestData?.client.homeClinic || 'Sydney, NSW';
+    return phorestData?.client.homeClinic || phorestData?.client.address || 'Not set';
   };
 
   const getTotalOrders = () => {
@@ -150,6 +150,17 @@ export default function ProfilePage() {
 
   const getCurrentStreak = () => {
     return user?.currentStreak || 0;
+  };
+
+  const getDateOfBirth = () => {
+    if (phorestData?.client.dateOfBirth) {
+      // Convert from various date formats to YYYY-MM-DD for input[type="date"]
+      const date = new Date(phorestData.client.dateOfBirth);
+      if (!isNaN(date.getTime())) {
+        return date.toISOString().split('T')[0];
+      }
+    }
+    return '';
   };
 
   return (
@@ -290,6 +301,7 @@ export default function ProfilePage() {
                   </label>
                   <input
                     type="date"
+                    value={getDateOfBirth()}
                     placeholder="dd/mm/yyyy"
                     className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-500"
                   />
