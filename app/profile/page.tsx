@@ -70,6 +70,19 @@ export default function ProfilePage() {
       if (result.success && result.data) {
         setPhorestData(result.data);
         setSyncStatus('success');
+        
+        // Debug: Log client data to help troubleshoot
+        console.log('🔍 Profile Debug - Client data received:', result.data.client);
+        console.log('📱 Phone fields:', {
+          phone: result.data.client.phone,
+          mobile: result.data.client.mobile,
+          telephone: result.data.client.telephone
+        });
+        console.log('📅 Date fields:', {
+          dateOfBirth: result.data.client.dateOfBirth,
+          dob: result.data.client.dob,
+          birthDate: result.data.client.birthDate
+        });
       } else {
         setSyncStatus('error');
         console.log('No Phorest data found for user');
@@ -125,7 +138,22 @@ export default function ProfilePage() {
   };
 
   const getPhone = () => {
-    return phorestData?.client.phone || phorestData?.client.mobile || 'Not provided';
+    // Check multiple possible field names for phone number
+    const phoneFields = [
+      phorestData?.client.phone,
+      phorestData?.client.mobile,
+      phorestData?.client.telephone,
+      phorestData?.client.phoneNumber,
+      phorestData?.client.mobilePhone
+    ];
+    
+    for (const phoneField of phoneFields) {
+      if (phoneField && phoneField !== '' && phoneField !== null && phoneField !== 'Not provided') {
+        return phoneField;
+      }
+    }
+    
+    return 'Not provided';
   };
 
   const getEmail = () => {
@@ -153,14 +181,29 @@ export default function ProfilePage() {
   };
 
   const getDateOfBirth = () => {
-    if (phorestData?.client.dateOfBirth) {
-      // Convert from various date formats to YYYY-MM-DD for input[type="date"]
-      const date = new Date(phorestData.client.dateOfBirth);
-      if (!isNaN(date.getTime())) {
-        return date.toISOString().split('T')[0];
+    // Check multiple possible field names for date of birth
+    const dobFields = [
+      phorestData?.client.dateOfBirth,
+      phorestData?.client.dob,
+      phorestData?.client.birthDate,
+      phorestData?.client.birth_date
+    ];
+    
+    for (const dobField of dobFields) {
+      if (dobField && dobField !== '' && dobField !== null) {
+        try {
+          const date = new Date(dobField);
+          // Check if it's a valid date and not today's date (which might indicate missing data)
+          if (!isNaN(date.getTime()) && date.getFullYear() > 1900 && date.getFullYear() < new Date().getFullYear()) {
+            return date.toISOString().split('T')[0];
+          }
+        } catch (error) {
+          console.warn('Error parsing date field:', dobField, error);
+        }
       }
     }
-    return '';
+    
+    return ''; // Return empty string if no valid date found
   };
 
   return (
