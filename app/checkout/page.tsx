@@ -1,56 +1,143 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { MainLayout } from '../components/layout/MainLayout';
-import { useCartStore } from '../lib/cart';
-import { Truck, Shield, CreditCard, ArrowLeft } from 'lucide-react';
-import Link from 'next/link';
-import { loadStripe } from '@stripe/stripe-js';
+import { useRouter } from 'next/navigation';
+import { ArrowLeft, CreditCard, Truck, Shield, CheckCircle } from 'lucide-react';
+import Image from 'next/image';
+import { useCartStore } from '@/app/lib/cart';
+import { useAuth } from '@/app/lib/auth-context';
+import { MainLayout } from '@/app/components/layout/MainLayout';
 
-// Initialize Stripe
-const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || 'pk_test_...');
+interface CheckoutForm {
+  email: string;
+  firstName: string;
+  lastName: string;
+  phone: string;
+  address: string;
+  city: string;
+  state: string;
+  postcode: string;
+  paymentMethod: 'card' | 'paypal' | 'afterpay';
+  cardNumber: string;
+  expiryDate: string;
+  cvv: string;
+  cardName: string;
+  saveDetails: boolean;
+  marketing: boolean;
+}
 
 export default function CheckoutPage() {
-  const { items, getTotalPrice, clearCart } = useCartStore();
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
+  const { user } = useAuth();
+  const { items, getTotalPrice, getTotalItems, clearCart } = useCartStore();
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [orderComplete, setOrderComplete] = useState(false);
+  const [orderId, setOrderId] = useState('');
 
-  const subtotal = getTotalPrice();
-  const shipping = 9.95; // Standard shipping
-  const total = subtotal + shipping;
+  const [form, setForm] = useState<CheckoutForm>({
+    email: user?.email || '',
+    firstName: user?.firstName || '',
+    lastName: user?.lastName || '',
+    phone: user?.phone || '',
+    address: '',
+    city: '',
+    state: 'WA',
+    postcode: '',
+    paymentMethod: 'card',
+    cardNumber: '',
+    expiryDate: '',
+    cvv: '',
+    cardName: '',
+    saveDetails: false,
+    marketing: true
+  });
 
-  const handleCheckout = async () => {
-    setIsLoading(true);
-    setError(null);
+  const totalPrice = getTotalPrice();
+  const totalItems = getTotalItems();
+  const shipping = 0; // Free shipping
+  const gst = totalPrice * 0.1; // 10% GST
+  const finalTotal = totalPrice + shipping + gst;
+
+  // Redirect if cart is empty
+  useEffect(() => {
+    if (items.length === 0 && !orderComplete) {
+      router.push('/products');
+    }
+  }, [items.length, orderComplete, router]);
+
+  const updateForm = (field: keyof CheckoutForm, value: string | boolean) => {
+    setForm(prev => ({ ...prev, [field]: value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsProcessing(true);
 
     try {
-      // Simulate checkout process for demo
+      // Simulate payment processing
       await new Promise(resolve => setTimeout(resolve, 2000));
       
-      // Clear cart and redirect to success page
+      // Generate order ID
+      const newOrderId = `SS${Date.now().toString().slice(-6)}`;
+      setOrderId(newOrderId);
+
+      // Award points for purchase (10% back as points)
+      const pointsEarned = Math.floor(finalTotal * 0.1);
+      
+      // Update user progress with purchase
+      await fetch('/api/user/progress', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          userId: user?.id || 'demo-user',
+          action: 'purchase_made',
+          data: {
+            amount: finalTotal,
+            items: items.length,
+            orderId: newOrderId
+          }
+        })
+      });
+
+      // Clear cart and show success
       clearCart();
-      window.location.href = '/checkout/success';
-    } catch (err) {
-      setError('Something went wrong. Please try again.');
-      console.error('Checkout error:', err);
+      setOrderComplete(true);
+
+    } catch (error) {
+      console.error('Payment failed:', error);
     } finally {
-      setIsLoading(false);
+      setIsProcessing(false);
     }
   };
 
-  if (items.length === 0) {
+  if (orderComplete) {
     return (
       <MainLayout>
-        <div className="max-w-2xl mx-auto text-center py-12">
-          <div className="text-6xl mb-4">🛒</div>
-          <h1 className="text-2xl font-bold text-gray-900 mb-4">Your cart is empty</h1>
-          <p className="text-gray-600 mb-8">Add some amazing skincare products to get started!</p>
-          <Link 
-            href="/products"
-            className="inline-flex items-center gap-2 bg-pink-600 text-white px-6 py-3 rounded-xl hover:bg-pink-700 transition-colors"
-          >
-            Continue Shopping
-          </Link>
+        <div className="max-w-2xl mx-auto py-16 text-center">
+          <CheckCircle className="h-16 w-16 text-green-500 mx-auto mb-6" />
+          <h1 className="text-3xl font-bold text-gray-900 mb-4">Order Confirmed!</h1>
+          <p className="text-gray-600 mb-6">
+            Thank you for your order. You've earned <span className="font-semibold text-pink-600">
+            {Math.floor(finalTotal * 0.1)} points</span> for this purchase!
+          </p>
+          <div className="bg-gray-50 rounded-lg p-6 mb-8">
+            <p className="text-sm text-gray-500 mb-2">Order Number</p>
+            <p className="text-2xl font-bold text-gray-900">{orderId}</p>
+          </div>
+          <div className="flex gap-4 justify-center">
+            <button
+              onClick={() => router.push('/products')}
+              className="px-6 py-3 bg-pink-600 text-white rounded-lg hover:bg-pink-700 transition-colors"
+            >
+              Continue Shopping
+            </button>
+            <button
+              onClick={() => router.push('/profile')}
+              className="px-6 py-3 bg-gray-100 text-gray-900 rounded-lg hover:bg-gray-200 transition-colors"
+            >
+              View Order History
+            </button>
+          </div>
         </div>
       </MainLayout>
     );
@@ -58,131 +145,303 @@ export default function CheckoutPage() {
 
   return (
     <MainLayout>
-      <div className="max-w-4xl mx-auto">
+      <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="flex items-center gap-4 mb-8">
-          <Link 
-            href="/cart"
-            className="flex items-center gap-2 text-gray-600 hover:text-gray-900"
+          <button
+            onClick={() => router.back()}
+            className="p-2 hover:bg-gray-100 rounded-full transition-colors"
           >
             <ArrowLeft className="h-5 w-5" />
-            Back to Cart
-          </Link>
-          <div className="h-4 w-px bg-gray-300" />
-          <h1 className="text-2xl font-bold text-gray-900">Checkout</h1>
+          </button>
+          <div>
+            <h1 className="text-2xl font-bold text-gray-900">Checkout</h1>
+            <p className="text-gray-600">Complete your order to earn rewards points</p>
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {/* Order Summary */}
-          <div className="bg-white rounded-2xl p-6 border border-gray-200 h-fit">
-            <h2 className="text-lg font-semibold mb-6">Order Summary</h2>
-            
-            {/* Cart Items */}
-            <div className="space-y-4 mb-6">
-              {items.map((item) => (
-                <div key={item.id} className="flex items-center gap-4">
-                  <div className="w-16 h-16 bg-gradient-to-br from-pink-100 to-purple-100 rounded-lg flex items-center justify-center">
-                    <span className="text-2xl">🧴</span>
-                  </div>
-                  <div className="flex-1">
-                    <h3 className="font-medium text-gray-900">{item.name}</h3>
-                    <p className="text-sm text-gray-600">Quantity: {item.quantity}</p>
-                  </div>
-                  <div className="text-right">
-                    <p className="font-semibold text-gray-900">
-                      ${(item.price * item.quantity).toFixed(2)}
-                    </p>
-                  </div>
-                </div>
-              ))}
+        <div className="grid lg:grid-cols-2 gap-8">
+          {/* Checkout Form */}
+          <div className="space-y-6">
+            {/* Contact Information */}
+            <div className="bg-white rounded-lg p-6 shadow-sm border">
+              <h2 className="text-lg font-semibold text-gray-900 mb-4">Contact Information</h2>
+              <div className="grid grid-cols-2 gap-4">
+                <input
+                  type="email"
+                  placeholder="Email address"
+                  value={form.email}
+                  onChange={(e) => updateForm('email', e.target.value)}
+                  className="col-span-2 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                  required
+                />
+                <input
+                  type="text"
+                  placeholder="First name"
+                  value={form.firstName}
+                  onChange={(e) => updateForm('firstName', e.target.value)}
+                  className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                  required
+                />
+                <input
+                  type="text"
+                  placeholder="Last name"
+                  value={form.lastName}
+                  onChange={(e) => updateForm('lastName', e.target.value)}
+                  className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                  required
+                />
+                <input
+                  type="tel"
+                  placeholder="Phone number"
+                  value={form.phone}
+                  onChange={(e) => updateForm('phone', e.target.value)}
+                  className="col-span-2 p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                  required
+                />
+              </div>
             </div>
 
-            {/* Pricing Breakdown */}
-            <div className="border-t border-gray-200 pt-4 space-y-2">
-              <div className="flex justify-between text-gray-600">
-                <span>Subtotal</span>
-                <span>${subtotal.toFixed(2)}</span>
-              </div>
-              <div className="flex justify-between text-gray-600">
-                <span>Shipping</span>
-                <span>${shipping.toFixed(2)}</span>
-              </div>
-              <div className="flex justify-between text-lg font-bold text-gray-900 pt-2 border-t border-gray-200">
-                <span>Total</span>
-                <span>${total.toFixed(2)} AUD</span>
+            {/* Shipping Address */}
+            <div className="bg-white rounded-lg p-6 shadow-sm border">
+              <h2 className="text-lg font-semibold text-gray-900 mb-4">Shipping Address</h2>
+              <div className="space-y-4">
+                <input
+                  type="text"
+                  placeholder="Street address"
+                  value={form.address}
+                  onChange={(e) => updateForm('address', e.target.value)}
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                  required
+                />
+                <div className="grid grid-cols-3 gap-4">
+                  <input
+                    type="text"
+                    placeholder="City"
+                    value={form.city}
+                    onChange={(e) => updateForm('city', e.target.value)}
+                    className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                    required
+                  />
+                  <select
+                    value={form.state}
+                    onChange={(e) => updateForm('state', e.target.value)}
+                    className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                    required
+                  >
+                    <option value="WA">WA</option>
+                    <option value="NSW">NSW</option>
+                    <option value="VIC">VIC</option>
+                    <option value="QLD">QLD</option>
+                    <option value="SA">SA</option>
+                    <option value="TAS">TAS</option>
+                    <option value="NT">NT</option>
+                    <option value="ACT">ACT</option>
+                  </select>
+                  <input
+                    type="text"
+                    placeholder="Postcode"
+                    value={form.postcode}
+                    onChange={(e) => updateForm('postcode', e.target.value)}
+                    className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                    required
+                  />
+                </div>
               </div>
             </div>
 
-            {/* Security Badges */}
-            <div className="mt-6 pt-6 border-t border-gray-200">
-              <div className="flex items-center justify-center gap-6 text-sm text-gray-600">
-                <div className="flex items-center gap-2">
-                  <Shield className="h-4 w-4 text-green-600" />
-                  <span>Secure Payment</span>
+            {/* Payment Method */}
+            <div className="bg-white rounded-lg p-6 shadow-sm border">
+              <h2 className="text-lg font-semibold text-gray-900 mb-4">Payment Method</h2>
+              
+              {/* Payment Options */}
+              <div className="grid grid-cols-3 gap-3 mb-6">
+                {[
+                  { id: 'card', name: 'Credit Card', icon: CreditCard },
+                  { id: 'paypal', name: 'PayPal', icon: Shield },
+                  { id: 'afterpay', name: 'Afterpay', icon: CreditCard }
+                ].map((method) => (
+                  <button
+                    key={method.id}
+                    type="button"
+                    onClick={() => updateForm('paymentMethod', method.id as any)}
+                    className={`p-3 border rounded-lg text-sm font-medium transition-colors ${
+                      form.paymentMethod === method.id
+                        ? 'border-pink-500 bg-pink-50 text-pink-700'
+                        : 'border-gray-300 hover:border-gray-400'
+                    }`}
+                  >
+                    <method.icon className="h-5 w-5 mx-auto mb-1" />
+                    {method.name}
+                  </button>
+                ))}
+              </div>
+
+              {/* Card Details */}
+              {form.paymentMethod === 'card' && (
+                <div className="space-y-4">
+                  <input
+                    type="text"
+                    placeholder="Card number"
+                    value={form.cardNumber}
+                    onChange={(e) => updateForm('cardNumber', e.target.value)}
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                    required
+                  />
+                  <div className="grid grid-cols-2 gap-4">
+                    <input
+                      type="text"
+                      placeholder="MM/YY"
+                      value={form.expiryDate}
+                      onChange={(e) => updateForm('expiryDate', e.target.value)}
+                      className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                      required
+                    />
+                    <input
+                      type="text"
+                      placeholder="CVV"
+                      value={form.cvv}
+                      onChange={(e) => updateForm('cvv', e.target.value)}
+                      className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                      required
+                    />
+                  </div>
+                  <input
+                    type="text"
+                    placeholder="Name on card"
+                    value={form.cardName}
+                    onChange={(e) => updateForm('cardName', e.target.value)}
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-pink-500 focus:border-transparent"
+                    required
+                  />
                 </div>
-                <div className="flex items-center gap-2">
-                  <Truck className="h-4 w-4 text-blue-600" />
-                  <span>Fast Shipping</span>
-                </div>
+              )}
+
+              {/* Options */}
+              <div className="mt-6 space-y-3">
+                <label className="flex items-center gap-3">
+                  <input
+                    type="checkbox"
+                    checked={form.saveDetails}
+                    onChange={(e) => updateForm('saveDetails', e.target.checked)}
+                    className="w-4 h-4 text-pink-600 border-gray-300 rounded focus:ring-pink-500"
+                  />
+                  <span className="text-sm text-gray-700">Save payment details for next time</span>
+                </label>
+                <label className="flex items-center gap-3">
+                  <input
+                    type="checkbox"
+                    checked={form.marketing}
+                    onChange={(e) => updateForm('marketing', e.target.checked)}
+                    className="w-4 h-4 text-pink-600 border-gray-300 rounded focus:ring-pink-500"
+                  />
+                  <span className="text-sm text-gray-700">Send me skincare tips and exclusive offers</span>
+                </label>
               </div>
             </div>
           </div>
 
-          {/* Payment Section */}
-          <div className="bg-white rounded-2xl p-6 border border-gray-200">
-            <h2 className="text-lg font-semibold mb-6">Payment Details</h2>
-            
-            {/* Stripe Checkout Info */}
-            <div className="bg-gradient-to-r from-pink-50 to-purple-50 rounded-xl p-4 mb-6">
-              <div className="flex items-center gap-3 mb-3">
-                <CreditCard className="h-5 w-5 text-pink-600" />
-                <span className="font-medium text-gray-900">Secure Stripe Checkout</span>
+          {/* Order Summary */}
+          <div className="space-y-6">
+            {/* Order Items */}
+            <div className="bg-white rounded-lg p-6 shadow-sm border">
+              <h2 className="text-lg font-semibold text-gray-900 mb-4">Order Summary</h2>
+              <div className="space-y-4">
+                {items.map((item) => (
+                  <div key={item.id} className="flex items-center gap-4">
+                    <div className="w-16 h-16 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
+                      {item.image ? (
+                        <Image
+                          src={item.image}
+                          alt={item.name}
+                          width={64}
+                          height={64}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center text-2xl">
+                          🧴
+                        </div>
+                      )}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="text-xs text-gray-500 uppercase">{item.brand}</div>
+                      <h3 className="font-medium text-gray-900 text-sm line-clamp-2">
+                        {item.name}
+                      </h3>
+                      <div className="text-sm text-gray-600">Qty: {item.quantity}</div>
+                    </div>
+                    <div className="text-sm font-semibold text-gray-900">
+                      ${(item.price * item.quantity).toFixed(2)}
+                    </div>
+                  </div>
+                ))}
               </div>
-              <p className="text-sm text-gray-600">
-                You'll be redirected to Stripe's secure payment page to complete your purchase.
-                We accept all major credit cards and payment methods.
-              </p>
             </div>
 
-            {/* Shipping Information */}
-            <div className="bg-blue-50 rounded-xl p-4 mb-6">
-              <h3 className="font-medium text-gray-900 mb-2">🚚 Shipping Information</h3>
-              <div className="text-sm text-gray-600 space-y-1">
-                <p>• Standard Shipping: 3-7 business days ($9.95)</p>
-                <p>• Express Shipping: 1-3 business days ($19.95)</p>
-                <p>• Free shipping on orders over $100</p>
-                <p>• Australia-wide delivery</p>
+            {/* Price Breakdown */}
+            <div className="bg-white rounded-lg p-6 shadow-sm border">
+              <div className="space-y-3">
+                <div className="flex justify-between text-sm">
+                  <span className="text-gray-600">Subtotal ({totalItems} items)</span>
+                  <span className="font-medium">${totalPrice.toFixed(2)}</span>
+                </div>
+                <div className="flex justify-between text-sm">
+                  <span className="text-gray-600">Shipping</span>
+                  <span className="font-medium text-green-600">Free</span>
+                </div>
+                <div className="flex justify-between text-sm">
+                  <span className="text-gray-600">GST (10%)</span>
+                  <span className="font-medium">${gst.toFixed(2)}</span>
+                </div>
+                <div className="border-t pt-3">
+                  <div className="flex justify-between text-lg font-semibold">
+                    <span>Total</span>
+                    <span className="text-pink-600">${finalTotal.toFixed(2)}</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Rewards Info */}
+              <div className="mt-6 p-4 bg-pink-50 rounded-lg">
+                <div className="flex items-center gap-2 mb-2">
+                  <CheckCircle className="h-4 w-4 text-pink-600" />
+                  <span className="text-sm font-medium text-pink-900">Rewards</span>
+                </div>
+                <p className="text-sm text-pink-700">
+                  You'll earn <span className="font-semibold">{Math.floor(finalTotal * 0.1)} points</span> from this purchase!
+                </p>
+              </div>
+
+              {/* Complete Order Button */}
+              <form onSubmit={handleSubmit} className="mt-6">
+                <button
+                  type="submit"
+                  disabled={isProcessing}
+                  className="w-full bg-pink-600 text-white py-3 rounded-lg font-medium
+                           hover:bg-pink-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed
+                           flex items-center justify-center gap-2"
+                >
+                  {isProcessing ? (
+                    <>
+                      <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                      Processing...
+                    </>
+                  ) : (
+                    <>
+                      <Shield className="h-4 w-4" />
+                      Complete Order - ${finalTotal.toFixed(2)}
+                    </>
+                  )}
+                </button>
+              </form>
+
+              {/* Security Info */}
+              <div className="mt-4 flex items-center gap-2 text-xs text-gray-500">
+                <Shield className="h-4 w-4" />
+                <span>Secure 256-bit SSL encryption</span>
               </div>
             </div>
-
-            {/* Checkout Button */}
-            {error && (
-              <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-4">
-                {error}
-              </div>
-            )}
-
-            <button
-              onClick={handleCheckout}
-              disabled={isLoading}
-              className="w-full bg-gradient-to-r from-pink-600 to-purple-600 text-white py-4 px-6 rounded-xl font-semibold hover:from-pink-700 hover:to-purple-700 transition-all transform hover:scale-105 disabled:opacity-50 disabled:transform-none"
-            >
-              {isLoading ? (
-                <div className="flex items-center justify-center gap-2">
-                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                  Processing...
-                </div>
-              ) : (
-                <div className="flex items-center justify-center gap-2">
-                  <CreditCard className="h-5 w-5" />
-                  Complete Purchase - ${total.toFixed(2)} AUD
-                </div>
-              )}
-            </button>
-
-            <p className="text-xs text-gray-500 text-center mt-4">
-              By completing your purchase, you agree to our Terms of Service and Privacy Policy.
-            </p>
           </div>
         </div>
       </div>

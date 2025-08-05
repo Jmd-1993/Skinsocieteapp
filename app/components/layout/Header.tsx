@@ -7,6 +7,8 @@ import { useState, useEffect, useRef } from "react";
 import { cn } from "@/app/lib/utils";
 import { useCartStore } from "@/app/lib/cart";
 import { useAuth } from "../../lib/auth-context";
+import { CartIcon } from "../cart/CartIcon";
+import { CartDrawer } from "../cart/CartDrawer";
 
 function CartBadge() {
   const getTotalItems = useCartStore((state) => state.getTotalItems);
@@ -92,10 +94,7 @@ export function Header() {
             </button>
 
             {/* Cart */}
-            <Link href="/cart" className="relative p-2 rounded-lg hover:bg-gray-100">
-              <ShoppingCart className="h-5 w-5" />
-              <CartBadge />
-            </Link>
+            <CartIcon />
 
             {/* User Menu */}
             {isSignedIn ? (
@@ -233,6 +232,9 @@ export function Header() {
           onClick={() => setMobileMenuOpen(false)}
         />
       )}
+
+      {/* Cart Drawer */}
+      <CartDrawer />
     </header>
   );
 }
