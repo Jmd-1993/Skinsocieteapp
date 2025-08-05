@@ -1,6 +1,6 @@
-export type PostType = 'routine' | 'progress' | 'tip' | 'review' | 'challenge' | 'general';
+export type PostType = 'ROUTINE' | 'PROGRESS' | 'TIP' | 'REVIEW' | 'CHALLENGE' | 'BEFORE_AFTER' | 'TUTORIAL';
 
-export type PostCategory = 'skincare' | 'makeup' | 'wellness' | 'lifestyle' | 'tutorial';
+export type PostCategory = 'SKINCARE' | 'MAKEUP' | 'WELLNESS' | 'LIFESTYLE' | 'PRODUCTS' | 'TREATMENTS';
 
 export interface PostImage {
   id: string;

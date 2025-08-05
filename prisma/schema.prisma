@@ -30,6 +30,27 @@ model User {
   userChallenges  UserChallenge[]
   referralsSent   Referral[]       @relation("ReferralSender")
   referralsReceived Referral[]     @relation("ReferralReceiver")
+  
+  // Social Feed Relations
+  posts           SocialPost[]
+  postLikes       PostLike[]
+  postComments    PostComment[]
+  commentLikes    CommentLike[]
+  postSaves       PostSave[]
+  postShares      PostShare[]
+  
+  // Following Relations
+  followers       UserFollow[]     @relation("UserFollowing")
+  following       UserFollow[]     @relation("UserFollower")
+  
+  // Notifications
+  notifications   Notification[]
+  sentNotifications Notification[] @relation("NotificationFrom")
+  
+  // Stories
+  stories         UserStory[]
+  storyViews      StoryView[]
+  storyHighlights StoryHighlight[]
 }
 
 model Profile {
@@ -105,6 +126,7 @@ model Product {
   orderItems      OrderItem[]
   cartItems       CartItem[]
   reviews         Review[]
+  postProducts    PostProduct[]
 }
 
 enum ProductStatus {
@@ -401,6 +423,7 @@ model Challenge {
   updatedAt       DateTime         @updatedAt
   
   userChallenges  UserChallenge[]
+  posts           SocialPost[]
 }
 
 enum ChallengeType {
@@ -480,4 +503,316 @@ enum ReferralStatus {
   PENDING
   COMPLETED
   EXPIRED
+}
+
+// Social Feed Models
+model SocialPost {
+  id              String           @id @default(cuid())
+  userId          String
+  user            User             @relation(fields: [userId], references: [id])
+  
+  type            PostType
+  category        PostCategory
+  
+  caption         String
+  hashtags        String[]
+  location        String?
+  
+  // Content
+  images          PostImage[]
+  products        PostProduct[]
+  
+  // Engagement
+  likes           PostLike[]
+  comments        PostComment[]
+  saves           PostSave[]
+  shares          PostShare[]
+  
+  // Analytics
+  views           Int              @default(0)
+  engagementScore Float            @default(0)
+  trendingScore   Float            @default(0)
+  qualityScore    Float            @default(0)
+  
+  // Status
+  isPrivate       Boolean          @default(false)
+  isReported      Boolean          @default(false)
+  isFeatured      Boolean          @default(false)
+  moderationStatus ModerationStatus @default(APPROVED)
+  
+  // Challenge relation
+  challengeId     String?
+  challenge       Challenge?       @relation(fields: [challengeId], references: [id])
+  
+  // Notifications
+  notifications   Notification[]
+  
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  
+  @@index([userId])
+  @@index([type])
+  @@index([category])
+  @@index([createdAt])
+  @@index([engagementScore])
+  @@index([trendingScore])
+}
+
+enum PostType {
+  ROUTINE
+  PROGRESS
+  TIP
+  REVIEW
+  CHALLENGE
+  BEFORE_AFTER
+  TUTORIAL
+}
+
+enum PostCategory {
+  SKINCARE
+  MAKEUP
+  WELLNESS
+  LIFESTYLE
+  PRODUCTS
+  TREATMENTS
+}
+
+enum ModerationStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  FLAGGED
+}
+
+model PostImage {
+  id              String           @id @default(cuid())
+  postId          String
+  post            SocialPost       @relation(fields: [postId], references: [id], onDelete: Cascade)
+  
+  url             String
+  alt             String?
+  width           Int?
+  height          Int?
+  size            Int?             // file size in bytes
+  order           Int              @default(0)
+  isMain          Boolean          @default(false)
+  
+  createdAt       DateTime         @default(now())
+  
+  @@index([postId])
+}
+
+model PostProduct {
+  id              String           @id @default(cuid())
+  postId          String
+  post            SocialPost       @relation(fields: [postId], references: [id], onDelete: Cascade)
+  productId       String
+  product         Product          @relation(fields: [productId], references: [id])
+  
+  order           Int              @default(0)
+  
+  createdAt       DateTime         @default(now())
+  
+  @@unique([postId, productId])
+  @@index([postId])
+}
+
+model PostLike {
+  id              String           @id @default(cuid())
+  userId          String
+  user            User             @relation(fields: [userId], references: [id])
+  postId          String
+  post            SocialPost       @relation(fields: [postId], references: [id], onDelete: Cascade)
+  
+  createdAt       DateTime         @default(now())
+  
+  @@unique([userId, postId])
+  @@index([postId])
+  @@index([userId])
+}
+
+model PostComment {
+  id              String           @id @default(cuid())
+  userId          String
+  user            User             @relation(fields: [userId], references: [id])
+  postId          String
+  post            SocialPost       @relation(fields: [postId], references: [id], onDelete: Cascade)
+  
+  content         String
+  
+  // Threading support
+  parentId        String?
+  parent          PostComment?     @relation("CommentThread", fields: [parentId], references: [id])
+  replies         PostComment[]    @relation("CommentThread")
+  
+  // Engagement
+  likes           CommentLike[]
+  
+  // Status
+  isEdited        Boolean          @default(false)
+  isReported      Boolean          @default(false)
+  moderationStatus ModerationStatus @default(APPROVED)
+  
+  // Notifications
+  notifications   Notification[]
+  
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  
+  @@index([postId])
+  @@index([userId])
+  @@index([parentId])
+}
+
+model CommentLike {
+  id              String           @id @default(cuid())
+  userId          String
+  user            User             @relation(fields: [userId], references: [id])
+  commentId       String
+  comment         PostComment      @relation(fields: [commentId], references: [id], onDelete: Cascade)
+  
+  createdAt       DateTime         @default(now())
+  
+  @@unique([userId, commentId])
+  @@index([commentId])
+}
+
+model PostSave {
+  id              String           @id @default(cuid())
+  userId          String
+  user            User             @relation(fields: [userId], references: [id])
+  postId          String
+  post            SocialPost       @relation(fields: [postId], references: [id], onDelete: Cascade)
+  
+  createdAt       DateTime         @default(now())
+  
+  @@unique([userId, postId])
+  @@index([postId])
+  @@index([userId])
+}
+
+model PostShare {
+  id              String           @id @default(cuid())
+  userId          String
+  user            User             @relation(fields: [userId], references: [id])
+  postId          String
+  post            SocialPost       @relation(fields: [postId], references: [id], onDelete: Cascade)
+  
+  platform        String?          // instagram, facebook, twitter, etc
+  
+  createdAt       DateTime         @default(now())
+  
+  @@index([postId])
+  @@index([userId])
+}
+
+// User Social Features
+model UserFollow {
+  id              String           @id @default(cuid())
+  followerId      String
+  follower        User             @relation("UserFollower", fields: [followerId], references: [id])
+  followingId     String
+  following       User             @relation("UserFollowing", fields: [followingId], references: [id])
+  
+  createdAt       DateTime         @default(now())
+  
+  @@unique([followerId, followingId])
+  @@index([followerId])
+  @@index([followingId])
+}
+
+// Notifications
+model Notification {
+  id              String           @id @default(cuid())
+  userId          String
+  user            User             @relation(fields: [userId], references: [id])
+  
+  type            NotificationType
+  title           String
+  message         String
+  
+  // References
+  fromUserId      String?
+  fromUser        User?            @relation("NotificationFrom", fields: [fromUserId], references: [id])
+  postId          String?
+  post            SocialPost?      @relation(fields: [postId], references: [id])
+  commentId       String?
+  comment         PostComment?     @relation(fields: [commentId], references: [id])
+  
+  isRead          Boolean          @default(false)
+  
+  createdAt       DateTime         @default(now())
+  
+  @@index([userId])
+  @@index([isRead])
+  @@index([createdAt])
+}
+
+enum NotificationType {
+  LIKE
+  COMMENT
+  FOLLOW
+  POST_MENTION
+  COMMENT_REPLY
+  CHALLENGE_COMPLETE
+  FEATURED_POST
+}
+
+// User Stories (Instagram Stories equivalent)
+model UserStory {
+  id              String           @id @default(cuid())
+  userId          String
+  user            User             @relation(fields: [userId], references: [id])
+  
+  type            StoryType        @default(IMAGE)
+  content         String           // URL for image/video
+  caption         String?
+  
+  // Engagement
+  views           StoryView[]
+  
+  // Status
+  isHighlight     Boolean          @default(false)
+  highlightId     String?
+  highlight       StoryHighlight?  @relation(fields: [highlightId], references: [id])
+  
+  expiresAt       DateTime         // Stories expire after 24 hours
+  createdAt       DateTime         @default(now())
+  
+  @@index([userId])
+  @@index([expiresAt])
+}
+
+enum StoryType {
+  IMAGE
+  VIDEO
+}
+
+model StoryView {
+  id              String           @id @default(cuid())
+  userId          String
+  user            User             @relation(fields: [userId], references: [id])
+  storyId         String
+  story           UserStory        @relation(fields: [storyId], references: [id], onDelete: Cascade)
+  
+  createdAt       DateTime         @default(now())
+  
+  @@unique([userId, storyId])
+  @@index([storyId])
+}
+
+model StoryHighlight {
+  id              String           @id @default(cuid())
+  userId          String
+  user            User             @relation(fields: [userId], references: [id])
+  
+  title           String
+  coverImage      String?
+  
+  stories         UserStory[]
+  
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  
+  @@index([userId])
 }

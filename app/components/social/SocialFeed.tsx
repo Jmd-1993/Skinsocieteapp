@@ -20,11 +20,11 @@ const SORT_OPTIONS: { value: FeedSort['by']; label: string; icon: React.ReactNod
 ];
 
 const POST_TYPE_FILTERS: { value: PostType; label: string; emoji: string }[] = [
-  { value: 'routine', label: 'Routines', emoji: '✨' },
-  { value: 'progress', label: 'Progress', emoji: '📈' },
-  { value: 'tip', label: 'Tips', emoji: '💡' },
-  { value: 'review', label: 'Reviews', emoji: '⭐' },
-  { value: 'challenge', label: 'Challenges', emoji: '🎯' },
+  { value: 'ROUTINE', label: 'Routines', emoji: '✨' },
+  { value: 'PROGRESS', label: 'Progress', emoji: '📈' },
+  { value: 'TIP', label: 'Tips', emoji: '💡' },
+  { value: 'REVIEW', label: 'Reviews', emoji: '⭐' },
+  { value: 'CHALLENGE', label: 'Challenges', emoji: '🎯' },
 ];
 
 export function SocialFeed({ className }: SocialFeedProps) {

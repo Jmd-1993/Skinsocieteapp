@@ -23,15 +23,15 @@ interface CreatePostModalProps {
 }
 
 const POST_TYPES = [
-  { value: 'routine' as PostType, label: 'Routine', emoji: '✨', description: 'Share your skincare routine' },
-  { value: 'progress' as PostType, label: 'Progress', emoji: '📈', description: 'Show your skin transformation' },
-  { value: 'tip' as PostType, label: 'Tip', emoji: '💡', description: 'Share helpful advice' },
-  { value: 'review' as PostType, label: 'Review', emoji: '⭐', description: 'Review a product' },
-  { value: 'challenge' as PostType, label: 'Challenge', emoji: '🎯', description: 'Join a challenge' },
+  { value: 'ROUTINE' as PostType, label: 'Routine', emoji: '✨', description: 'Share your skincare routine' },
+  { value: 'PROGRESS' as PostType, label: 'Progress', emoji: '📈', description: 'Show your skin transformation' },
+  { value: 'TIP' as PostType, label: 'Tip', emoji: '💡', description: 'Share helpful advice' },
+  { value: 'REVIEW' as PostType, label: 'Review', emoji: '⭐', description: 'Review a product' },
+  { value: 'CHALLENGE' as PostType, label: 'Challenge', emoji: '🎯', description: 'Join a challenge' },
 ];
 
 export function CreatePostModal({ isOpen, onClose, onPost }: CreatePostModalProps) {
-  const [postType, setPostType] = useState<PostType>('routine');
+  const [postType, setPostType] = useState<PostType>('ROUTINE');
   const [caption, setCaption] = useState('');
   const [selectedImages, setSelectedImages] = useState<File[]>([]);
   const [previewUrls, setPreviewUrls] = useState<string[]>([]);
@@ -105,7 +105,7 @@ export function CreatePostModal({ isOpen, onClose, onPost }: CreatePostModalProp
     setPreviewUrls([]);
     setTags([]);
     setLocation('');
-    setPostType('routine');
+    setPostType('ROUTINE');
   };
 
   if (!isOpen) return null;

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { SocialPost, PostType, PostCategory, FeedFilter, FeedSort } from '@/app/types/social-feed';
+import { SocialFeedService, PostFilters, PostSort } from '@/app/lib/social-feed-service';
+import { PostType, PostCategory } from '@/app/types/social-feed';
 
 // In-memory storage for demo (in production, use a database)
 const postsStore = new Map<string, SocialPost>();
@@ -176,8 +177,6 @@ function initializeDemoPosts() {
 
 export async function GET(request: NextRequest) {
   try {
-    initializeDemoPosts();
-    
     const { searchParams } = new URL(request.url);
     const page = parseInt(searchParams.get('page') || '0');
     const limit = parseInt(searchParams.get('limit') || '10');
@@ -185,77 +184,109 @@ export async function GET(request: NextRequest) {
     const sortDirection = searchParams.get('sortDirection') || 'desc';
     
     // Parse filters
-    const typeFilter = searchParams.get('type')?.split(',') as PostType[] || [];
-    const categoryFilter = searchParams.get('category')?.split(',') as PostCategory[] || [];
-    const tagsFilter = searchParams.get('tags')?.split(',') || [];
-    const onlyFeatured = searchParams.get('onlyFeatured') === 'true';
+    const filters: PostFilters = {};
     
-    let posts = Array.from(postsStore.values());
+    const typeFilter = searchParams.get('type')?.split(',') as PostType[];
+    if (typeFilter?.length) filters.type = typeFilter;
     
-    // Apply filters
-    if (typeFilter.length > 0) {
-      posts = posts.filter(post => typeFilter.includes(post.type));
+    const categoryFilter = searchParams.get('category')?.split(',') as PostCategory[];
+    if (categoryFilter?.length) filters.category = categoryFilter;
+    
+    const tagsFilter = searchParams.get('tags')?.split(',');
+    if (tagsFilter?.length) filters.hashtags = tagsFilter;
+    
+    if (searchParams.get('onlyFeatured') === 'true') {
+      filters.onlyFeatured = true;
     }
     
-    if (categoryFilter.length > 0) {
-      posts = posts.filter(post => categoryFilter.includes(post.category));
+    if (searchParams.get('onlyFollowing') === 'true') {
+      filters.onlyFollowing = true;
     }
     
-    if (tagsFilter.length > 0) {
-      posts = posts.filter(post => 
-        post.tags?.some(tag => tagsFilter.includes(tag.name))
-      );
-    }
+    const userId = searchParams.get('userId');
+    if (userId) filters.userId = userId;
     
-    if (onlyFeatured) {
-      posts = posts.filter(post => post.isFeatured);
-    }
+    const challengeId = searchParams.get('challengeId');
+    if (challengeId) filters.challengeId = challengeId;
     
-    // Apply sorting
-    posts.sort((a, b) => {
-      let aValue: number, bValue: number;
-      
-      switch (sortBy) {
-        case 'popular':
-          aValue = a.interactions.likes + a.interactions.comments;
-          bValue = b.interactions.likes + b.interactions.comments;
-          break;
-        case 'trending':
-          aValue = a.trendingScore;
-          bValue = b.trendingScore;
-          break;
-        case 'engagement':
-          aValue = a.engagementScore;
-          bValue = b.engagementScore;
-          break;
-        case 'quality':
-          aValue = a.qualityScore;
-          bValue = b.qualityScore;
-          break;
-        default: // recent
-          aValue = new Date(a.createdAt).getTime();
-          bValue = new Date(b.createdAt).getTime();
-      }
-      
-      return sortDirection === 'desc' ? bValue - aValue : aValue - bValue;
-    });
+    // Build sort object
+    const sort: PostSort = {
+      by: sortBy as PostSort['by'],
+      direction: sortDirection as 'asc' | 'desc'
+    };
     
-    // Pagination
-    const startIndex = page * limit;
-    const endIndex = startIndex + limit;
-    const paginatedPosts = posts.slice(startIndex, endIndex);
-    const hasMore = endIndex < posts.length;
+    // Get posts from database
+    const posts = await SocialFeedService.getPosts(filters, sort, page, limit);
+    
+    // Transform posts to match frontend interface
+    const transformedPosts = posts.map(post => ({
+      id: post.id,
+      type: post.type.toLowerCase(),
+      category: post.category.toLowerCase(),
+      author: {
+        id: post.user.id,
+        firstName: post.user.profile?.firstName || 'User',
+        lastName: post.user.profile?.lastName || '',
+        username: post.user.profile?.firstName?.toLowerCase() || 'user',
+        avatar: '/api/placeholder/40/40',
+        tier: post.user.profile?.loyaltyTier?.name || 'Glow Starter',
+        isVerified: false,
+        followerCount: 0
+      },
+      caption: post.caption,
+      images: post.images.map(img => ({
+        id: img.id,
+        url: img.url,
+        alt: img.alt || '',
+        isMain: img.isMain
+      })),
+      products: post.products?.map(pp => ({
+        id: pp.product.id,
+        name: pp.product.name,
+        brand: typeof pp.product.brand === 'object' ? pp.product.brand : { name: 'Brand' },
+        price: Number(pp.product.price),
+        image: pp.product.featuredImage
+      })) || [],
+      tags: post.hashtags.map((tag, index) => ({
+        id: `tag-${index}`,
+        name: tag,
+        category: post.category.toLowerCase()
+      })),
+      location: post.location,
+      createdAt: post.createdAt.toISOString(),
+      updatedAt: post.updatedAt.toISOString(),
+      isEdited: false,
+      interactions: {
+        likes: post._count.likes,
+        comments: post._count.comments,
+        saves: post._count.saves,
+        shares: post._count.shares,
+        views: post.views,
+        isLikedByCurrentUser: post.likes?.length > 0,
+        isSavedByCurrentUser: post.saves?.length > 0,
+        isFollowingAuthor: false
+      },
+      isPrivate: post.isPrivate,
+      isReported: post.isReported,
+      isFeatured: post.isFeatured,
+      moderationStatus: post.moderationStatus.toLowerCase(),
+      engagementScore: post.engagementScore,
+      trendingScore: post.trendingScore,
+      qualityScore: post.qualityScore
+    }));
+    
+    const hasMore = transformedPosts.length === limit;
     
     return NextResponse.json({
       success: true,
-      posts: paginatedPosts,
+      posts: transformedPosts,
       pagination: {
         page,
         limit,
-        total: posts.length,
+        total: transformedPosts.length,
         hasMore
       },
-      hasMore // For backward compatibility with the store
+      hasMore
     });
     
   } catch (error) {
@@ -272,100 +303,91 @@ export async function POST(request: NextRequest) {
     const formData = await request.formData();
     
     // Extract form data
-    const type = formData.get('type') as PostType || 'routine';
+    const type = formData.get('type') as PostType || 'ROUTINE';
     const caption = formData.get('caption') as string || '';
     const location = formData.get('location') as string || '';
     const tagsString = formData.get('tags') as string || '[]';
-    const tags = JSON.parse(tagsString);
+    const hashtags = JSON.parse(tagsString);
+    const isPrivate = formData.get('isPrivate') === 'true';
+    const challengeId = formData.get('challengeId') as string || undefined;
     
-    // Handle image uploads (in real app, you'd upload to cloud storage)
-    const images = [];
+    // Handle image uploads
     const imageFiles = formData.getAll('images') as File[];
+    const images = imageFiles.filter(file => file && file.size > 0);
     
-    for (let i = 0; i < imageFiles.length; i++) {
-      const file = imageFiles[i];
-      if (file && file.size > 0) {
-        // In real app, upload to cloud storage and get URL
-        // For now, use placeholder
-        images.push({
-          id: `img-${Date.now()}-${i}`,
-          url: '/api/placeholder/400/500',
-          alt: `User uploaded image ${i + 1}`,
-          isMain: i === 0
-        });
-      }
-    }
+    // Extract product IDs if any
+    const productIdsString = formData.get('productIds') as string || '[]';
+    const productIds = JSON.parse(productIdsString);
     
-    // In a real app, you'd get this from the authenticated session
-    const currentUser = {
-      id: 'current-user',
-      firstName: 'You',
-      lastName: '',
-      username: 'you',
-      avatar: '/api/placeholder/40/40',
-      tier: 'Beauty Enthusiast', 
-      isVerified: false,
-      followerCount: 0
-    };
-    
-    // Map category based on post type
-    let category: PostCategory = 'skincare';
-    if (type === 'routine' || type === 'progress' || type === 'tip') {
-      category = 'skincare';
-    } else if (type === 'review') {
-      category = 'products';
-    }
-    
-    // Process tags
-    const processedTags = tags.map((tagName: string, index: number) => ({
-      id: `tag-${Date.now()}-${index}`,
-      name: tagName,
-      category: category
-    }));
-    
-    const newPost: SocialPost = {
-      id: `post-${Date.now()}`,
-      type,
-      category,
-      author: currentUser,
+    // Create post using service
+    const post = await SocialFeedService.createPost({
+      type: type.toUpperCase() as PostType,
       caption,
-      images,
-      tags: processedTags,
+      hashtags,
       location: location || undefined,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-      isEdited: false,
-      interactions: {
-        likes: 0,
-        comments: 0,
-        saves: 0,
-        shares: 0,
-        views: 1,
-        isLikedByCurrentUser: false,
-        isSavedByCurrentUser: false,
-        isFollowingAuthor: false
-      },
-      isPrivate: false,
-      isReported: false,
-      isFeatured: false,
-      moderationStatus: 'approved',
-      engagementScore: 0,
-      trendingScore: 0,
-      qualityScore: 70
-    };
-    
-    postsStore.set(newPost.id, newPost);
+      images,
+      productIds: productIds.length > 0 ? productIds : undefined,
+      challengeId,
+      isPrivate,
+    });
     
     return NextResponse.json({
       success: true,
-      post: newPost,
+      post: {
+        id: post.id,
+        type: post.type.toLowerCase(),
+        category: post.category.toLowerCase(),
+        author: {
+          id: post.user.id,
+          firstName: post.user.profile?.firstName || 'User',
+          lastName: post.user.profile?.lastName || '',
+          username: post.user.profile?.firstName?.toLowerCase() || 'user',
+          avatar: '/api/placeholder/40/40',
+          tier: post.user.profile?.loyaltyTier?.name || 'Glow Starter',
+          isVerified: false,
+          followerCount: 0
+        },
+        caption: post.caption,
+        images: post.images.map(img => ({
+          id: img.id,
+          url: img.url,
+          alt: img.alt || '',
+          isMain: img.isMain
+        })),
+        tags: post.hashtags.map((tag, index) => ({
+          id: `tag-${index}`,
+          name: tag,
+          category: post.category.toLowerCase()
+        })),
+        location: post.location,
+        createdAt: post.createdAt.toISOString(),
+        updatedAt: post.updatedAt.toISOString(),
+        isEdited: false,
+        interactions: {
+          likes: post._count.likes,
+          comments: post._count.comments,
+          saves: post._count.saves,
+          shares: post._count.shares,
+          views: post.views,
+          isLikedByCurrentUser: false,
+          isSavedByCurrentUser: false,
+          isFollowingAuthor: false
+        },
+        isPrivate: post.isPrivate,
+        isReported: post.isReported,
+        isFeatured: post.isFeatured,
+        moderationStatus: post.moderationStatus.toLowerCase(),
+        engagementScore: post.engagementScore,
+        trendingScore: post.trendingScore,
+        qualityScore: post.qualityScore
+      },
       message: 'Post created successfully'
     });
     
   } catch (error) {
     console.error('Create post API error:', error);
     return NextResponse.json(
-      { success: false, error: 'Failed to create post' },
+      { success: false, error: error.message || 'Failed to create post' },
       { status: 500 }
     );
   }
