@@ -43,14 +43,20 @@ model User {
   followers       UserFollow[]     @relation("UserFollowing")
   following       UserFollow[]     @relation("UserFollower")
   
-  // Notifications
+  // Notifications (Legacy)
   notifications   Notification[]
-  sentNotifications Notification[] @relation("NotificationFrom")
+  notificationsFrom Notification[] @relation("NotificationFrom")
   
   // Stories
   stories         UserStory[]
   storyViews      StoryView[]
   storyHighlights StoryHighlight[]
+  
+  // Advanced Notifications
+  notificationPreferences UserNotificationPreferences?
+  sentNotifications SentNotification[]
+  behaviorTracking UserBehaviorTracking?
+  notificationSchedules NotificationSchedule[]
 }
 
 model Profile {
@@ -815,4 +821,243 @@ model StoryHighlight {
   updatedAt       DateTime         @updatedAt
   
   @@index([userId])
+}
+
+// Advanced Notification System
+model NotificationTemplate {
+  id              String           @id @default(cuid())
+  name            String           @unique
+  title           String
+  body            String
+  category        NotificationCategory
+  trigger         NotificationTrigger
+  
+  // Targeting
+  targetTiers     String[]         // Loyalty tiers to target
+  targetSkinTypes String[]         // Skin types to target
+  targetConcerns  String[]         // Skin concerns to target
+  
+  // Timing
+  sendTime        String?          // HH:MM format
+  daysOfWeek      Int[]            // 0-6 (Sunday-Saturday)
+  timezoneOffset  Int?             // Offset from UTC
+  
+  // Content
+  imageUrl        String?
+  actionButtons   Json?            // Array of {text, action, deepLink}
+  deepLink        String?
+  
+  // Settings
+  isActive        Boolean          @default(true)
+  priority        NotificationPriority @default(NORMAL)
+  sound           String?
+  badge           Boolean          @default(false)
+  
+  // Analytics
+  openRate        Float            @default(0)
+  clickRate       Float            @default(0)
+  conversionRate  Float            @default(0)
+  
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  
+  // Relations
+  sentNotifications SentNotification[]
+  abTests         NotificationABTest[]
+  schedules       NotificationSchedule[]
+}
+
+enum NotificationCategory {
+  ROUTINE_REMINDER
+  GAMIFICATION
+  BEHAVIORAL_TRIGGER
+  PERSONALIZED_CONTENT
+  APPOINTMENT
+  PROMOTIONAL
+  SYSTEM
+}
+
+enum NotificationTrigger {
+  SCHEDULED
+  BEHAVIOR_BASED
+  EVENT_BASED
+  LOCATION_BASED
+  WEATHER_BASED
+}
+
+enum NotificationPriority {
+  LOW
+  NORMAL
+  HIGH
+  URGENT
+}
+
+model UserNotificationPreferences {
+  id              String           @id @default(cuid())
+  userId          String           @unique
+  user            User             @relation(fields: [userId], references: [id])
+  
+  // Category preferences
+  routineReminders Boolean         @default(true)
+  gamification    Boolean          @default(true)
+  behavioralTriggers Boolean       @default(true)
+  personalizedContent Boolean      @default(true)
+  appointments    Boolean          @default(true)
+  promotional     Boolean          @default(true)
+  
+  // Timing preferences
+  morningTime     String           @default("07:30") // HH:MM
+  eveningTime     String           @default("21:00") // HH:MM
+  quietHoursStart String?          // HH:MM
+  quietHoursEnd   String?          // HH:MM
+  timezone        String           @default("UTC")
+  
+  // Frequency limits
+  maxPerDay       Int              @default(3)
+  maxPerWeek      Int              @default(15)
+  
+  // Device tokens
+  fcmTokens       String[]         // Android FCM tokens
+  apnsTokens      String[]         // iOS APNs tokens
+  
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+}
+
+model SentNotification {
+  id              String           @id @default(cuid())
+  userId          String
+  user            User             @relation(fields: [userId], references: [id])
+  templateId      String
+  template        NotificationTemplate @relation(fields: [templateId], references: [id])
+  
+  // Content sent
+  title           String
+  body            String
+  imageUrl        String?
+  deepLink        String?
+  
+  // Delivery info
+  platform        String           // ios, android, web
+  deviceToken     String
+  sentAt          DateTime         @default(now())
+  
+  // Analytics
+  delivered       Boolean          @default(false)
+  opened          Boolean          @default(false)
+  clicked         Boolean          @default(false)
+  actionTaken     String?          // Which action was taken
+  
+  // Metadata
+  abTestGroup     String?
+  personalizedData Json?           // Data used for personalization
+  
+  @@index([userId])
+  @@index([templateId])
+  @@index([sentAt])
+  @@index([platform])
+}
+
+model NotificationABTest {
+  id              String           @id @default(cuid())
+  templateId      String
+  template        NotificationTemplate @relation(fields: [templateId], references: [id])
+  
+  name            String
+  description     String?
+  
+  // Test configuration
+  variants        Json             // Array of variants with different content
+  trafficSplit    Json             // Percentage allocation per variant
+  
+  // Test period
+  startDate       DateTime
+  endDate         DateTime
+  
+  // Results
+  totalSent       Int              @default(0)
+  totalOpened     Int              @default(0)
+  totalClicked    Int              @default(0)
+  winningVariant  String?
+  
+  isActive        Boolean          @default(true)
+  
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  
+  @@index([templateId])
+  @@index([startDate, endDate])
+}
+
+model UserBehaviorTracking {
+  id              String           @id @default(cuid())
+  userId          String
+  user            User             @relation(fields: [userId], references: [id])
+  
+  // Activity tracking
+  lastLoginAt     DateTime?
+  lastRoutineAt   DateTime?
+  lastBookingAt   DateTime?
+  lastPurchaseAt  DateTime?
+  lastPostAt      DateTime?
+  
+  // Routine completion
+  morningRoutineStreak Int         @default(0)
+  eveningRoutineStreak Int         @default(0)
+  totalRoutinesCompleted Int       @default(0)
+  
+  // Engagement metrics
+  sessionsThisWeek Int             @default(0)
+  sessionDuration Float            @default(0) // Average in minutes
+  pagesViewedPerSession Float      @default(0)
+  
+  // Preferences learned
+  preferredLoginTime String?       // HH:MM
+  preferredCategories String[]     // Skincare interests
+  deviceType      String?          // ios/android/web
+  
+  // Notification response
+  notificationOptOut Boolean       @default(false)
+  avgNotificationResponse Float    @default(0) // 0-1 score
+  
+  updatedAt       DateTime         @updatedAt
+  
+  @@unique([userId])
+  @@index([lastLoginAt])
+  @@index([lastRoutineAt])
+}
+
+model NotificationSchedule {
+  id              String           @id @default(cuid())
+  userId          String
+  user            User             @relation(fields: [userId], references: [id])
+  templateId      String
+  template        NotificationTemplate @relation(fields: [templateId], references: [id])
+  
+  // Scheduling
+  scheduledFor    DateTime
+  timeZone        String
+  
+  // Personalization data
+  personalizedContent Json?
+  
+  // Status
+  status          ScheduleStatus   @default(PENDING)
+  attemptCount    Int              @default(0)
+  lastAttemptAt   DateTime?
+  errorMessage    String?
+  
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  
+  @@index([userId])
+  @@index([scheduledFor])
+  @@index([status])
+}
+
+enum ScheduleStatus {
+  PENDING
+  SENT
+  FAILED
+  CANCELLED
 }

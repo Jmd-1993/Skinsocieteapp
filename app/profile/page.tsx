@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { MainLayout } from "../components/layout/MainLayout";
 import { useAuth } from '../lib/auth-context';
+import { NotificationPreferences } from '../components/notifications/NotificationPreferences';
 import { User, Mail, Phone, Calendar, MapPin, Edit, Camera, Gift, Trophy, Star, Zap, Clock } from "lucide-react";
 
 interface PhorestData {
@@ -360,6 +361,11 @@ export default function ProfilePage() {
                   />
                 </div>
               </div>
+            </div>
+
+            {/* Notification Preferences */}
+            <div className="bg-white rounded-xl p-6 border border-gray-200">
+              <NotificationPreferences />
             </div>
 
             {/* Skin Profile */}
