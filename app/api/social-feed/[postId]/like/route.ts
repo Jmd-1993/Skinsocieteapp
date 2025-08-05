@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { SocialFeedService } from '@/app/lib/social-feed-service';
+
+// Fallback in-memory storage for demo
+const userLikes = new Map<string, Set<string>>();
 
 export async function POST(
   request: NextRequest,
@@ -7,8 +9,19 @@ export async function POST(
 ) {
   try {
     const { postId } = params;
+    const userId = 'current-user'; // In real app, get from authenticated session
     
-    const result = await SocialFeedService.likePost(postId);
+    if (!userLikes.has(userId)) {
+      userLikes.set(userId, new Set());
+    }
+    
+    const userLikesSet = userLikes.get(userId)!;
+    
+    if (userLikesSet.has(postId)) {
+      userLikesSet.delete(postId);
+    } else {
+      userLikesSet.add(postId);
+    }
     
     return NextResponse.json({
       success: true,
@@ -18,7 +31,7 @@ export async function POST(
   } catch (error) {
     console.error('Like post API error:', error);
     return NextResponse.json(
-      { success: false, error: error.message || 'Failed to like post' },
+      { success: false, error: 'Failed to like post' },
       { status: 500 }
     );
   }

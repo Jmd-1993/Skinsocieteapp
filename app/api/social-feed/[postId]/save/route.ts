@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { SocialFeedService } from '@/app/lib/social-feed-service';
+
+// Fallback in-memory storage for demo
+const userSaves = new Map<string, Set<string>>();
 
 export async function POST(
   request: NextRequest,
@@ -7,8 +9,19 @@ export async function POST(
 ) {
   try {
     const { postId } = params;
+    const userId = 'current-user'; // In real app, get from authenticated session
     
-    const result = await SocialFeedService.savePost(postId);
+    if (!userSaves.has(userId)) {
+      userSaves.set(userId, new Set());
+    }
+    
+    const userSavesSet = userSaves.get(userId)!;
+    
+    if (userSavesSet.has(postId)) {
+      userSavesSet.delete(postId);
+    } else {
+      userSavesSet.add(postId);
+    }
     
     return NextResponse.json({
       success: true,
@@ -18,7 +31,7 @@ export async function POST(
   } catch (error) {
     console.error('Save post API error:', error);
     return NextResponse.json(
-      { success: false, error: error.message || 'Failed to save post' },
+      { success: false, error: 'Failed to save post' },
       { status: 500 }
     );
   }
