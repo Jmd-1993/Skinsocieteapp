@@ -6,7 +6,7 @@ services:
     runtime: node
     buildCommand: npm ci && npx prisma generate --no-engine && next build
     startCommand: npm start
-    node: 18.17.0
+    node: 20.11.0
     envVars:
       - key: PHOREST_USERNAME
         value: global/josh@skinsociete.com.au
