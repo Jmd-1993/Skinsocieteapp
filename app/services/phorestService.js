@@ -320,10 +320,33 @@ class PhorestService {
     }
   }
 
-  // NEW CORRECT BOOKING METHOD using exact Phorest format
+  // Convert local time to UTC for Phorest API (requires UTC timestamps)
+  convertToUTC(localTimeString, timezone = 'Australia/Perth') {
+    try {
+      // Parse the input time string
+      const localTime = new Date(localTimeString);
+      
+      // Perth is UTC+8 (no daylight saving for this calculation)
+      // Convert to UTC by subtracting 8 hours
+      const utcTime = new Date(localTime.getTime() - (8 * 60 * 60 * 1000));
+      
+      // Return in ISO format with Z suffix for UTC
+      return utcTime.toISOString();
+    } catch (error) {
+      console.error('❌ Timezone conversion error:', error);
+      // Fallback: assume input is already UTC
+      return localTimeString.endsWith('Z') ? localTimeString : localTimeString + 'Z';
+    }
+  }
+
+  // NEW CORRECT BOOKING METHOD using exact Phorest format with timezone conversion
   async createBooking(clientId, serviceId, staffId, startTime) {
     try {
       await this.ensureBranchId();
+      
+      // Convert local Perth time to UTC (Phorest API requirement)
+      const utcStartTime = this.convertToUTC(startTime);
+      console.log(`🌏 Timezone conversion: ${startTime} (Perth) -> ${utcStartTime} (UTC)`);
       
       // Use exact format provided by Phorest
       const bookingPayload = {
@@ -334,7 +357,7 @@ class PhorestService {
             serviceSchedules: [
               {
                 serviceId: serviceId,
-                startTime: startTime,
+                startTime: utcStartTime, // Use UTC time
                 staffId: staffId
               }
             ]
@@ -342,7 +365,7 @@ class PhorestService {
         ]
       };
       
-      console.log('🔧 Creating booking with correct Phorest format:', JSON.stringify(bookingPayload, null, 2));
+      console.log('🔧 Creating booking with UTC time:', JSON.stringify(bookingPayload, null, 2));
       
       const response = await this.api.post(`/${this.config.businessId}/branch/${this.branchId}/booking`, bookingPayload);
       

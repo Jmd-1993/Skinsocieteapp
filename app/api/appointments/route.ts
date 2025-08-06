@@ -67,7 +67,7 @@ export async function POST(request: NextRequest) {
       
       // Handle specific Phorest booking validation errors
       if (error.message.includes('STAFF_NOT_WORKING') || error.message.includes('SLOT_UNAVAILABLE')) {
-        errorMessage = 'The requested staff member is not rostered for the selected time. Please choose a different time when they are working, or select a different staff member.';
+        errorMessage = 'The requested staff member is not rostered for the selected time. Please choose a different time when they are working. Note: All times are automatically converted to match your local timezone.';
         statusCode = 400;
       } else if (error.message.includes('STAFF_DOUBLE_BOOKED')) {
         errorMessage = 'The requested time slot is already booked';
