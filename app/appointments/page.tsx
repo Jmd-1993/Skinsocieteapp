@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '../lib/auth-context';
 import { useRouter } from 'next/navigation';
 import { MainLayout } from '../components/layout/MainLayout';
+import { BookingModal } from '../components/booking/BookingModal';
 import { 
   Calendar, 
   Clock, 
@@ -53,6 +54,7 @@ export default function AppointmentsPage() {
   const [selectedService, setSelectedService] = useState<Service | null>(null);
   const [phorestServices, setPhorestServices] = useState<Service[]>([]);
   const [servicesLoading, setServicesLoading] = useState(true);
+  const [showBookingModal, setShowBookingModal] = useState(false);
 
   // Fetch client's home clinic from Phorest
   useEffect(() => {
@@ -206,69 +208,19 @@ export default function AppointmentsPage() {
     }
   ];
 
-  const handleBookNow = async (service: Service) => {
+  const handleBookNow = (service: Service) => {
     setSelectedService(service);
-    
-    if (!clientData || !homeClinic) {
-      alert('Unable to book appointment. Please try refreshing the page.');
-      return;
-    }
-    
-    try {
-      // For demo purposes, use default values
-      const defaultStaffId = 'X-qh_VV3E41h9tghKPiRyg'; // Isabelle Callaghan from test data
-      const appointmentTime = new Date();
-      appointmentTime.setDate(appointmentTime.getDate() + 1); // Tomorrow
-      appointmentTime.setHours(14, 0, 0, 0); // 2 PM
-      
-      // Skip weekends
-      if (appointmentTime.getDay() === 0) appointmentTime.setDate(appointmentTime.getDate() + 1);
-      if (appointmentTime.getDay() === 6) appointmentTime.setDate(appointmentTime.getDate() + 2);
-      
-      const bookingData = {
-        clientId: clientData.clientId,
-        serviceId: service.id === 'hydrating-facial' ? 'gyyUxf51abS0lB-A_3PDFA' : service.id, // Map to actual Phorest service ID
-        staffId: defaultStaffId,
-        startTime: appointmentTime.toISOString()
-      };
-      
-      console.log('🎯 Booking appointment:', bookingData);
-      
-      const response = await fetch('/api/appointments', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(bookingData)
-      });
-      
-      const result = await response.json();
-      
-      if (result.success) {
-        alert(`✅ Appointment booked successfully!\n\nService: ${service.name}\nDate: ${appointmentTime.toLocaleDateString()}\nTime: ${appointmentTime.toLocaleTimeString()}\nLocation: ${homeClinic.name}`);
-        
-        // Optionally navigate to appointments view
-        // router.push('/appointments/view');
-      } else {
-        console.error('Booking failed:', result);
-        
-        // Handle specific booking errors
-        let errorMessage = result.message;
-        if (result.message?.includes('STAFF_NOT_WORKING')) {
-          errorMessage = 'The selected staff member is not available at this time. Please choose a different time or staff member.';
-        } else if (result.message?.includes('STAFF_DOUBLE_BOOKED')) {
-          errorMessage = 'This time slot is already booked. Please select a different time.';
-        } else if (result.message?.includes('SLOT_UNAVAILABLE')) {
-          errorMessage = 'This appointment slot is not available. Please try a different time.';
-        }
-        
-        alert(`❌ Unable to book appointment\n\n${errorMessage}\n\nNote: This is a demo integration. In production, you would select from available time slots.`);
-      }
-      
-    } catch (error) {
-      console.error('Booking error:', error);
-      alert('❌ An error occurred while booking. Please try again.');
-    }
+    setShowBookingModal(true);
+  };
+
+  const handleBookingComplete = (booking: any) => {
+    console.log('Booking completed:', booking);
+    // Optionally refresh appointments or navigate to confirmation page
+  };
+
+  const handleCloseModal = () => {
+    setShowBookingModal(false);
+    setSelectedService(null);
   };
 
   if (loading) {
@@ -522,6 +474,18 @@ export default function AppointmentsPage() {
             </div>
           </div>
         </div>
+
+        {/* Booking Modal */}
+        {showBookingModal && selectedService && clientData && homeClinic && (
+          <BookingModal
+            isOpen={showBookingModal}
+            onClose={handleCloseModal}
+            service={selectedService}
+            clientData={clientData}
+            homeClinic={homeClinic}
+            onBookingComplete={handleBookingComplete}
+          />
+        )}
       </div>
     </MainLayout>
   );

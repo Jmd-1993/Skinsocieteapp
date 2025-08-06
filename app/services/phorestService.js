@@ -613,14 +613,31 @@ class PhorestService {
   }
 
   // STAFF (Branch level)
-  async getStaff() {
+  async getStaff(branchId = null) {
+    try {
+      const targetBranchId = branchId || this.branchId;
+      if (!targetBranchId) {
+        await this.ensureBranchId();
+      }
+      
+      const response = await this.api.get(
+        `/${this.config.businessId}/branch/${targetBranchId || this.branchId}/staff`
+      );
+      return response.data._embedded?.staffs || [];
+    } catch (error) {
+      this.handleError(error);
+    }
+  }
+
+  // Get staff member by ID
+  async getStaffById(staffId) {
     try {
       await this.ensureBranchId();
       
       const response = await this.api.get(
-        `/${this.config.businessId}/branch/${this.branchId}/staff`
+        `/${this.config.businessId}/branch/${this.branchId}/staff/${staffId}`
       );
-      return response.data._embedded?.staffs || [];
+      return response.data;
     } catch (error) {
       this.handleError(error);
     }
@@ -645,6 +662,130 @@ class PhorestService {
       return response.data;
     } catch (error) {
       this.handleError(error);
+    }
+  }
+
+  // Get availability for a specific staff member
+  async getStaffAvailability(staffId, date, duration = 60) {
+    try {
+      await this.ensureBranchId();
+      
+      const response = await this.api.get(
+        `/${this.config.businessId}/branch/${this.branchId}/staff/${staffId}/availability`,
+        {
+          params: {
+            date: date,
+            duration: duration
+          }
+        }
+      );
+      
+      // Transform Phorest availability response to our expected format
+      const availabilityData = response.data;
+      
+      // Extract available slots from Phorest response
+      const availableSlots = this.parseAvailabilitySlots(availabilityData, date);
+      
+      return {
+        staffId,
+        date,
+        availableSlots
+      };
+    } catch (error) {
+      console.warn(`⚠️ Could not get staff availability for ${staffId}:`, error.response?.status, error.message);
+      
+      // If the specific staff availability endpoint doesn't exist, try general availability
+      try {
+        const generalAvailability = await this.checkAvailability(date, null, staffId);
+        return {
+          staffId,
+          date,
+          availableSlots: this.parseAvailabilitySlots(generalAvailability, date)
+        };
+      } catch (fallbackError) {
+        console.warn(`⚠️ General availability also failed for ${staffId}:`, fallbackError.message);
+        // Return empty availability
+        return {
+          staffId,
+          date,
+          availableSlots: []
+        };
+      }
+    }
+  }
+
+  // Parse availability slots from Phorest API response
+  parseAvailabilitySlots(availabilityData, date) {
+    try {
+      const slots = [];
+      
+      // Check if we have slots in the response
+      if (availabilityData && availabilityData.availableSlots) {
+        availabilityData.availableSlots.forEach(slot => {
+          slots.push({
+            time: this.formatTimeSlot(slot.startTime || slot.time),
+            available: true,
+            startTime: slot.startTime,
+            endTime: slot.endTime
+          });
+        });
+      } else if (availabilityData && availabilityData.slots) {
+        // Alternative slot structure
+        availabilityData.slots.forEach(slot => {
+          if (slot.available !== false) {
+            slots.push({
+              time: this.formatTimeSlot(slot.startTime || slot.time),
+              available: true,
+              startTime: slot.startTime,
+              endTime: slot.endTime
+            });
+          }
+        });
+      } else if (availabilityData && Array.isArray(availabilityData)) {
+        // Direct array of slots
+        availabilityData.forEach(slot => {
+          if (slot.available !== false) {
+            slots.push({
+              time: this.formatTimeSlot(slot.startTime || slot.time),
+              available: true,
+              startTime: slot.startTime,
+              endTime: slot.endTime
+            });
+          }
+        });
+      }
+      
+      return slots;
+    } catch (error) {
+      console.warn('⚠️ Error parsing availability slots:', error);
+      return [];
+    }
+  }
+
+  // Format time slot to HH:MM format
+  formatTimeSlot(timeString) {
+    try {
+      if (!timeString) return '09:00';
+      
+      // Handle ISO datetime strings
+      if (timeString.includes('T')) {
+        const date = new Date(timeString);
+        return date.toLocaleTimeString('en-AU', { 
+          hour: '2-digit', 
+          minute: '2-digit',
+          hour12: false 
+        });
+      }
+      
+      // Handle time-only strings
+      if (timeString.includes(':')) {
+        return timeString.substring(0, 5); // Get HH:MM part
+      }
+      
+      return timeString;
+    } catch (error) {
+      console.warn('⚠️ Error formatting time slot:', error);
+      return '09:00';
     }
   }
 
