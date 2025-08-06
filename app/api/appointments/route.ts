@@ -25,8 +25,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Import Phorest service
-    const { default: phorestService } = await import('../../services/phorestService.js');
+    // Import Phorest service with absolute path
+    const { default: phorestService } = await import('@/app/services/phorestService.js');
 
     console.log(`🎯 Creating booking for client ${clientId}`);
     console.log(`📅 Service: ${serviceId}, Staff: ${staffId}, Time: ${startTime}`);
@@ -66,15 +66,18 @@ export async function POST(request: NextRequest) {
       errorMessage = error.message;
       
       // Handle specific Phorest booking validation errors
-      if (error.message.includes('STAFF_NOT_WORKING')) {
-        errorMessage = 'Staff member is not available at the requested time';
+      if (error.message.includes('STAFF_NOT_WORKING') || error.message.includes('SLOT_UNAVAILABLE')) {
+        errorMessage = 'Staff member is not available at the requested time. Please select a different time or staff member.';
         statusCode = 400;
       } else if (error.message.includes('STAFF_DOUBLE_BOOKED')) {
         errorMessage = 'The requested time slot is already booked';
         statusCode = 409; // Conflict
-      } else if (error.message.includes('SLOT_UNAVAILABLE')) {
-        errorMessage = 'The requested appointment slot is not available';
-        statusCode = 400;
+      } else if (error.message.includes('CLIENT_NOT_FOUND')) {
+        errorMessage = 'Client not found. Please check the client details.';
+        statusCode = 404;
+      } else if (error.message.includes('SERVICE_NOT_FOUND')) {
+        errorMessage = 'Service not found. Please check the service selection.';
+        statusCode = 404;
       } else if (error.message.includes('400')) {
         errorMessage = 'Invalid booking request - please check appointment details';
         statusCode = 400;
@@ -105,8 +108,8 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    // Import Phorest service
-    const { default: phorestService } = await import('../../services/phorestService.js');
+    // Import Phorest service with absolute path
+    const { default: phorestService } = await import('@/app/services/phorestService.js');
 
     console.log(`📋 Getting appointments for client: ${clientId}`);
 
