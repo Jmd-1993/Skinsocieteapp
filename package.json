@@ -43,12 +43,15 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@modelcontextprotocol/server-puppeteer": "^2025.5.12",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "c7-mcp-server": "^1.0.1",
     "eslint": "^9",
     "eslint-config-next": "15.4.5",
+    "puppeteer": "^24.16.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
