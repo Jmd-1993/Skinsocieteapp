@@ -259,17 +259,98 @@ class PhorestService {
     try {
       await this.ensureBranchId();
       
-      const payload = {
-        ...appointmentData,
-        branchId: this.branchId
+      // Handle different input formats for backward compatibility
+      let clientId, serviceId, staffId, startTime, duration, notes;
+      
+      if (appointmentData.clientAppointmentSchedules) {
+        // Already in correct format
+        const response = await this.api.post(`/${this.config.businessId}/branch/${this.branchId}/booking`, appointmentData);
+        return response.data;
+      } else if (appointmentData.appointments) {
+        // Legacy array format - convert to correct format
+        const appointment = appointmentData.appointments[0];
+        clientId = appointmentData.clientId;
+        serviceId = appointment.serviceId;
+        staffId = appointment.staffId;
+        startTime = appointment.startTime;
+        duration = appointment.duration;
+        notes = appointmentData.notes || appointment.notes;
+      } else {
+        // Legacy direct format - extract fields
+        clientId = appointmentData.clientId;
+        serviceId = appointmentData.serviceId;
+        staffId = appointmentData.staffId;
+        startTime = appointmentData.startTime;
+        duration = appointmentData.duration;
+        notes = appointmentData.notes;
+      }
+      
+      // Convert to correct Phorest booking format
+      const correctPayload = {
+        clientId: clientId,
+        clientAppointmentSchedules: [
+          {
+            clientId: clientId,
+            serviceSchedules: [
+              {
+                serviceId: serviceId,
+                startTime: startTime,
+                staffId: staffId
+              }
+            ]
+          }
+        ]
       };
       
-      const response = await this.api.post(
-        `/${this.config.businessId}/branch/${this.branchId}/booking`, 
-        payload
-      );
+      // Add optional fields if provided
+      if (notes) {
+        correctPayload.clientAppointmentSchedules[0].serviceSchedules[0].notes = notes;
+      }
+      if (duration) {
+        correctPayload.clientAppointmentSchedules[0].serviceSchedules[0].duration = duration;
+      }
+      
+      console.log('🔧 Using correct Phorest booking format:', JSON.stringify(correctPayload, null, 2));
+      
+      // Use the correct booking endpoint with branch ID
+      const response = await this.api.post(`/${this.config.businessId}/branch/${this.branchId}/booking`, correctPayload);
       return response.data;
     } catch (error) {
+      this.handleError(error);
+    }
+  }
+
+  // NEW CORRECT BOOKING METHOD using exact Phorest format
+  async createBooking(clientId, serviceId, staffId, startTime) {
+    try {
+      await this.ensureBranchId();
+      
+      // Use exact format provided by Phorest
+      const bookingPayload = {
+        clientId: clientId,
+        clientAppointmentSchedules: [
+          {
+            clientId: clientId,
+            serviceSchedules: [
+              {
+                serviceId: serviceId,
+                startTime: startTime,
+                staffId: staffId
+              }
+            ]
+          }
+        ]
+      };
+      
+      console.log('🔧 Creating booking with correct Phorest format:', JSON.stringify(bookingPayload, null, 2));
+      
+      const response = await this.api.post(`/${this.config.businessId}/branch/${this.branchId}/booking`, bookingPayload);
+      
+      console.log('✅ Booking successful!', response.data);
+      return response.data;
+      
+    } catch (error) {
+      console.error('❌ Booking failed:', error.response?.data || error.message);
       this.handleError(error);
     }
   }

@@ -206,15 +206,69 @@ export default function AppointmentsPage() {
     }
   ];
 
-  const handleBookNow = (service: Service) => {
+  const handleBookNow = async (service: Service) => {
     setSelectedService(service);
     
-    // For now, show alert about Phorest integration status
-    // In production, this would navigate to booking flow
-    alert(`Booking ${service.name} at ${homeClinic?.name}\n\nThis will redirect to the booking system once Phorest API permissions are resolved.`);
+    if (!clientData || !homeClinic) {
+      alert('Unable to book appointment. Please try refreshing the page.');
+      return;
+    }
     
-    // Future implementation:
-    // router.push(`/book?service=${service.id}&clinic=${homeClinic?.branchId}`);
+    try {
+      // For demo purposes, use default values
+      const defaultStaffId = 'X-qh_VV3E41h9tghKPiRyg'; // Isabelle Callaghan from test data
+      const appointmentTime = new Date();
+      appointmentTime.setDate(appointmentTime.getDate() + 1); // Tomorrow
+      appointmentTime.setHours(14, 0, 0, 0); // 2 PM
+      
+      // Skip weekends
+      if (appointmentTime.getDay() === 0) appointmentTime.setDate(appointmentTime.getDate() + 1);
+      if (appointmentTime.getDay() === 6) appointmentTime.setDate(appointmentTime.getDate() + 2);
+      
+      const bookingData = {
+        clientId: clientData.clientId,
+        serviceId: service.id === 'hydrating-facial' ? 'gyyUxf51abS0lB-A_3PDFA' : service.id, // Map to actual Phorest service ID
+        staffId: defaultStaffId,
+        startTime: appointmentTime.toISOString()
+      };
+      
+      console.log('🎯 Booking appointment:', bookingData);
+      
+      const response = await fetch('/api/appointments', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(bookingData)
+      });
+      
+      const result = await response.json();
+      
+      if (result.success) {
+        alert(`✅ Appointment booked successfully!\n\nService: ${service.name}\nDate: ${appointmentTime.toLocaleDateString()}\nTime: ${appointmentTime.toLocaleTimeString()}\nLocation: ${homeClinic.name}`);
+        
+        // Optionally navigate to appointments view
+        // router.push('/appointments/view');
+      } else {
+        console.error('Booking failed:', result);
+        
+        // Handle specific booking errors
+        let errorMessage = result.message;
+        if (result.message?.includes('STAFF_NOT_WORKING')) {
+          errorMessage = 'The selected staff member is not available at this time. Please choose a different time or staff member.';
+        } else if (result.message?.includes('STAFF_DOUBLE_BOOKED')) {
+          errorMessage = 'This time slot is already booked. Please select a different time.';
+        } else if (result.message?.includes('SLOT_UNAVAILABLE')) {
+          errorMessage = 'This appointment slot is not available. Please try a different time.';
+        }
+        
+        alert(`❌ Unable to book appointment\n\n${errorMessage}\n\nNote: This is a demo integration. In production, you would select from available time slots.`);
+      }
+      
+    } catch (error) {
+      console.error('Booking error:', error);
+      alert('❌ An error occurred while booking. Please try again.');
+    }
   };
 
   if (loading) {
