@@ -29,7 +29,8 @@ export async function POST(request: NextRequest) {
     const { default: phorestService } = await import('@/app/services/phorestService.js');
 
     console.log(`🎯 Creating booking for client ${clientId}`);
-    console.log(`📅 Service: ${serviceId}, Staff: ${staffId}, Time: ${startTime}`);
+    console.log(`📅 Service: ${serviceId}, Staff: ${staffId}, Time: ${startTime} (Perth time → UTC conversion)`);
+    console.log(`🌏 Timezone: Perth (UTC+8) time will be converted to UTC for Phorest API`);
 
     // Use the new correct booking method
     const booking = await phorestService.createBooking(
