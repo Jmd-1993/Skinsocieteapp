@@ -51,6 +51,12 @@ export class NotificationService {
           const platform = preferences.fcmTokens.includes(token) ? 'android' : 'ios';
           
           try {
+            if (!messaging) {
+              console.warn('Firebase messaging not initialized - skipping notification send');
+              results.push({ userId: user.id, token, success: false, error: 'Firebase not initialized' });
+              continue;
+            }
+            
             const message = this.buildMessage(token, payload, platform);
             const response = await messaging.send(message);
             
