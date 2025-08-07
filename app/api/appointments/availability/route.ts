@@ -36,7 +36,43 @@ export async function POST(request: NextRequest) {
       
       // CRITICAL FIX: Get only qualified staff for this specific service at this branch
       console.log(`🎯 Getting qualified staff for service ${serviceId} at branch ${branchId}`);
-      const staff = await phorestService.getQualifiedStaffForService(serviceId, branchId);
+      
+      // Emergency fallback: Check if method exists, if not use direct filtering logic
+      let staff;
+      if (typeof phorestService.getQualifiedStaffForService === 'function') {
+        console.log(`✅ Using getQualifiedStaffForService method`);
+        staff = await phorestService.getQualifiedStaffForService(serviceId, branchId);
+      } else {
+        console.log(`⚠️ getQualifiedStaffForService not available, using emergency fallback`);
+        // Emergency: Apply filtering logic directly here
+        const allStaff = await phorestService.getStaff(branchId);
+        console.log(`🔍 Emergency filter: Got ${allStaff.length} staff, filtering for branch ${branchId}`);
+        
+        staff = allStaff.filter(staffMember => {
+          // Must be assigned to this specific branch
+          const isAssignedToBranch = staffMember.branchId === branchId;
+          // Must be active
+          const isActive = !staffMember.archived;
+          // Must be available for online booking
+          const isAvailableForBooking = !staffMember.hideFromOnlineBookings;
+          // Must be real staff (not test accounts)
+          const isRealStaff = !staffMember.firstName?.toLowerCase().includes('test') && 
+                             !staffMember.firstName?.toLowerCase().includes('led');
+          
+          const passes = isAssignedToBranch && isActive && isAvailableForBooking && isRealStaff;
+          
+          if (!passes) {
+            console.log(`❌ Emergency filter out ${staffMember.firstName} ${staffMember.lastName}: branch=${isAssignedToBranch}, active=${isActive}, available=${isAvailableForBooking}, real=${isRealStaff}`);
+          }
+          
+          return passes;
+        });
+        
+        console.log(`🎯 Emergency filtered to ${staff.length} staff members`);
+        staff.forEach(s => {
+          console.log(`   ✅ ${s.firstName} ${s.lastName} (${s.staffCategoryName || 'No role'})`);
+        });
+      }
       
       console.log(`👥 Found ${staff.length} qualified staff members for this service`);
       console.log(`👥 Staff details:`, staff.map(s => ({ 
