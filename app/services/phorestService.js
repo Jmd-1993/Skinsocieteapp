@@ -5,7 +5,8 @@ class PhorestService {
   constructor() {
     // Use environment variables in production
     this.config = {
-      baseURL: 'https://api-gateway-au.phorest.com/third-party-api-server/api/business',
+      // FIXED: Using correct US/AU endpoint instead of non-existent api-gateway-au
+      baseURL: 'https://platform-us.phorest.com/third-party-api-server/api/business',
       businessId: process.env.PHOREST_BUSINESS_ID || 'IX2it2QrF0iguR-LpZ6BHQ',
       auth: {
         username: process.env.PHOREST_USERNAME || 'global/josh@skinsociete.com.au',
@@ -24,6 +25,8 @@ class PhorestService {
         'Content-Type': 'application/json',
         'Accept': 'application/json'
       },
+      // FIXED: Add timeout to prevent hanging requests
+      timeout: 30000, // 30 seconds
       // Follow redirects for write operations
       maxRedirects: 5
     });
