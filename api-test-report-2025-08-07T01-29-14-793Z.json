@@ -1,0 +1,2630 @@
+{
+  "timestamp": "2025-08-07T01:29:14.793Z",
+  "testTarget": "https://skinsocieteapp.onrender.com",
+  "testType": "Production API Testing",
+  "results": {
+    "availabilityAPI": {
+      "success": true,
+      "status": 200,
+      "data": {
+        "success": true,
+        "date": "2025-08-08",
+        "slots": [
+          {
+            "time": "09:00",
+            "staffId": "RIpZqKSCWZAnVsCUc99TRw",
+            "staffName": "Adarsh  Das",
+            "available": true
+          },
+          {
+            "time": "09:00",
+            "staffId": "Y7_RCTnSFUgn9RXQNdOC7A",
+            "staffName": "Chris Mihaljevich",
+            "available": true
+          },
+          {
+            "time": "09:00",
+            "staffId": "X-qh_VV3E41h9tghKPiRyg",
+            "staffName": "Isabelle Callaghan",
+            "available": true
+          },
+          {
+            "time": "09:00",
+            "staffId": "pZyhGSuNV_C5QDyASqcqcA",
+            "staffName": "Jannine Simone",
+            "available": true
+          },
+          {
+            "time": "09:00",
+            "staffId": "-nhuNdvjYuLZQsqTYFAkbA",
+            "staffName": "Jemma Gleeson",
+            "available": true
+          },
+          {
+            "time": "09:00",
+            "staffId": "ClzmPutG7xx7aYrTTTEqZQ",
+            "staffName": "Josh Mills",
+            "available": true
+          },
+          {
+            "time": "09:00",
+            "staffId": "sZZNtIuWjxoMkUmyA5Eoew",
+            "staffName": "LED  Cottesloe",
+            "available": true
+          },
+          {
+            "time": "09:00",
+            "staffId": "UVBsX1a41enJ0IhI3Jlfag",
+            "staffName": "Maddison Foster",
+            "available": true
+          },
+          {
+            "time": "09:00",
+            "staffId": "OFSlDmhiLAZa2uc90-IwHg",
+            "staffName": "Melissa Tincey",
+            "available": true
+          },
+          {
+            "time": "09:00",
+            "staffId": "o4W4EAAYNbHvQqsFo2qC4g",
+            "staffName": "Paul Quigley",
+            "available": true
+          },
+          {
+            "time": "09:00",
+            "staffId": "NPUk2vp9EnB9LuyZQPbAuA",
+            "staffName": "Phorest Test",
+            "available": true
+          },
+          {
+            "time": "09:00",
+            "staffId": "BCGCteX3cJiz7e89DQBheQ",
+            "staffName": "Tim  Hardy",
+            "available": true
+          },
+          {
+            "time": "09:30",
+            "staffId": "RIpZqKSCWZAnVsCUc99TRw",
+            "staffName": "Adarsh  Das",
+            "available": true
+          },
+          {
+            "time": "09:30",
+            "staffId": "Y7_RCTnSFUgn9RXQNdOC7A",
+            "staffName": "Chris Mihaljevich",
+            "available": true
+          },
+          {
+            "time": "09:30",
+            "staffId": "X-qh_VV3E41h9tghKPiRyg",
+            "staffName": "Isabelle Callaghan",
+            "available": true
+          },
+          {
+            "time": "09:30",
+            "staffId": "pZyhGSuNV_C5QDyASqcqcA",
+            "staffName": "Jannine Simone",
+            "available": true
+          },
+          {
+            "time": "09:30",
+            "staffId": "-nhuNdvjYuLZQsqTYFAkbA",
+            "staffName": "Jemma Gleeson",
+            "available": true
+          },
+          {
+            "time": "09:30",
+            "staffId": "ClzmPutG7xx7aYrTTTEqZQ",
+            "staffName": "Josh Mills",
+            "available": true
+          },
+          {
+            "time": "09:30",
+            "staffId": "sZZNtIuWjxoMkUmyA5Eoew",
+            "staffName": "LED  Cottesloe",
+            "available": true
+          },
+          {
+            "time": "09:30",
+            "staffId": "UVBsX1a41enJ0IhI3Jlfag",
+            "staffName": "Maddison Foster",
+            "available": true
+          },
+          {
+            "time": "09:30",
+            "staffId": "OFSlDmhiLAZa2uc90-IwHg",
+            "staffName": "Melissa Tincey",
+            "available": true
+          },
+          {
+            "time": "09:30",
+            "staffId": "o4W4EAAYNbHvQqsFo2qC4g",
+            "staffName": "Paul Quigley",
+            "available": true
+          },
+          {
+            "time": "09:30",
+            "staffId": "NPUk2vp9EnB9LuyZQPbAuA",
+            "staffName": "Phorest Test",
+            "available": true
+          },
+          {
+            "time": "09:30",
+            "staffId": "BCGCteX3cJiz7e89DQBheQ",
+            "staffName": "Tim  Hardy",
+            "available": true
+          },
+          {
+            "time": "10:00",
+            "staffId": "RIpZqKSCWZAnVsCUc99TRw",
+            "staffName": "Adarsh  Das",
+            "available": true
+          },
+          {
+            "time": "10:00",
+            "staffId": "Y7_RCTnSFUgn9RXQNdOC7A",
+            "staffName": "Chris Mihaljevich",
+            "available": true
+          },
+          {
+            "time": "10:00",
+            "staffId": "X-qh_VV3E41h9tghKPiRyg",
+            "staffName": "Isabelle Callaghan",
+            "available": true
+          },
+          {
+            "time": "10:00",
+            "staffId": "pZyhGSuNV_C5QDyASqcqcA",
+            "staffName": "Jannine Simone",
+            "available": true
+          },
+          {
+            "time": "10:00",
+            "staffId": "-nhuNdvjYuLZQsqTYFAkbA",
+            "staffName": "Jemma Gleeson",
+            "available": true
+          },
+          {
+            "time": "10:00",
+            "staffId": "ClzmPutG7xx7aYrTTTEqZQ",
+            "staffName": "Josh Mills",
+            "available": true
+          },
+          {
+            "time": "10:00",
+            "staffId": "sZZNtIuWjxoMkUmyA5Eoew",
+            "staffName": "LED  Cottesloe",
+            "available": true
+          },
+          {
+            "time": "10:00",
+            "staffId": "UVBsX1a41enJ0IhI3Jlfag",
+            "staffName": "Maddison Foster",
+            "available": true
+          },
+          {
+            "time": "10:00",
+            "staffId": "OFSlDmhiLAZa2uc90-IwHg",
+            "staffName": "Melissa Tincey",
+            "available": true
+          },
+          {
+            "time": "10:00",
+            "staffId": "o4W4EAAYNbHvQqsFo2qC4g",
+            "staffName": "Paul Quigley",
+            "available": true
+          },
+          {
+            "time": "10:00",
+            "staffId": "NPUk2vp9EnB9LuyZQPbAuA",
+            "staffName": "Phorest Test",
+            "available": true
+          },
+          {
+            "time": "10:00",
+            "staffId": "BCGCteX3cJiz7e89DQBheQ",
+            "staffName": "Tim  Hardy",
+            "available": true
+          },
+          {
+            "time": "10:30",
+            "staffId": "RIpZqKSCWZAnVsCUc99TRw",
+            "staffName": "Adarsh  Das",
+            "available": true
+          },
+          {
+            "time": "10:30",
+            "staffId": "Y7_RCTnSFUgn9RXQNdOC7A",
+            "staffName": "Chris Mihaljevich",
+            "available": true
+          },
+          {
+            "time": "10:30",
+            "staffId": "X-qh_VV3E41h9tghKPiRyg",
+            "staffName": "Isabelle Callaghan",
+            "available": true
+          },
+          {
+            "time": "10:30",
+            "staffId": "pZyhGSuNV_C5QDyASqcqcA",
+            "staffName": "Jannine Simone",
+            "available": true
+          },
+          {
+            "time": "10:30",
+            "staffId": "-nhuNdvjYuLZQsqTYFAkbA",
+            "staffName": "Jemma Gleeson",
+            "available": true
+          },
+          {
+            "time": "10:30",
+            "staffId": "ClzmPutG7xx7aYrTTTEqZQ",
+            "staffName": "Josh Mills",
+            "available": true
+          },
+          {
+            "time": "10:30",
+            "staffId": "sZZNtIuWjxoMkUmyA5Eoew",
+            "staffName": "LED  Cottesloe",
+            "available": true
+          },
+          {
+            "time": "10:30",
+            "staffId": "UVBsX1a41enJ0IhI3Jlfag",
+            "staffName": "Maddison Foster",
+            "available": true
+          },
+          {
+            "time": "10:30",
+            "staffId": "OFSlDmhiLAZa2uc90-IwHg",
+            "staffName": "Melissa Tincey",
+            "available": true
+          },
+          {
+            "time": "10:30",
+            "staffId": "o4W4EAAYNbHvQqsFo2qC4g",
+            "staffName": "Paul Quigley",
+            "available": true
+          },
+          {
+            "time": "10:30",
+            "staffId": "NPUk2vp9EnB9LuyZQPbAuA",
+            "staffName": "Phorest Test",
+            "available": true
+          },
+          {
+            "time": "10:30",
+            "staffId": "BCGCteX3cJiz7e89DQBheQ",
+            "staffName": "Tim  Hardy",
+            "available": true
+          },
+          {
+            "time": "11:00",
+            "staffId": "RIpZqKSCWZAnVsCUc99TRw",
+            "staffName": "Adarsh  Das",
+            "available": true
+          },
+          {
+            "time": "11:00",
+            "staffId": "Y7_RCTnSFUgn9RXQNdOC7A",
+            "staffName": "Chris Mihaljevich",
+            "available": true
+          },
+          {
+            "time": "11:00",
+            "staffId": "X-qh_VV3E41h9tghKPiRyg",
+            "staffName": "Isabelle Callaghan",
+            "available": true
+          },
+          {
+            "time": "11:00",
+            "staffId": "pZyhGSuNV_C5QDyASqcqcA",
+            "staffName": "Jannine Simone",
+            "available": true
+          },
+          {
+            "time": "11:00",
+            "staffId": "-nhuNdvjYuLZQsqTYFAkbA",
+            "staffName": "Jemma Gleeson",
+            "available": true
+          },
+          {
+            "time": "11:00",
+            "staffId": "ClzmPutG7xx7aYrTTTEqZQ",
+            "staffName": "Josh Mills",
+            "available": true
+          },
+          {
+            "time": "11:00",
+            "staffId": "sZZNtIuWjxoMkUmyA5Eoew",
+            "staffName": "LED  Cottesloe",
+            "available": true
+          },
+          {
+            "time": "11:00",
+            "staffId": "UVBsX1a41enJ0IhI3Jlfag",
+            "staffName": "Maddison Foster",
+            "available": true
+          },
+          {
+            "time": "11:00",
+            "staffId": "OFSlDmhiLAZa2uc90-IwHg",
+            "staffName": "Melissa Tincey",
+            "available": true
+          },
+          {
+            "time": "11:00",
+            "staffId": "o4W4EAAYNbHvQqsFo2qC4g",
+            "staffName": "Paul Quigley",
+            "available": true
+          },
+          {
+            "time": "11:00",
+            "staffId": "NPUk2vp9EnB9LuyZQPbAuA",
+            "staffName": "Phorest Test",
+            "available": true
+          },
+          {
+            "time": "11:00",
+            "staffId": "BCGCteX3cJiz7e89DQBheQ",
+            "staffName": "Tim  Hardy",
+            "available": true
+          },
+          {
+            "time": "11:30",
+            "staffId": "RIpZqKSCWZAnVsCUc99TRw",
+            "staffName": "Adarsh  Das",
+            "available": true
+          },
+          {
+            "time": "11:30",
+            "staffId": "Y7_RCTnSFUgn9RXQNdOC7A",
+            "staffName": "Chris Mihaljevich",
+            "available": true
+          },
+          {
+            "time": "11:30",
+            "staffId": "X-qh_VV3E41h9tghKPiRyg",
+            "staffName": "Isabelle Callaghan",
+            "available": true
+          },
+          {
+            "time": "11:30",
+            "staffId": "pZyhGSuNV_C5QDyASqcqcA",
+            "staffName": "Jannine Simone",
+            "available": true
+          },
+          {
+            "time": "11:30",
+            "staffId": "-nhuNdvjYuLZQsqTYFAkbA",
+            "staffName": "Jemma Gleeson",
+            "available": true
+          },
+          {
+            "time": "11:30",
+            "staffId": "ClzmPutG7xx7aYrTTTEqZQ",
+            "staffName": "Josh Mills",
+            "available": true
+          },
+          {
+            "time": "11:30",
+            "staffId": "sZZNtIuWjxoMkUmyA5Eoew",
+            "staffName": "LED  Cottesloe",
+            "available": true
+          },
+          {
+            "time": "11:30",
+            "staffId": "UVBsX1a41enJ0IhI3Jlfag",
+            "staffName": "Maddison Foster",
+            "available": true
+          },
+          {
+            "time": "11:30",
+            "staffId": "OFSlDmhiLAZa2uc90-IwHg",
+            "staffName": "Melissa Tincey",
+            "available": true
+          },
+          {
+            "time": "11:30",
+            "staffId": "o4W4EAAYNbHvQqsFo2qC4g",
+            "staffName": "Paul Quigley",
+            "available": true
+          },
+          {
+            "time": "11:30",
+            "staffId": "NPUk2vp9EnB9LuyZQPbAuA",
+            "staffName": "Phorest Test",
+            "available": true
+          },
+          {
+            "time": "11:30",
+            "staffId": "BCGCteX3cJiz7e89DQBheQ",
+            "staffName": "Tim  Hardy",
+            "available": true
+          },
+          {
+            "time": "12:00",
+            "staffId": "RIpZqKSCWZAnVsCUc99TRw",
+            "staffName": "Adarsh  Das",
+            "available": true
+          },
+          {
+            "time": "12:00",
+            "staffId": "Y7_RCTnSFUgn9RXQNdOC7A",
+            "staffName": "Chris Mihaljevich",
+            "available": true
+          },
+          {
+            "time": "12:00",
+            "staffId": "X-qh_VV3E41h9tghKPiRyg",
+            "staffName": "Isabelle Callaghan",
+            "available": true
+          },
+          {
+            "time": "12:00",
+            "staffId": "pZyhGSuNV_C5QDyASqcqcA",
+            "staffName": "Jannine Simone",
+            "available": true
+          },
+          {
+            "time": "12:00",
+            "staffId": "-nhuNdvjYuLZQsqTYFAkbA",
+            "staffName": "Jemma Gleeson",
+            "available": true
+          },
+          {
+            "time": "12:00",
+            "staffId": "ClzmPutG7xx7aYrTTTEqZQ",
+            "staffName": "Josh Mills",
+            "available": true
+          },
+          {
+            "time": "12:00",
+            "staffId": "sZZNtIuWjxoMkUmyA5Eoew",
+            "staffName": "LED  Cottesloe",
+            "available": true
+          },
+          {
+            "time": "12:00",
+            "staffId": "UVBsX1a41enJ0IhI3Jlfag",
+            "staffName": "Maddison Foster",
+            "available": true
+          },
+          {
+            "time": "12:00",
+            "staffId": "OFSlDmhiLAZa2uc90-IwHg",
+            "staffName": "Melissa Tincey",
+            "available": true
+          },
+          {
+            "time": "12:00",
+            "staffId": "o4W4EAAYNbHvQqsFo2qC4g",
+            "staffName": "Paul Quigley",
+            "available": true
+          },
+          {
+            "time": "12:00",
+            "staffId": "NPUk2vp9EnB9LuyZQPbAuA",
+            "staffName": "Phorest Test",
+            "available": true
+          },
+          {
+            "time": "12:00",
+            "staffId": "BCGCteX3cJiz7e89DQBheQ",
+            "staffName": "Tim  Hardy",
+            "available": true
+          },
+          {
+            "time": "12:30",
+            "staffId": "RIpZqKSCWZAnVsCUc99TRw",
+            "staffName": "Adarsh  Das",
+            "available": true
+          },
+          {
+            "time": "12:30",
+            "staffId": "Y7_RCTnSFUgn9RXQNdOC7A",
+            "staffName": "Chris Mihaljevich",
+            "available": true
+          },
+          {
+            "time": "12:30",
+            "staffId": "X-qh_VV3E41h9tghKPiRyg",
+            "staffName": "Isabelle Callaghan",
+            "available": true
+          },
+          {
+            "time": "12:30",
+            "staffId": "pZyhGSuNV_C5QDyASqcqcA",
+            "staffName": "Jannine Simone",
+            "available": true
+          },
+          {
+            "time": "12:30",
+            "staffId": "-nhuNdvjYuLZQsqTYFAkbA",
+            "staffName": "Jemma Gleeson",
+            "available": true
+          },
+          {
+            "time": "12:30",
+            "staffId": "ClzmPutG7xx7aYrTTTEqZQ",
+            "staffName": "Josh Mills",
+            "available": true
+          },
+          {
+            "time": "12:30",
+            "staffId": "sZZNtIuWjxoMkUmyA5Eoew",
+            "staffName": "LED  Cottesloe",
+            "available": true
+          },
+          {
+            "time": "12:30",
+            "staffId": "UVBsX1a41enJ0IhI3Jlfag",
+            "staffName": "Maddison Foster",
+            "available": true
+          },
+          {
+            "time": "12:30",
+            "staffId": "OFSlDmhiLAZa2uc90-IwHg",
+            "staffName": "Melissa Tincey",
+            "available": true
+          },
+          {
+            "time": "12:30",
+            "staffId": "o4W4EAAYNbHvQqsFo2qC4g",
+            "staffName": "Paul Quigley",
+            "available": true
+          },
+          {
+            "time": "12:30",
+            "staffId": "NPUk2vp9EnB9LuyZQPbAuA",
+            "staffName": "Phorest Test",
+            "available": true
+          },
+          {
+            "time": "12:30",
+            "staffId": "BCGCteX3cJiz7e89DQBheQ",
+            "staffName": "Tim  Hardy",
+            "available": true
+          },
+          {
+            "time": "13:00",
+            "staffId": "RIpZqKSCWZAnVsCUc99TRw",
+            "staffName": "Adarsh  Das",
+            "available": true
+          },
+          {
+            "time": "13:00",
+            "staffId": "Y7_RCTnSFUgn9RXQNdOC7A",
+            "staffName": "Chris Mihaljevich",
+            "available": true
+          },
+          {
+            "time": "13:00",
+            "staffId": "X-qh_VV3E41h9tghKPiRyg",
+            "staffName": "Isabelle Callaghan",
+            "available": true
+          },
+          {
+            "time": "13:00",
+            "staffId": "pZyhGSuNV_C5QDyASqcqcA",
+            "staffName": "Jannine Simone",
+            "available": true
+          },
+          {
+            "time": "13:00",
+            "staffId": "-nhuNdvjYuLZQsqTYFAkbA",
+            "staffName": "Jemma Gleeson",
+            "available": true
+          },
+          {
+            "time": "13:00",
+            "staffId": "ClzmPutG7xx7aYrTTTEqZQ",
+            "staffName": "Josh Mills",
+            "available": true
+          },
+          {
+            "time": "13:00",
+            "staffId": "sZZNtIuWjxoMkUmyA5Eoew",
+            "staffName": "LED  Cottesloe",
+            "available": true
+          },
+          {
+            "time": "13:00",
+            "staffId": "UVBsX1a41enJ0IhI3Jlfag",
+            "staffName": "Maddison Foster",
+            "available": true
+          },
+          {
+            "time": "13:00",
+            "staffId": "OFSlDmhiLAZa2uc90-IwHg",
+            "staffName": "Melissa Tincey",
+            "available": true
+          },
+          {
+            "time": "13:00",
+            "staffId": "o4W4EAAYNbHvQqsFo2qC4g",
+            "staffName": "Paul Quigley",
+            "available": true
+          },
+          {
+            "time": "13:00",
+            "staffId": "NPUk2vp9EnB9LuyZQPbAuA",
+            "staffName": "Phorest Test",
+            "available": true
+          },
+          {
+            "time": "13:00",
+            "staffId": "BCGCteX3cJiz7e89DQBheQ",
+            "staffName": "Tim  Hardy",
+            "available": true
+          },
+          {
+            "time": "13:30",
+            "staffId": "RIpZqKSCWZAnVsCUc99TRw",
+            "staffName": "Adarsh  Das",
+            "available": true
+          },
+          {
+            "time": "13:30",
+            "staffId": "Y7_RCTnSFUgn9RXQNdOC7A",
+            "staffName": "Chris Mihaljevich",
+            "available": true
+          },
+          {
+            "time": "13:30",
+            "staffId": "X-qh_VV3E41h9tghKPiRyg",
+            "staffName": "Isabelle Callaghan",
+            "available": true
+          },
+          {
+            "time": "13:30",
+            "staffId": "pZyhGSuNV_C5QDyASqcqcA",
+            "staffName": "Jannine Simone",
+            "available": true
+          },
+          {
+            "time": "13:30",
+            "staffId": "-nhuNdvjYuLZQsqTYFAkbA",
+            "staffName": "Jemma Gleeson",
+            "available": true
+          },
+          {
+            "time": "13:30",
+            "staffId": "ClzmPutG7xx7aYrTTTEqZQ",
+            "staffName": "Josh Mills",
+            "available": true
+          },
+          {
+            "time": "13:30",
+            "staffId": "sZZNtIuWjxoMkUmyA5Eoew",
+            "staffName": "LED  Cottesloe",
+            "available": true
+          },
+          {
+            "time": "13:30",
+            "staffId": "UVBsX1a41enJ0IhI3Jlfag",
+            "staffName": "Maddison Foster",
+            "available": true
+          },
+          {
+            "time": "13:30",
+            "staffId": "OFSlDmhiLAZa2uc90-IwHg",
+            "staffName": "Melissa Tincey",
+            "available": true
+          },
+          {
+            "time": "13:30",
+            "staffId": "o4W4EAAYNbHvQqsFo2qC4g",
+            "staffName": "Paul Quigley",
+            "available": true
+          },
+          {
+            "time": "13:30",
+            "staffId": "NPUk2vp9EnB9LuyZQPbAuA",
+            "staffName": "Phorest Test",
+            "available": true
+          },
+          {
+            "time": "13:30",
+            "staffId": "BCGCteX3cJiz7e89DQBheQ",
+            "staffName": "Tim  Hardy",
+            "available": true
+          },
+          {
+            "time": "14:00",
+            "staffId": "RIpZqKSCWZAnVsCUc99TRw",
+            "staffName": "Adarsh  Das",
+            "available": true
+          },
+          {
+            "time": "14:00",
+            "staffId": "Y7_RCTnSFUgn9RXQNdOC7A",
+            "staffName": "Chris Mihaljevich",
+            "available": true
+          },
+          {
+            "time": "14:00",
+            "staffId": "X-qh_VV3E41h9tghKPiRyg",
+            "staffName": "Isabelle Callaghan",
+            "available": true
+          },
+          {
+            "time": "14:00",
+            "staffId": "pZyhGSuNV_C5QDyASqcqcA",
+            "staffName": "Jannine Simone",
+            "available": true
+          },
+          {
+            "time": "14:00",
+            "staffId": "-nhuNdvjYuLZQsqTYFAkbA",
+            "staffName": "Jemma Gleeson",
+            "available": true
+          },
+          {
+            "time": "14:00",
+            "staffId": "ClzmPutG7xx7aYrTTTEqZQ",
+            "staffName": "Josh Mills",
+            "available": true
+          },
+          {
+            "time": "14:00",
+            "staffId": "sZZNtIuWjxoMkUmyA5Eoew",
+            "staffName": "LED  Cottesloe",
+            "available": true
+          },
+          {
+            "time": "14:00",
+            "staffId": "UVBsX1a41enJ0IhI3Jlfag",
+            "staffName": "Maddison Foster",
+            "available": true
+          },
+          {
+            "time": "14:00",
+            "staffId": "OFSlDmhiLAZa2uc90-IwHg",
+            "staffName": "Melissa Tincey",
+            "available": true
+          },
+          {
+            "time": "14:00",
+            "staffId": "o4W4EAAYNbHvQqsFo2qC4g",
+            "staffName": "Paul Quigley",
+            "available": true
+          },
+          {
+            "time": "14:00",
+            "staffId": "NPUk2vp9EnB9LuyZQPbAuA",
+            "staffName": "Phorest Test",
+            "available": true
+          },
+          {
+            "time": "14:00",
+            "staffId": "BCGCteX3cJiz7e89DQBheQ",
+            "staffName": "Tim  Hardy",
+            "available": true
+          },
+          {
+            "time": "14:30",
+            "staffId": "RIpZqKSCWZAnVsCUc99TRw",
+            "staffName": "Adarsh  Das",
+            "available": true
+          },
+          {
+            "time": "14:30",
+            "staffId": "Y7_RCTnSFUgn9RXQNdOC7A",
+            "staffName": "Chris Mihaljevich",
+            "available": true
+          },
+          {
+            "time": "14:30",
+            "staffId": "X-qh_VV3E41h9tghKPiRyg",
+            "staffName": "Isabelle Callaghan",
+            "available": true
+          },
+          {
+            "time": "14:30",
+            "staffId": "pZyhGSuNV_C5QDyASqcqcA",
+            "staffName": "Jannine Simone",
+            "available": true
+          },
+          {
+            "time": "14:30",
+            "staffId": "-nhuNdvjYuLZQsqTYFAkbA",
+            "staffName": "Jemma Gleeson",
+            "available": true
+          },
+          {
+            "time": "14:30",
+            "staffId": "ClzmPutG7xx7aYrTTTEqZQ",
+            "staffName": "Josh Mills",
+            "available": true
+          },
+          {
+            "time": "14:30",
+            "staffId": "sZZNtIuWjxoMkUmyA5Eoew",
+            "staffName": "LED  Cottesloe",
+            "available": true
+          },
+          {
+            "time": "14:30",
+            "staffId": "UVBsX1a41enJ0IhI3Jlfag",
+            "staffName": "Maddison Foster",
+            "available": true
+          },
+          {
+            "time": "14:30",
+            "staffId": "OFSlDmhiLAZa2uc90-IwHg",
+            "staffName": "Melissa Tincey",
+            "available": true
+          },
+          {
+            "time": "14:30",
+            "staffId": "o4W4EAAYNbHvQqsFo2qC4g",
+            "staffName": "Paul Quigley",
+            "available": true
+          },
+          {
+            "time": "14:30",
+            "staffId": "NPUk2vp9EnB9LuyZQPbAuA",
+            "staffName": "Phorest Test",
+            "available": true
+          },
+          {
+            "time": "14:30",
+            "staffId": "BCGCteX3cJiz7e89DQBheQ",
+            "staffName": "Tim  Hardy",
+            "available": true
+          },
+          {
+            "time": "15:00",
+            "staffId": "RIpZqKSCWZAnVsCUc99TRw",
+            "staffName": "Adarsh  Das",
+            "available": true
+          },
+          {
+            "time": "15:00",
+            "staffId": "Y7_RCTnSFUgn9RXQNdOC7A",
+            "staffName": "Chris Mihaljevich",
+            "available": true
+          },
+          {
+            "time": "15:00",
+            "staffId": "X-qh_VV3E41h9tghKPiRyg",
+            "staffName": "Isabelle Callaghan",
+            "available": true
+          },
+          {
+            "time": "15:00",
+            "staffId": "pZyhGSuNV_C5QDyASqcqcA",
+            "staffName": "Jannine Simone",
+            "available": true
+          },
+          {
+            "time": "15:00",
+            "staffId": "-nhuNdvjYuLZQsqTYFAkbA",
+            "staffName": "Jemma Gleeson",
+            "available": true
+          },
+          {
+            "time": "15:00",
+            "staffId": "ClzmPutG7xx7aYrTTTEqZQ",
+            "staffName": "Josh Mills",
+            "available": true
+          },
+          {
+            "time": "15:00",
+            "staffId": "sZZNtIuWjxoMkUmyA5Eoew",
+            "staffName": "LED  Cottesloe",
+            "available": true
+          },
+          {
+            "time": "15:00",
+            "staffId": "UVBsX1a41enJ0IhI3Jlfag",
+            "staffName": "Maddison Foster",
+            "available": true
+          },
+          {
+            "time": "15:00",
+            "staffId": "OFSlDmhiLAZa2uc90-IwHg",
+            "staffName": "Melissa Tincey",
+            "available": true
+          },
+          {
+            "time": "15:00",
+            "staffId": "o4W4EAAYNbHvQqsFo2qC4g",
+            "staffName": "Paul Quigley",
+            "available": true
+          },
+          {
+            "time": "15:00",
+            "staffId": "NPUk2vp9EnB9LuyZQPbAuA",
+            "staffName": "Phorest Test",
+            "available": true
+          },
+          {
+            "time": "15:00",
+            "staffId": "BCGCteX3cJiz7e89DQBheQ",
+            "staffName": "Tim  Hardy",
+            "available": true
+          },
+          {
+            "time": "15:30",
+            "staffId": "RIpZqKSCWZAnVsCUc99TRw",
+            "staffName": "Adarsh  Das",
+            "available": true
+          },
+          {
+            "time": "15:30",
+            "staffId": "Y7_RCTnSFUgn9RXQNdOC7A",
+            "staffName": "Chris Mihaljevich",
+            "available": true
+          },
+          {
+            "time": "15:30",
+            "staffId": "X-qh_VV3E41h9tghKPiRyg",
+            "staffName": "Isabelle Callaghan",
+            "available": true
+          },
+          {
+            "time": "15:30",
+            "staffId": "pZyhGSuNV_C5QDyASqcqcA",
+            "staffName": "Jannine Simone",
+            "available": true
+          },
+          {
+            "time": "15:30",
+            "staffId": "-nhuNdvjYuLZQsqTYFAkbA",
+            "staffName": "Jemma Gleeson",
+            "available": true
+          },
+          {
+            "time": "15:30",
+            "staffId": "ClzmPutG7xx7aYrTTTEqZQ",
+            "staffName": "Josh Mills",
+            "available": true
+          },
+          {
+            "time": "15:30",
+            "staffId": "sZZNtIuWjxoMkUmyA5Eoew",
+            "staffName": "LED  Cottesloe",
+            "available": true
+          },
+          {
+            "time": "15:30",
+            "staffId": "UVBsX1a41enJ0IhI3Jlfag",
+            "staffName": "Maddison Foster",
+            "available": true
+          },
+          {
+            "time": "15:30",
+            "staffId": "OFSlDmhiLAZa2uc90-IwHg",
+            "staffName": "Melissa Tincey",
+            "available": true
+          },
+          {
+            "time": "15:30",
+            "staffId": "o4W4EAAYNbHvQqsFo2qC4g",
+            "staffName": "Paul Quigley",
+            "available": true
+          },
+          {
+            "time": "15:30",
+            "staffId": "NPUk2vp9EnB9LuyZQPbAuA",
+            "staffName": "Phorest Test",
+            "available": true
+          },
+          {
+            "time": "15:30",
+            "staffId": "BCGCteX3cJiz7e89DQBheQ",
+            "staffName": "Tim  Hardy",
+            "available": true
+          },
+          {
+            "time": "16:00",
+            "staffId": "RIpZqKSCWZAnVsCUc99TRw",
+            "staffName": "Adarsh  Das",
+            "available": true
+          },
+          {
+            "time": "16:00",
+            "staffId": "Y7_RCTnSFUgn9RXQNdOC7A",
+            "staffName": "Chris Mihaljevich",
+            "available": true
+          },
+          {
+            "time": "16:00",
+            "staffId": "X-qh_VV3E41h9tghKPiRyg",
+            "staffName": "Isabelle Callaghan",
+            "available": true
+          },
+          {
+            "time": "16:00",
+            "staffId": "pZyhGSuNV_C5QDyASqcqcA",
+            "staffName": "Jannine Simone",
+            "available": true
+          },
+          {
+            "time": "16:00",
+            "staffId": "-nhuNdvjYuLZQsqTYFAkbA",
+            "staffName": "Jemma Gleeson",
+            "available": true
+          },
+          {
+            "time": "16:00",
+            "staffId": "ClzmPutG7xx7aYrTTTEqZQ",
+            "staffName": "Josh Mills",
+            "available": true
+          },
+          {
+            "time": "16:00",
+            "staffId": "sZZNtIuWjxoMkUmyA5Eoew",
+            "staffName": "LED  Cottesloe",
+            "available": true
+          },
+          {
+            "time": "16:00",
+            "staffId": "UVBsX1a41enJ0IhI3Jlfag",
+            "staffName": "Maddison Foster",
+            "available": true
+          },
+          {
+            "time": "16:00",
+            "staffId": "OFSlDmhiLAZa2uc90-IwHg",
+            "staffName": "Melissa Tincey",
+            "available": true
+          },
+          {
+            "time": "16:00",
+            "staffId": "o4W4EAAYNbHvQqsFo2qC4g",
+            "staffName": "Paul Quigley",
+            "available": true
+          },
+          {
+            "time": "16:00",
+            "staffId": "NPUk2vp9EnB9LuyZQPbAuA",
+            "staffName": "Phorest Test",
+            "available": true
+          },
+          {
+            "time": "16:00",
+            "staffId": "BCGCteX3cJiz7e89DQBheQ",
+            "staffName": "Tim  Hardy",
+            "available": true
+          },
+          {
+            "time": "16:30",
+            "staffId": "RIpZqKSCWZAnVsCUc99TRw",
+            "staffName": "Adarsh  Das",
+            "available": true
+          },
+          {
+            "time": "16:30",
+            "staffId": "Y7_RCTnSFUgn9RXQNdOC7A",
+            "staffName": "Chris Mihaljevich",
+            "available": true
+          },
+          {
+            "time": "16:30",
+            "staffId": "X-qh_VV3E41h9tghKPiRyg",
+            "staffName": "Isabelle Callaghan",
+            "available": true
+          },
+          {
+            "time": "16:30",
+            "staffId": "pZyhGSuNV_C5QDyASqcqcA",
+            "staffName": "Jannine Simone",
+            "available": true
+          },
+          {
+            "time": "16:30",
+            "staffId": "-nhuNdvjYuLZQsqTYFAkbA",
+            "staffName": "Jemma Gleeson",
+            "available": true
+          },
+          {
+            "time": "16:30",
+            "staffId": "ClzmPutG7xx7aYrTTTEqZQ",
+            "staffName": "Josh Mills",
+            "available": true
+          },
+          {
+            "time": "16:30",
+            "staffId": "sZZNtIuWjxoMkUmyA5Eoew",
+            "staffName": "LED  Cottesloe",
+            "available": true
+          },
+          {
+            "time": "16:30",
+            "staffId": "UVBsX1a41enJ0IhI3Jlfag",
+            "staffName": "Maddison Foster",
+            "available": true
+          },
+          {
+            "time": "16:30",
+            "staffId": "OFSlDmhiLAZa2uc90-IwHg",
+            "staffName": "Melissa Tincey",
+            "available": true
+          },
+          {
+            "time": "16:30",
+            "staffId": "o4W4EAAYNbHvQqsFo2qC4g",
+            "staffName": "Paul Quigley",
+            "available": true
+          },
+          {
+            "time": "16:30",
+            "staffId": "NPUk2vp9EnB9LuyZQPbAuA",
+            "staffName": "Phorest Test",
+            "available": true
+          },
+          {
+            "time": "16:30",
+            "staffId": "BCGCteX3cJiz7e89DQBheQ",
+            "staffName": "Tim  Hardy",
+            "available": true
+          },
+          {
+            "time": "17:00",
+            "staffId": "RIpZqKSCWZAnVsCUc99TRw",
+            "staffName": "Adarsh  Das",
+            "available": true
+          },
+          {
+            "time": "17:00",
+            "staffId": "Y7_RCTnSFUgn9RXQNdOC7A",
+            "staffName": "Chris Mihaljevich",
+            "available": true
+          },
+          {
+            "time": "17:00",
+            "staffId": "X-qh_VV3E41h9tghKPiRyg",
+            "staffName": "Isabelle Callaghan",
+            "available": true
+          },
+          {
+            "time": "17:00",
+            "staffId": "pZyhGSuNV_C5QDyASqcqcA",
+            "staffName": "Jannine Simone",
+            "available": true
+          },
+          {
+            "time": "17:00",
+            "staffId": "-nhuNdvjYuLZQsqTYFAkbA",
+            "staffName": "Jemma Gleeson",
+            "available": true
+          },
+          {
+            "time": "17:00",
+            "staffId": "ClzmPutG7xx7aYrTTTEqZQ",
+            "staffName": "Josh Mills",
+            "available": true
+          },
+          {
+            "time": "17:00",
+            "staffId": "sZZNtIuWjxoMkUmyA5Eoew",
+            "staffName": "LED  Cottesloe",
+            "available": true
+          },
+          {
+            "time": "17:00",
+            "staffId": "UVBsX1a41enJ0IhI3Jlfag",
+            "staffName": "Maddison Foster",
+            "available": true
+          },
+          {
+            "time": "17:00",
+            "staffId": "OFSlDmhiLAZa2uc90-IwHg",
+            "staffName": "Melissa Tincey",
+            "available": true
+          },
+          {
+            "time": "17:00",
+            "staffId": "o4W4EAAYNbHvQqsFo2qC4g",
+            "staffName": "Paul Quigley",
+            "available": true
+          },
+          {
+            "time": "17:00",
+            "staffId": "NPUk2vp9EnB9LuyZQPbAuA",
+            "staffName": "Phorest Test",
+            "available": true
+          },
+          {
+            "time": "17:00",
+            "staffId": "BCGCteX3cJiz7e89DQBheQ",
+            "staffName": "Tim  Hardy",
+            "available": true
+          }
+        ],
+        "staff": [
+          {
+            "staffId": "RIpZqKSCWZAnVsCUc99TRw",
+            "staffName": "Adarsh  Das",
+            "title": "Beauty Therapist",
+            "slots": [
+              {
+                "time": "09:00",
+                "available": true,
+                "startTime": "2025-08-08T09:00:00",
+                "endTime": "2025-08-08T10:00:00"
+              },
+              {
+                "time": "09:30",
+                "available": true,
+                "startTime": "2025-08-08T09:30:00",
+                "endTime": "2025-08-08T10:30:00"
+              },
+              {
+                "time": "10:00",
+                "available": true,
+                "startTime": "2025-08-08T10:00:00",
+                "endTime": "2025-08-08T11:00:00"
+              },
+              {
+                "time": "10:30",
+                "available": true,
+                "startTime": "2025-08-08T10:30:00",
+                "endTime": "2025-08-08T11:30:00"
+              },
+              {
+                "time": "11:00",
+                "available": true,
+                "startTime": "2025-08-08T11:00:00",
+                "endTime": "2025-08-08T12:00:00"
+              },
+              {
+                "time": "11:30",
+                "available": true,
+                "startTime": "2025-08-08T11:30:00",
+                "endTime": "2025-08-08T12:30:00"
+              },
+              {
+                "time": "12:00",
+                "available": true,
+                "startTime": "2025-08-08T12:00:00",
+                "endTime": "2025-08-08T13:00:00"
+              },
+              {
+                "time": "12:30",
+                "available": true,
+                "startTime": "2025-08-08T12:30:00",
+                "endTime": "2025-08-08T13:30:00"
+              },
+              {
+                "time": "13:00",
+                "available": true,
+                "startTime": "2025-08-08T13:00:00",
+                "endTime": "2025-08-08T14:00:00"
+              },
+              {
+                "time": "13:30",
+                "available": true,
+                "startTime": "2025-08-08T13:30:00",
+                "endTime": "2025-08-08T14:30:00"
+              },
+              {
+                "time": "14:00",
+                "available": true,
+                "startTime": "2025-08-08T14:00:00",
+                "endTime": "2025-08-08T15:00:00"
+              },
+              {
+                "time": "14:30",
+                "available": true,
+                "startTime": "2025-08-08T14:30:00",
+                "endTime": "2025-08-08T15:30:00"
+              },
+              {
+                "time": "15:00",
+                "available": true,
+                "startTime": "2025-08-08T15:00:00",
+                "endTime": "2025-08-08T16:00:00"
+              },
+              {
+                "time": "15:30",
+                "available": true,
+                "startTime": "2025-08-08T15:30:00",
+                "endTime": "2025-08-08T16:30:00"
+              },
+              {
+                "time": "16:00",
+                "available": true,
+                "startTime": "2025-08-08T16:00:00",
+                "endTime": "2025-08-08T17:00:00"
+              },
+              {
+                "time": "16:30",
+                "available": true,
+                "startTime": "2025-08-08T16:30:00",
+                "endTime": "2025-08-08T17:30:00"
+              },
+              {
+                "time": "17:00",
+                "available": true,
+                "startTime": "2025-08-08T17:00:00",
+                "endTime": "2025-08-08T18:00:00"
+              }
+            ],
+            "error": null
+          },
+          {
+            "staffId": "Y7_RCTnSFUgn9RXQNdOC7A",
+            "staffName": "Chris Mihaljevich",
+            "title": "Beauty Therapist",
+            "slots": [
+              {
+                "time": "09:00",
+                "available": true,
+                "startTime": "2025-08-08T09:00:00",
+                "endTime": "2025-08-08T10:00:00"
+              },
+              {
+                "time": "09:30",
+                "available": true,
+                "startTime": "2025-08-08T09:30:00",
+                "endTime": "2025-08-08T10:30:00"
+              },
+              {
+                "time": "10:00",
+                "available": true,
+                "startTime": "2025-08-08T10:00:00",
+                "endTime": "2025-08-08T11:00:00"
+              },
+              {
+                "time": "10:30",
+                "available": true,
+                "startTime": "2025-08-08T10:30:00",
+                "endTime": "2025-08-08T11:30:00"
+              },
+              {
+                "time": "11:00",
+                "available": true,
+                "startTime": "2025-08-08T11:00:00",
+                "endTime": "2025-08-08T12:00:00"
+              },
+              {
+                "time": "11:30",
+                "available": true,
+                "startTime": "2025-08-08T11:30:00",
+                "endTime": "2025-08-08T12:30:00"
+              },
+              {
+                "time": "12:00",
+                "available": true,
+                "startTime": "2025-08-08T12:00:00",
+                "endTime": "2025-08-08T13:00:00"
+              },
+              {
+                "time": "12:30",
+                "available": true,
+                "startTime": "2025-08-08T12:30:00",
+                "endTime": "2025-08-08T13:30:00"
+              },
+              {
+                "time": "13:00",
+                "available": true,
+                "startTime": "2025-08-08T13:00:00",
+                "endTime": "2025-08-08T14:00:00"
+              },
+              {
+                "time": "13:30",
+                "available": true,
+                "startTime": "2025-08-08T13:30:00",
+                "endTime": "2025-08-08T14:30:00"
+              },
+              {
+                "time": "14:00",
+                "available": true,
+                "startTime": "2025-08-08T14:00:00",
+                "endTime": "2025-08-08T15:00:00"
+              },
+              {
+                "time": "14:30",
+                "available": true,
+                "startTime": "2025-08-08T14:30:00",
+                "endTime": "2025-08-08T15:30:00"
+              },
+              {
+                "time": "15:00",
+                "available": true,
+                "startTime": "2025-08-08T15:00:00",
+                "endTime": "2025-08-08T16:00:00"
+              },
+              {
+                "time": "15:30",
+                "available": true,
+                "startTime": "2025-08-08T15:30:00",
+                "endTime": "2025-08-08T16:30:00"
+              },
+              {
+                "time": "16:00",
+                "available": true,
+                "startTime": "2025-08-08T16:00:00",
+                "endTime": "2025-08-08T17:00:00"
+              },
+              {
+                "time": "16:30",
+                "available": true,
+                "startTime": "2025-08-08T16:30:00",
+                "endTime": "2025-08-08T17:30:00"
+              },
+              {
+                "time": "17:00",
+                "available": true,
+                "startTime": "2025-08-08T17:00:00",
+                "endTime": "2025-08-08T18:00:00"
+              }
+            ],
+            "error": null
+          },
+          {
+            "staffId": "X-qh_VV3E41h9tghKPiRyg",
+            "staffName": "Isabelle Callaghan",
+            "title": "Beauty Therapist",
+            "slots": [
+              {
+                "time": "09:00",
+                "available": true,
+                "startTime": "2025-08-08T09:00:00",
+                "endTime": "2025-08-08T10:00:00"
+              },
+              {
+                "time": "09:30",
+                "available": true,
+                "startTime": "2025-08-08T09:30:00",
+                "endTime": "2025-08-08T10:30:00"
+              },
+              {
+                "time": "10:00",
+                "available": true,
+                "startTime": "2025-08-08T10:00:00",
+                "endTime": "2025-08-08T11:00:00"
+              },
+              {
+                "time": "10:30",
+                "available": true,
+                "startTime": "2025-08-08T10:30:00",
+                "endTime": "2025-08-08T11:30:00"
+              },
+              {
+                "time": "11:00",
+                "available": true,
+                "startTime": "2025-08-08T11:00:00",
+                "endTime": "2025-08-08T12:00:00"
+              },
+              {
+                "time": "11:30",
+                "available": true,
+                "startTime": "2025-08-08T11:30:00",
+                "endTime": "2025-08-08T12:30:00"
+              },
+              {
+                "time": "12:00",
+                "available": true,
+                "startTime": "2025-08-08T12:00:00",
+                "endTime": "2025-08-08T13:00:00"
+              },
+              {
+                "time": "12:30",
+                "available": true,
+                "startTime": "2025-08-08T12:30:00",
+                "endTime": "2025-08-08T13:30:00"
+              },
+              {
+                "time": "13:00",
+                "available": true,
+                "startTime": "2025-08-08T13:00:00",
+                "endTime": "2025-08-08T14:00:00"
+              },
+              {
+                "time": "13:30",
+                "available": true,
+                "startTime": "2025-08-08T13:30:00",
+                "endTime": "2025-08-08T14:30:00"
+              },
+              {
+                "time": "14:00",
+                "available": true,
+                "startTime": "2025-08-08T14:00:00",
+                "endTime": "2025-08-08T15:00:00"
+              },
+              {
+                "time": "14:30",
+                "available": true,
+                "startTime": "2025-08-08T14:30:00",
+                "endTime": "2025-08-08T15:30:00"
+              },
+              {
+                "time": "15:00",
+                "available": true,
+                "startTime": "2025-08-08T15:00:00",
+                "endTime": "2025-08-08T16:00:00"
+              },
+              {
+                "time": "15:30",
+                "available": true,
+                "startTime": "2025-08-08T15:30:00",
+                "endTime": "2025-08-08T16:30:00"
+              },
+              {
+                "time": "16:00",
+                "available": true,
+                "startTime": "2025-08-08T16:00:00",
+                "endTime": "2025-08-08T17:00:00"
+              },
+              {
+                "time": "16:30",
+                "available": true,
+                "startTime": "2025-08-08T16:30:00",
+                "endTime": "2025-08-08T17:30:00"
+              },
+              {
+                "time": "17:00",
+                "available": true,
+                "startTime": "2025-08-08T17:00:00",
+                "endTime": "2025-08-08T18:00:00"
+              }
+            ],
+            "error": null
+          },
+          {
+            "staffId": "pZyhGSuNV_C5QDyASqcqcA",
+            "staffName": "Jannine Simone",
+            "title": "Beauty Therapist",
+            "slots": [
+              {
+                "time": "09:00",
+                "available": true,
+                "startTime": "2025-08-08T09:00:00",
+                "endTime": "2025-08-08T10:00:00"
+              },
+              {
+                "time": "09:30",
+                "available": true,
+                "startTime": "2025-08-08T09:30:00",
+                "endTime": "2025-08-08T10:30:00"
+              },
+              {
+                "time": "10:00",
+                "available": true,
+                "startTime": "2025-08-08T10:00:00",
+                "endTime": "2025-08-08T11:00:00"
+              },
+              {
+                "time": "10:30",
+                "available": true,
+                "startTime": "2025-08-08T10:30:00",
+                "endTime": "2025-08-08T11:30:00"
+              },
+              {
+                "time": "11:00",
+                "available": true,
+                "startTime": "2025-08-08T11:00:00",
+                "endTime": "2025-08-08T12:00:00"
+              },
+              {
+                "time": "11:30",
+                "available": true,
+                "startTime": "2025-08-08T11:30:00",
+                "endTime": "2025-08-08T12:30:00"
+              },
+              {
+                "time": "12:00",
+                "available": true,
+                "startTime": "2025-08-08T12:00:00",
+                "endTime": "2025-08-08T13:00:00"
+              },
+              {
+                "time": "12:30",
+                "available": true,
+                "startTime": "2025-08-08T12:30:00",
+                "endTime": "2025-08-08T13:30:00"
+              },
+              {
+                "time": "13:00",
+                "available": true,
+                "startTime": "2025-08-08T13:00:00",
+                "endTime": "2025-08-08T14:00:00"
+              },
+              {
+                "time": "13:30",
+                "available": true,
+                "startTime": "2025-08-08T13:30:00",
+                "endTime": "2025-08-08T14:30:00"
+              },
+              {
+                "time": "14:00",
+                "available": true,
+                "startTime": "2025-08-08T14:00:00",
+                "endTime": "2025-08-08T15:00:00"
+              },
+              {
+                "time": "14:30",
+                "available": true,
+                "startTime": "2025-08-08T14:30:00",
+                "endTime": "2025-08-08T15:30:00"
+              },
+              {
+                "time": "15:00",
+                "available": true,
+                "startTime": "2025-08-08T15:00:00",
+                "endTime": "2025-08-08T16:00:00"
+              },
+              {
+                "time": "15:30",
+                "available": true,
+                "startTime": "2025-08-08T15:30:00",
+                "endTime": "2025-08-08T16:30:00"
+              },
+              {
+                "time": "16:00",
+                "available": true,
+                "startTime": "2025-08-08T16:00:00",
+                "endTime": "2025-08-08T17:00:00"
+              },
+              {
+                "time": "16:30",
+                "available": true,
+                "startTime": "2025-08-08T16:30:00",
+                "endTime": "2025-08-08T17:30:00"
+              },
+              {
+                "time": "17:00",
+                "available": true,
+                "startTime": "2025-08-08T17:00:00",
+                "endTime": "2025-08-08T18:00:00"
+              }
+            ],
+            "error": null
+          },
+          {
+            "staffId": "-nhuNdvjYuLZQsqTYFAkbA",
+            "staffName": "Jemma Gleeson",
+            "title": "Beauty Therapist",
+            "slots": [
+              {
+                "time": "09:00",
+                "available": true,
+                "startTime": "2025-08-08T09:00:00",
+                "endTime": "2025-08-08T10:00:00"
+              },
+              {
+                "time": "09:30",
+                "available": true,
+                "startTime": "2025-08-08T09:30:00",
+                "endTime": "2025-08-08T10:30:00"
+              },
+              {
+                "time": "10:00",
+                "available": true,
+                "startTime": "2025-08-08T10:00:00",
+                "endTime": "2025-08-08T11:00:00"
+              },
+              {
+                "time": "10:30",
+                "available": true,
+                "startTime": "2025-08-08T10:30:00",
+                "endTime": "2025-08-08T11:30:00"
+              },
+              {
+                "time": "11:00",
+                "available": true,
+                "startTime": "2025-08-08T11:00:00",
+                "endTime": "2025-08-08T12:00:00"
+              },
+              {
+                "time": "11:30",
+                "available": true,
+                "startTime": "2025-08-08T11:30:00",
+                "endTime": "2025-08-08T12:30:00"
+              },
+              {
+                "time": "12:00",
+                "available": true,
+                "startTime": "2025-08-08T12:00:00",
+                "endTime": "2025-08-08T13:00:00"
+              },
+              {
+                "time": "12:30",
+                "available": true,
+                "startTime": "2025-08-08T12:30:00",
+                "endTime": "2025-08-08T13:30:00"
+              },
+              {
+                "time": "13:00",
+                "available": true,
+                "startTime": "2025-08-08T13:00:00",
+                "endTime": "2025-08-08T14:00:00"
+              },
+              {
+                "time": "13:30",
+                "available": true,
+                "startTime": "2025-08-08T13:30:00",
+                "endTime": "2025-08-08T14:30:00"
+              },
+              {
+                "time": "14:00",
+                "available": true,
+                "startTime": "2025-08-08T14:00:00",
+                "endTime": "2025-08-08T15:00:00"
+              },
+              {
+                "time": "14:30",
+                "available": true,
+                "startTime": "2025-08-08T14:30:00",
+                "endTime": "2025-08-08T15:30:00"
+              },
+              {
+                "time": "15:00",
+                "available": true,
+                "startTime": "2025-08-08T15:00:00",
+                "endTime": "2025-08-08T16:00:00"
+              },
+              {
+                "time": "15:30",
+                "available": true,
+                "startTime": "2025-08-08T15:30:00",
+                "endTime": "2025-08-08T16:30:00"
+              },
+              {
+                "time": "16:00",
+                "available": true,
+                "startTime": "2025-08-08T16:00:00",
+                "endTime": "2025-08-08T17:00:00"
+              },
+              {
+                "time": "16:30",
+                "available": true,
+                "startTime": "2025-08-08T16:30:00",
+                "endTime": "2025-08-08T17:30:00"
+              },
+              {
+                "time": "17:00",
+                "available": true,
+                "startTime": "2025-08-08T17:00:00",
+                "endTime": "2025-08-08T18:00:00"
+              }
+            ],
+            "error": null
+          },
+          {
+            "staffId": "ClzmPutG7xx7aYrTTTEqZQ",
+            "staffName": "Josh Mills",
+            "title": "Beauty Therapist",
+            "slots": [
+              {
+                "time": "09:00",
+                "available": true,
+                "startTime": "2025-08-08T09:00:00",
+                "endTime": "2025-08-08T10:00:00"
+              },
+              {
+                "time": "09:30",
+                "available": true,
+                "startTime": "2025-08-08T09:30:00",
+                "endTime": "2025-08-08T10:30:00"
+              },
+              {
+                "time": "10:00",
+                "available": true,
+                "startTime": "2025-08-08T10:00:00",
+                "endTime": "2025-08-08T11:00:00"
+              },
+              {
+                "time": "10:30",
+                "available": true,
+                "startTime": "2025-08-08T10:30:00",
+                "endTime": "2025-08-08T11:30:00"
+              },
+              {
+                "time": "11:00",
+                "available": true,
+                "startTime": "2025-08-08T11:00:00",
+                "endTime": "2025-08-08T12:00:00"
+              },
+              {
+                "time": "11:30",
+                "available": true,
+                "startTime": "2025-08-08T11:30:00",
+                "endTime": "2025-08-08T12:30:00"
+              },
+              {
+                "time": "12:00",
+                "available": true,
+                "startTime": "2025-08-08T12:00:00",
+                "endTime": "2025-08-08T13:00:00"
+              },
+              {
+                "time": "12:30",
+                "available": true,
+                "startTime": "2025-08-08T12:30:00",
+                "endTime": "2025-08-08T13:30:00"
+              },
+              {
+                "time": "13:00",
+                "available": true,
+                "startTime": "2025-08-08T13:00:00",
+                "endTime": "2025-08-08T14:00:00"
+              },
+              {
+                "time": "13:30",
+                "available": true,
+                "startTime": "2025-08-08T13:30:00",
+                "endTime": "2025-08-08T14:30:00"
+              },
+              {
+                "time": "14:00",
+                "available": true,
+                "startTime": "2025-08-08T14:00:00",
+                "endTime": "2025-08-08T15:00:00"
+              },
+              {
+                "time": "14:30",
+                "available": true,
+                "startTime": "2025-08-08T14:30:00",
+                "endTime": "2025-08-08T15:30:00"
+              },
+              {
+                "time": "15:00",
+                "available": true,
+                "startTime": "2025-08-08T15:00:00",
+                "endTime": "2025-08-08T16:00:00"
+              },
+              {
+                "time": "15:30",
+                "available": true,
+                "startTime": "2025-08-08T15:30:00",
+                "endTime": "2025-08-08T16:30:00"
+              },
+              {
+                "time": "16:00",
+                "available": true,
+                "startTime": "2025-08-08T16:00:00",
+                "endTime": "2025-08-08T17:00:00"
+              },
+              {
+                "time": "16:30",
+                "available": true,
+                "startTime": "2025-08-08T16:30:00",
+                "endTime": "2025-08-08T17:30:00"
+              },
+              {
+                "time": "17:00",
+                "available": true,
+                "startTime": "2025-08-08T17:00:00",
+                "endTime": "2025-08-08T18:00:00"
+              }
+            ],
+            "error": null
+          },
+          {
+            "staffId": "sZZNtIuWjxoMkUmyA5Eoew",
+            "staffName": "LED  Cottesloe",
+            "title": "Beauty Therapist",
+            "slots": [
+              {
+                "time": "09:00",
+                "available": true,
+                "startTime": "2025-08-08T09:00:00",
+                "endTime": "2025-08-08T10:00:00"
+              },
+              {
+                "time": "09:30",
+                "available": true,
+                "startTime": "2025-08-08T09:30:00",
+                "endTime": "2025-08-08T10:30:00"
+              },
+              {
+                "time": "10:00",
+                "available": true,
+                "startTime": "2025-08-08T10:00:00",
+                "endTime": "2025-08-08T11:00:00"
+              },
+              {
+                "time": "10:30",
+                "available": true,
+                "startTime": "2025-08-08T10:30:00",
+                "endTime": "2025-08-08T11:30:00"
+              },
+              {
+                "time": "11:00",
+                "available": true,
+                "startTime": "2025-08-08T11:00:00",
+                "endTime": "2025-08-08T12:00:00"
+              },
+              {
+                "time": "11:30",
+                "available": true,
+                "startTime": "2025-08-08T11:30:00",
+                "endTime": "2025-08-08T12:30:00"
+              },
+              {
+                "time": "12:00",
+                "available": true,
+                "startTime": "2025-08-08T12:00:00",
+                "endTime": "2025-08-08T13:00:00"
+              },
+              {
+                "time": "12:30",
+                "available": true,
+                "startTime": "2025-08-08T12:30:00",
+                "endTime": "2025-08-08T13:30:00"
+              },
+              {
+                "time": "13:00",
+                "available": true,
+                "startTime": "2025-08-08T13:00:00",
+                "endTime": "2025-08-08T14:00:00"
+              },
+              {
+                "time": "13:30",
+                "available": true,
+                "startTime": "2025-08-08T13:30:00",
+                "endTime": "2025-08-08T14:30:00"
+              },
+              {
+                "time": "14:00",
+                "available": true,
+                "startTime": "2025-08-08T14:00:00",
+                "endTime": "2025-08-08T15:00:00"
+              },
+              {
+                "time": "14:30",
+                "available": true,
+                "startTime": "2025-08-08T14:30:00",
+                "endTime": "2025-08-08T15:30:00"
+              },
+              {
+                "time": "15:00",
+                "available": true,
+                "startTime": "2025-08-08T15:00:00",
+                "endTime": "2025-08-08T16:00:00"
+              },
+              {
+                "time": "15:30",
+                "available": true,
+                "startTime": "2025-08-08T15:30:00",
+                "endTime": "2025-08-08T16:30:00"
+              },
+              {
+                "time": "16:00",
+                "available": true,
+                "startTime": "2025-08-08T16:00:00",
+                "endTime": "2025-08-08T17:00:00"
+              },
+              {
+                "time": "16:30",
+                "available": true,
+                "startTime": "2025-08-08T16:30:00",
+                "endTime": "2025-08-08T17:30:00"
+              },
+              {
+                "time": "17:00",
+                "available": true,
+                "startTime": "2025-08-08T17:00:00",
+                "endTime": "2025-08-08T18:00:00"
+              }
+            ],
+            "error": null
+          },
+          {
+            "staffId": "UVBsX1a41enJ0IhI3Jlfag",
+            "staffName": "Maddison Foster",
+            "title": "Beauty Therapist",
+            "slots": [
+              {
+                "time": "09:00",
+                "available": true,
+                "startTime": "2025-08-08T09:00:00",
+                "endTime": "2025-08-08T10:00:00"
+              },
+              {
+                "time": "09:30",
+                "available": true,
+                "startTime": "2025-08-08T09:30:00",
+                "endTime": "2025-08-08T10:30:00"
+              },
+              {
+                "time": "10:00",
+                "available": true,
+                "startTime": "2025-08-08T10:00:00",
+                "endTime": "2025-08-08T11:00:00"
+              },
+              {
+                "time": "10:30",
+                "available": true,
+                "startTime": "2025-08-08T10:30:00",
+                "endTime": "2025-08-08T11:30:00"
+              },
+              {
+                "time": "11:00",
+                "available": true,
+                "startTime": "2025-08-08T11:00:00",
+                "endTime": "2025-08-08T12:00:00"
+              },
+              {
+                "time": "11:30",
+                "available": true,
+                "startTime": "2025-08-08T11:30:00",
+                "endTime": "2025-08-08T12:30:00"
+              },
+              {
+                "time": "12:00",
+                "available": true,
+                "startTime": "2025-08-08T12:00:00",
+                "endTime": "2025-08-08T13:00:00"
+              },
+              {
+                "time": "12:30",
+                "available": true,
+                "startTime": "2025-08-08T12:30:00",
+                "endTime": "2025-08-08T13:30:00"
+              },
+              {
+                "time": "13:00",
+                "available": true,
+                "startTime": "2025-08-08T13:00:00",
+                "endTime": "2025-08-08T14:00:00"
+              },
+              {
+                "time": "13:30",
+                "available": true,
+                "startTime": "2025-08-08T13:30:00",
+                "endTime": "2025-08-08T14:30:00"
+              },
+              {
+                "time": "14:00",
+                "available": true,
+                "startTime": "2025-08-08T14:00:00",
+                "endTime": "2025-08-08T15:00:00"
+              },
+              {
+                "time": "14:30",
+                "available": true,
+                "startTime": "2025-08-08T14:30:00",
+                "endTime": "2025-08-08T15:30:00"
+              },
+              {
+                "time": "15:00",
+                "available": true,
+                "startTime": "2025-08-08T15:00:00",
+                "endTime": "2025-08-08T16:00:00"
+              },
+              {
+                "time": "15:30",
+                "available": true,
+                "startTime": "2025-08-08T15:30:00",
+                "endTime": "2025-08-08T16:30:00"
+              },
+              {
+                "time": "16:00",
+                "available": true,
+                "startTime": "2025-08-08T16:00:00",
+                "endTime": "2025-08-08T17:00:00"
+              },
+              {
+                "time": "16:30",
+                "available": true,
+                "startTime": "2025-08-08T16:30:00",
+                "endTime": "2025-08-08T17:30:00"
+              },
+              {
+                "time": "17:00",
+                "available": true,
+                "startTime": "2025-08-08T17:00:00",
+                "endTime": "2025-08-08T18:00:00"
+              }
+            ],
+            "error": null
+          },
+          {
+            "staffId": "OFSlDmhiLAZa2uc90-IwHg",
+            "staffName": "Melissa Tincey",
+            "title": "Beauty Therapist",
+            "slots": [
+              {
+                "time": "09:00",
+                "available": true,
+                "startTime": "2025-08-08T09:00:00",
+                "endTime": "2025-08-08T10:00:00"
+              },
+              {
+                "time": "09:30",
+                "available": true,
+                "startTime": "2025-08-08T09:30:00",
+                "endTime": "2025-08-08T10:30:00"
+              },
+              {
+                "time": "10:00",
+                "available": true,
+                "startTime": "2025-08-08T10:00:00",
+                "endTime": "2025-08-08T11:00:00"
+              },
+              {
+                "time": "10:30",
+                "available": true,
+                "startTime": "2025-08-08T10:30:00",
+                "endTime": "2025-08-08T11:30:00"
+              },
+              {
+                "time": "11:00",
+                "available": true,
+                "startTime": "2025-08-08T11:00:00",
+                "endTime": "2025-08-08T12:00:00"
+              },
+              {
+                "time": "11:30",
+                "available": true,
+                "startTime": "2025-08-08T11:30:00",
+                "endTime": "2025-08-08T12:30:00"
+              },
+              {
+                "time": "12:00",
+                "available": true,
+                "startTime": "2025-08-08T12:00:00",
+                "endTime": "2025-08-08T13:00:00"
+              },
+              {
+                "time": "12:30",
+                "available": true,
+                "startTime": "2025-08-08T12:30:00",
+                "endTime": "2025-08-08T13:30:00"
+              },
+              {
+                "time": "13:00",
+                "available": true,
+                "startTime": "2025-08-08T13:00:00",
+                "endTime": "2025-08-08T14:00:00"
+              },
+              {
+                "time": "13:30",
+                "available": true,
+                "startTime": "2025-08-08T13:30:00",
+                "endTime": "2025-08-08T14:30:00"
+              },
+              {
+                "time": "14:00",
+                "available": true,
+                "startTime": "2025-08-08T14:00:00",
+                "endTime": "2025-08-08T15:00:00"
+              },
+              {
+                "time": "14:30",
+                "available": true,
+                "startTime": "2025-08-08T14:30:00",
+                "endTime": "2025-08-08T15:30:00"
+              },
+              {
+                "time": "15:00",
+                "available": true,
+                "startTime": "2025-08-08T15:00:00",
+                "endTime": "2025-08-08T16:00:00"
+              },
+              {
+                "time": "15:30",
+                "available": true,
+                "startTime": "2025-08-08T15:30:00",
+                "endTime": "2025-08-08T16:30:00"
+              },
+              {
+                "time": "16:00",
+                "available": true,
+                "startTime": "2025-08-08T16:00:00",
+                "endTime": "2025-08-08T17:00:00"
+              },
+              {
+                "time": "16:30",
+                "available": true,
+                "startTime": "2025-08-08T16:30:00",
+                "endTime": "2025-08-08T17:30:00"
+              },
+              {
+                "time": "17:00",
+                "available": true,
+                "startTime": "2025-08-08T17:00:00",
+                "endTime": "2025-08-08T18:00:00"
+              }
+            ],
+            "error": null
+          },
+          {
+            "staffId": "o4W4EAAYNbHvQqsFo2qC4g",
+            "staffName": "Paul Quigley",
+            "title": "Beauty Therapist",
+            "slots": [
+              {
+                "time": "09:00",
+                "available": true,
+                "startTime": "2025-08-08T09:00:00",
+                "endTime": "2025-08-08T10:00:00"
+              },
+              {
+                "time": "09:30",
+                "available": true,
+                "startTime": "2025-08-08T09:30:00",
+                "endTime": "2025-08-08T10:30:00"
+              },
+              {
+                "time": "10:00",
+                "available": true,
+                "startTime": "2025-08-08T10:00:00",
+                "endTime": "2025-08-08T11:00:00"
+              },
+              {
+                "time": "10:30",
+                "available": true,
+                "startTime": "2025-08-08T10:30:00",
+                "endTime": "2025-08-08T11:30:00"
+              },
+              {
+                "time": "11:00",
+                "available": true,
+                "startTime": "2025-08-08T11:00:00",
+                "endTime": "2025-08-08T12:00:00"
+              },
+              {
+                "time": "11:30",
+                "available": true,
+                "startTime": "2025-08-08T11:30:00",
+                "endTime": "2025-08-08T12:30:00"
+              },
+              {
+                "time": "12:00",
+                "available": true,
+                "startTime": "2025-08-08T12:00:00",
+                "endTime": "2025-08-08T13:00:00"
+              },
+              {
+                "time": "12:30",
+                "available": true,
+                "startTime": "2025-08-08T12:30:00",
+                "endTime": "2025-08-08T13:30:00"
+              },
+              {
+                "time": "13:00",
+                "available": true,
+                "startTime": "2025-08-08T13:00:00",
+                "endTime": "2025-08-08T14:00:00"
+              },
+              {
+                "time": "13:30",
+                "available": true,
+                "startTime": "2025-08-08T13:30:00",
+                "endTime": "2025-08-08T14:30:00"
+              },
+              {
+                "time": "14:00",
+                "available": true,
+                "startTime": "2025-08-08T14:00:00",
+                "endTime": "2025-08-08T15:00:00"
+              },
+              {
+                "time": "14:30",
+                "available": true,
+                "startTime": "2025-08-08T14:30:00",
+                "endTime": "2025-08-08T15:30:00"
+              },
+              {
+                "time": "15:00",
+                "available": true,
+                "startTime": "2025-08-08T15:00:00",
+                "endTime": "2025-08-08T16:00:00"
+              },
+              {
+                "time": "15:30",
+                "available": true,
+                "startTime": "2025-08-08T15:30:00",
+                "endTime": "2025-08-08T16:30:00"
+              },
+              {
+                "time": "16:00",
+                "available": true,
+                "startTime": "2025-08-08T16:00:00",
+                "endTime": "2025-08-08T17:00:00"
+              },
+              {
+                "time": "16:30",
+                "available": true,
+                "startTime": "2025-08-08T16:30:00",
+                "endTime": "2025-08-08T17:30:00"
+              },
+              {
+                "time": "17:00",
+                "available": true,
+                "startTime": "2025-08-08T17:00:00",
+                "endTime": "2025-08-08T18:00:00"
+              }
+            ],
+            "error": null
+          },
+          {
+            "staffId": "NPUk2vp9EnB9LuyZQPbAuA",
+            "staffName": "Phorest Test",
+            "title": "Beauty Therapist",
+            "slots": [
+              {
+                "time": "09:00",
+                "available": true,
+                "startTime": "2025-08-08T09:00:00",
+                "endTime": "2025-08-08T10:00:00"
+              },
+              {
+                "time": "09:30",
+                "available": true,
+                "startTime": "2025-08-08T09:30:00",
+                "endTime": "2025-08-08T10:30:00"
+              },
+              {
+                "time": "10:00",
+                "available": true,
+                "startTime": "2025-08-08T10:00:00",
+                "endTime": "2025-08-08T11:00:00"
+              },
+              {
+                "time": "10:30",
+                "available": true,
+                "startTime": "2025-08-08T10:30:00",
+                "endTime": "2025-08-08T11:30:00"
+              },
+              {
+                "time": "11:00",
+                "available": true,
+                "startTime": "2025-08-08T11:00:00",
+                "endTime": "2025-08-08T12:00:00"
+              },
+              {
+                "time": "11:30",
+                "available": true,
+                "startTime": "2025-08-08T11:30:00",
+                "endTime": "2025-08-08T12:30:00"
+              },
+              {
+                "time": "12:00",
+                "available": true,
+                "startTime": "2025-08-08T12:00:00",
+                "endTime": "2025-08-08T13:00:00"
+              },
+              {
+                "time": "12:30",
+                "available": true,
+                "startTime": "2025-08-08T12:30:00",
+                "endTime": "2025-08-08T13:30:00"
+              },
+              {
+                "time": "13:00",
+                "available": true,
+                "startTime": "2025-08-08T13:00:00",
+                "endTime": "2025-08-08T14:00:00"
+              },
+              {
+                "time": "13:30",
+                "available": true,
+                "startTime": "2025-08-08T13:30:00",
+                "endTime": "2025-08-08T14:30:00"
+              },
+              {
+                "time": "14:00",
+                "available": true,
+                "startTime": "2025-08-08T14:00:00",
+                "endTime": "2025-08-08T15:00:00"
+              },
+              {
+                "time": "14:30",
+                "available": true,
+                "startTime": "2025-08-08T14:30:00",
+                "endTime": "2025-08-08T15:30:00"
+              },
+              {
+                "time": "15:00",
+                "available": true,
+                "startTime": "2025-08-08T15:00:00",
+                "endTime": "2025-08-08T16:00:00"
+              },
+              {
+                "time": "15:30",
+                "available": true,
+                "startTime": "2025-08-08T15:30:00",
+                "endTime": "2025-08-08T16:30:00"
+              },
+              {
+                "time": "16:00",
+                "available": true,
+                "startTime": "2025-08-08T16:00:00",
+                "endTime": "2025-08-08T17:00:00"
+              },
+              {
+                "time": "16:30",
+                "available": true,
+                "startTime": "2025-08-08T16:30:00",
+                "endTime": "2025-08-08T17:30:00"
+              },
+              {
+                "time": "17:00",
+                "available": true,
+                "startTime": "2025-08-08T17:00:00",
+                "endTime": "2025-08-08T18:00:00"
+              }
+            ],
+            "error": null
+          },
+          {
+            "staffId": "BCGCteX3cJiz7e89DQBheQ",
+            "staffName": "Tim  Hardy",
+            "title": "Beauty Therapist",
+            "slots": [
+              {
+                "time": "09:00",
+                "available": true,
+                "startTime": "2025-08-08T09:00:00",
+                "endTime": "2025-08-08T10:00:00"
+              },
+              {
+                "time": "09:30",
+                "available": true,
+                "startTime": "2025-08-08T09:30:00",
+                "endTime": "2025-08-08T10:30:00"
+              },
+              {
+                "time": "10:00",
+                "available": true,
+                "startTime": "2025-08-08T10:00:00",
+                "endTime": "2025-08-08T11:00:00"
+              },
+              {
+                "time": "10:30",
+                "available": true,
+                "startTime": "2025-08-08T10:30:00",
+                "endTime": "2025-08-08T11:30:00"
+              },
+              {
+                "time": "11:00",
+                "available": true,
+                "startTime": "2025-08-08T11:00:00",
+                "endTime": "2025-08-08T12:00:00"
+              },
+              {
+                "time": "11:30",
+                "available": true,
+                "startTime": "2025-08-08T11:30:00",
+                "endTime": "2025-08-08T12:30:00"
+              },
+              {
+                "time": "12:00",
+                "available": true,
+                "startTime": "2025-08-08T12:00:00",
+                "endTime": "2025-08-08T13:00:00"
+              },
+              {
+                "time": "12:30",
+                "available": true,
+                "startTime": "2025-08-08T12:30:00",
+                "endTime": "2025-08-08T13:30:00"
+              },
+              {
+                "time": "13:00",
+                "available": true,
+                "startTime": "2025-08-08T13:00:00",
+                "endTime": "2025-08-08T14:00:00"
+              },
+              {
+                "time": "13:30",
+                "available": true,
+                "startTime": "2025-08-08T13:30:00",
+                "endTime": "2025-08-08T14:30:00"
+              },
+              {
+                "time": "14:00",
+                "available": true,
+                "startTime": "2025-08-08T14:00:00",
+                "endTime": "2025-08-08T15:00:00"
+              },
+              {
+                "time": "14:30",
+                "available": true,
+                "startTime": "2025-08-08T14:30:00",
+                "endTime": "2025-08-08T15:30:00"
+              },
+              {
+                "time": "15:00",
+                "available": true,
+                "startTime": "2025-08-08T15:00:00",
+                "endTime": "2025-08-08T16:00:00"
+              },
+              {
+                "time": "15:30",
+                "available": true,
+                "startTime": "2025-08-08T15:30:00",
+                "endTime": "2025-08-08T16:30:00"
+              },
+              {
+                "time": "16:00",
+                "available": true,
+                "startTime": "2025-08-08T16:00:00",
+                "endTime": "2025-08-08T17:00:00"
+              },
+              {
+                "time": "16:30",
+                "available": true,
+                "startTime": "2025-08-08T16:30:00",
+                "endTime": "2025-08-08T17:30:00"
+              },
+              {
+                "time": "17:00",
+                "available": true,
+                "startTime": "2025-08-08T17:00:00",
+                "endTime": "2025-08-08T18:00:00"
+              }
+            ],
+            "error": null
+          }
+        ]
+      }
+    },
+    "staffFiltering": {
+      "success": true,
+      "totalStaff": 12,
+      "isFilteredCorrectly": false,
+      "hasIsabelle": true,
+      "hasMel": true,
+      "staffList": [
+        {
+          "name": "Adarsh  Das",
+          "id": "RIpZqKSCWZAnVsCUc99TRw"
+        },
+        {
+          "name": "Chris Mihaljevich",
+          "id": "Y7_RCTnSFUgn9RXQNdOC7A"
+        },
+        {
+          "name": "Isabelle Callaghan",
+          "id": "X-qh_VV3E41h9tghKPiRyg"
+        },
+        {
+          "name": "Jannine Simone",
+          "id": "pZyhGSuNV_C5QDyASqcqcA"
+        },
+        {
+          "name": "Jemma Gleeson",
+          "id": "-nhuNdvjYuLZQsqTYFAkbA"
+        },
+        {
+          "name": "Josh Mills",
+          "id": "ClzmPutG7xx7aYrTTTEqZQ"
+        },
+        {
+          "name": "LED  Cottesloe",
+          "id": "sZZNtIuWjxoMkUmyA5Eoew"
+        },
+        {
+          "name": "Maddison Foster",
+          "id": "UVBsX1a41enJ0IhI3Jlfag"
+        },
+        {
+          "name": "Melissa Tincey",
+          "id": "OFSlDmhiLAZa2uc90-IwHg"
+        },
+        {
+          "name": "Paul Quigley",
+          "id": "o4W4EAAYNbHvQqsFo2qC4g"
+        },
+        {
+          "name": "Phorest Test",
+          "id": "NPUk2vp9EnB9LuyZQPbAuA"
+        },
+        {
+          "name": "Tim  Hardy",
+          "id": "BCGCteX3cJiz7e89DQBheQ"
+        }
+      ]
+    },
+    "serviceFiltering": null,
+    "errors": []
+  },
+  "summary": {
+    "apiAccessible": true,
+    "staffFilteringVerified": false,
+    "authenticationRequired": false,
+    "criticalFindings": [
+      "Staff filtering may not be working - returned 12 staff instead of ≤2"
+    ]
+  }
+}

@@ -34,18 +34,27 @@ export async function POST(request: NextRequest) {
       console.log(`🏥 Setting branch context to: ${branchId}`);
       phorestService.branchId = branchId;
       
-      // Get staff members for the branch
-      const staff = await phorestService.getStaff(branchId);
-      console.log(`👥 Found ${staff.length} staff members for branch ${branchId}`);
+      // CRITICAL FIX: Get only qualified staff for this specific service at this branch
+      console.log(`🎯 Getting qualified staff for service ${serviceId} at branch ${branchId}`);
+      const staff = await phorestService.getQualifiedStaffForService(serviceId, branchId);
+      
+      console.log(`👥 Found ${staff.length} qualified staff members for this service`);
       console.log(`👥 Staff details:`, staff.map(s => ({ 
         id: s.staffId, 
         name: `${s.firstName} ${s.lastName}`, 
-        title: s.title || s.jobTitle 
+        role: s.staffCategoryName || 'No role',
+        branch: s.branchId === branchId ? 'CORRECT BRANCH' : 'WRONG BRANCH'
       })));
 
       if (staff.length === 0) {
-        console.warn(`⚠️ No staff found for branch ${branchId}`);
-        throw new Error('No staff members found for this branch');
+        console.warn(`⚠️ No qualified staff found for service ${serviceId} at branch ${branchId}`);
+        
+        // Provide helpful error message
+        const allBranchStaff = await phorestService.getStaff(branchId);
+        console.log(`📊 Total staff at branch: ${allBranchStaff.length}`);
+        console.log(`📊 Service requires specific qualifications that may not be available at this branch`);
+        
+        throw new Error(`No qualified staff available for this service at this location. Please try a different service or location.`);
       }
 
       // Get availability for each staff member with better error handling

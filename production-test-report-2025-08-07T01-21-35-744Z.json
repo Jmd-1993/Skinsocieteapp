@@ -1,0 +1,72 @@
+{
+  "timestamp": "2025-08-07T01:21:35.744Z",
+  "testUrl": "https://skinsocieteapp.onrender.com/appointments",
+  "duration": 1840,
+  "screenshots": [
+    {
+      "step": 1,
+      "name": "booking-page-loaded",
+      "filename": "screenshot-1-booking-page-loaded-2025-08-07T01-21-35-499Z.png",
+      "filepath": "/Users/joshmills/skin-societe/screenshot-1-booking-page-loaded-2025-08-07T01-21-35-499Z.png"
+    },
+    {
+      "step": 2,
+      "name": "service-selection-failed",
+      "filename": "screenshot-2-service-selection-failed-2025-08-07T01-21-35-551Z.png",
+      "filepath": "/Users/joshmills/skin-societe/screenshot-2-service-selection-failed-2025-08-07T01-21-35-551Z.png"
+    },
+    {
+      "step": 3,
+      "name": "staff-filtering-failed",
+      "filename": "screenshot-3-staff-filtering-failed-2025-08-07T01-21-35-613Z.png",
+      "filepath": "/Users/joshmills/skin-societe/screenshot-3-staff-filtering-failed-2025-08-07T01-21-35-613Z.png"
+    },
+    {
+      "step": 4,
+      "name": "slot-selection-failed",
+      "filename": "screenshot-4-slot-selection-failed-2025-08-07T01-21-35-678Z.png",
+      "filepath": "/Users/joshmills/skin-societe/screenshot-4-slot-selection-failed-2025-08-07T01-21-35-678Z.png"
+    },
+    {
+      "step": 5,
+      "name": "booking-completion-failed",
+      "filename": "screenshot-5-booking-completion-failed-2025-08-07T01-21-35-709Z.png",
+      "filepath": "/Users/joshmills/skin-societe/screenshot-5-booking-completion-failed-2025-08-07T01-21-35-709Z.png"
+    }
+  ],
+  "results": {
+    "navigation": {
+      "success": true,
+      "loadTime": 1185,
+      "title": "Skin Societe - Australia's Premier Beauty Destination",
+      "url": "https://skinsocieteapp.onrender.com/appointments",
+      "hasRequiredElements": true
+    },
+    "serviceSelection": {
+      "success": false,
+      "error": "this.page.waitForTimeout is not a function"
+    },
+    "staffFiltering": {
+      "success": false,
+      "error": "this.page.waitForTimeout is not a function"
+    },
+    "appointmentSlots": {
+      "success": false,
+      "error": "this.page.waitForTimeout is not a function"
+    },
+    "bookingFlow": {
+      "success": false,
+      "error": "this.page.waitForTimeout is not a function"
+    },
+    "errors": []
+  },
+  "summary": {
+    "totalTests": 5,
+    "passedTests": 1,
+    "failedTests": 4,
+    "criticalIssues": [
+      "Staff filtering not working - may show too many staff members",
+      "No appointment slots found - availability API may not be working"
+    ]
+  }
+}

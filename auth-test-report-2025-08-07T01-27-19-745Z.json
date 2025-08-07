@@ -1,0 +1,45 @@
+{
+  "timestamp": "2025-08-07T01:27:19.742Z",
+  "testUrl": "https://skinsocieteapp.onrender.com/appointments",
+  "results": {
+    "authenticationFlow": {
+      "success": false,
+      "error": "Navigation timeout of 30000 ms exceeded"
+    },
+    "afterAuthBookingAccess": {
+      "success": false,
+      "error": "Navigation timeout of 30000 ms exceeded"
+    },
+    "staffFiltering": {
+      "success": true,
+      "implementation": {
+        "hasStaffFiltering": false,
+        "hasCottesloeLogic": false,
+        "hasIsabelleReference": false,
+        "hasMelReference": false,
+        "hasStaffAPI": false,
+        "hasAvailabilityAPI": false,
+        "hasBranchFiltering": false,
+        "hasPhorestIntegration": true,
+        "hasCottesloeBranchId": false,
+        "hasQualificationFiltering": false,
+        "relevantCodeSample": ""
+      }
+    },
+    "bookingWorkflow": null,
+    "errors": []
+  },
+  "screenshots": [],
+  "summary": {
+    "authenticationRequired": false,
+    "bookingPageAccessible": false,
+    "staffFilteringImplemented": true,
+    "criticalIssues": [
+      "Staff filtering not implemented in frontend code",
+      "Cottesloe branch ID not found in code - may affect staff filtering"
+    ],
+    "recommendations": [
+      "Phorest integration detected - staff filtering likely depends on API responses"
+    ]
+  }
+}

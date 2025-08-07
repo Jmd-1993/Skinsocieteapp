@@ -1,0 +1,37 @@
+{
+  "timestamp": "2025-08-07T01:22:53.549Z",
+  "url": "https://skinsocieteapp.onrender.com/appointments",
+  "analysis": {
+    "authentication": null,
+    "bookingInterface": null,
+    "networkRequests": [
+      {
+        "url": "https://skinsocieteapp.onrender.com/appointments",
+        "method": "GET",
+        "type": "request"
+      },
+      {
+        "url": "https://skinsocieteapp.onrender.com/appointments",
+        "status": 200,
+        "type": "response"
+      },
+      {
+        "url": "https://skinsocieteapp.onrender.com/_next/static/chunks/app/appointments/page-92fa5723f108b9c6.js",
+        "method": "GET",
+        "type": "request"
+      },
+      {
+        "url": "https://skinsocieteapp.onrender.com/_next/static/chunks/app/appointments/page-92fa5723f108b9c6.js",
+        "status": 200,
+        "type": "response"
+      }
+    ],
+    "errors": [
+      "ERROR: Failed to load resource: the server responded with a status of 404 ()",
+      "Analysis failed: Cannot read properties of undefined (reading 'hasContent')"
+    ]
+  },
+  "recommendations": [
+    "No staff mentions detected - staff filtering may need authentication"
+  ]
+}

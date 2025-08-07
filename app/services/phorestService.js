@@ -612,18 +612,74 @@ class PhorestService {
     }
   }
 
-  // STAFF (Branch level)
-  async getStaff(branchId = null) {
+  // STAFF (Branch level) - NOW WITH PROPER FILTERING
+  async getStaff(branchId = null, options = {}) {
     try {
       const targetBranchId = branchId || this.branchId;
       if (!targetBranchId) {
         await this.ensureBranchId();
       }
       
+      console.log(`🔍 Fetching staff for branch: ${targetBranchId}`);
+      
       const response = await this.api.get(
         `/${this.config.businessId}/branch/${targetBranchId || this.branchId}/staff`
       );
-      return response.data._embedded?.staffs || [];
+      
+      const allStaff = response.data._embedded?.staffs || [];
+      console.log(`📊 Raw API returned ${allStaff.length} staff members`);
+      
+      // CRITICAL FIX: Filter staff who actually work at this specific branch
+      const branchSpecificStaff = allStaff.filter(staff => {
+        // Must be assigned to the current branch
+        const isAssignedToBranch = staff.branchId === targetBranchId;
+        
+        // Must be active (not archived)
+        const isActive = !staff.archived;
+        
+        // Must be available for online bookings (unless specifically requested to show hidden)
+        const isAvailableForBooking = options.includeHidden || !staff.hideFromOnlineBookings;
+        
+        // Filter out test/system accounts
+        const isRealStaff = !staff.firstName?.toLowerCase().includes('test') && 
+                           !staff.firstName?.toLowerCase().includes('led') &&
+                           !staff.lastName?.toLowerCase().includes('test');
+        
+        const shouldInclude = isAssignedToBranch && isActive && isAvailableForBooking && isRealStaff;
+        
+        if (!shouldInclude) {
+          console.log(`❌ Filtering out ${staff.firstName} ${staff.lastName}: assigned=${isAssignedToBranch}, active=${isActive}, available=${isAvailableForBooking}, real=${isRealStaff}`);
+        }
+        
+        return shouldInclude;
+      });
+      
+      console.log(`✅ After filtering: ${branchSpecificStaff.length} staff members for branch ${targetBranchId}`);
+      branchSpecificStaff.forEach(staff => {
+        console.log(`   - ${staff.firstName} ${staff.lastName} (${staff.staffCategoryName || 'No role'})`);
+      });
+      
+      // ADDITIONAL FILTER: If specific roles/qualifications are requested
+      if (options.requiredRole) {
+        const roleFilteredStaff = branchSpecificStaff.filter(staff => {
+          const staffRole = staff.staffCategoryName?.toLowerCase() || '';
+          const requiredRole = options.requiredRole.toLowerCase();
+          
+          // Handle role matching logic
+          if (requiredRole === 'nurse' || requiredRole === 'injectable') {
+            return staffRole.includes('nurse');
+          } else if (requiredRole === 'therapist' || requiredRole === 'dermal') {
+            return staffRole.includes('therapist') || staffRole.includes('dermal');
+          } else {
+            return staffRole.includes(requiredRole);
+          }
+        });
+        
+        console.log(`🎯 Role-filtered (${options.requiredRole}): ${roleFilteredStaff.length} staff members`);
+        return roleFilteredStaff;
+      }
+      
+      return branchSpecificStaff;
     } catch (error) {
       this.handleError(error);
     }
@@ -640,6 +696,39 @@ class PhorestService {
       return response.data;
     } catch (error) {
       this.handleError(error);
+    }
+  }
+
+  // NEW: Get qualified staff for a specific service/treatment
+  async getQualifiedStaffForService(serviceId, branchId = null) {
+    try {
+      console.log(`🔍 Finding qualified staff for service: ${serviceId}`);
+      
+      // Get the service details to understand requirements
+      const service = await this.getServiceById(serviceId);
+      console.log(`📋 Service: ${service?.name}`);
+      
+      // Get all staff for the branch
+      const allStaff = await this.getStaff(branchId);
+      
+      // Filter staff who are qualified for this service
+      const qualifiedStaff = allStaff.filter(staff => {
+        // Check if this service is in the staff's disqualified list
+        const isDisqualified = staff.disqualifiedServices?.includes(serviceId);
+        const isQualified = !isDisqualified;
+        
+        console.log(`${isQualified ? '✅' : '❌'} ${staff.firstName} ${staff.lastName} - ${isQualified ? 'QUALIFIED' : 'DISQUALIFIED'} for ${service?.name}`);
+        
+        return isQualified;
+      });
+      
+      console.log(`🎯 Found ${qualifiedStaff.length} qualified staff members for service: ${service?.name}`);
+      
+      return qualifiedStaff;
+    } catch (error) {
+      console.error('❌ Error getting qualified staff:', error);
+      // Fallback to all staff if service qualification check fails
+      return await this.getStaff(branchId);
     }
   }
 
