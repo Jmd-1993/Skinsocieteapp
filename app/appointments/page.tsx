@@ -5,6 +5,11 @@ import { useAuth } from '../lib/auth-context';
 import { useRouter } from 'next/navigation';
 import { MainLayout } from '../components/layout/MainLayout';
 import { BookingModal } from '../components/booking/BookingModal';
+import { ConditionBasedSelector } from '../components/booking/ConditionBasedSelector';
+import { VisualTreatmentGallery } from '../components/booking/VisualTreatmentGallery';
+import { MobileBookingInterface } from '../components/booking/MobileBookingInterface';
+import { SmartScheduler } from '../components/booking/SmartScheduler';
+import { ProgressiveIntakeForm } from '../components/booking/ProgressiveIntakeForm';
 import { 
   Calendar, 
   Clock, 
@@ -55,6 +60,21 @@ export default function AppointmentsPage() {
   const [phorestServices, setPhorestServices] = useState<Service[]>([]);
   const [servicesLoading, setServicesLoading] = useState(true);
   const [showBookingModal, setShowBookingModal] = useState(false);
+  const [showMobileBooking, setShowMobileBooking] = useState(false);
+  const [showIntakeForm, setShowIntakeForm] = useState(false);
+  const [bookingMode, setBookingMode] = useState<'condition' | 'gallery' | 'list'>('condition');
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Detect mobile device
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768 || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent));
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   // Fetch client's home clinic from Phorest
   useEffect(() => {
@@ -210,7 +230,18 @@ export default function AppointmentsPage() {
 
   const handleBookNow = (service: Service) => {
     setSelectedService(service);
-    setShowBookingModal(true);
+    
+    // Show appropriate booking interface based on device
+    if (isMobile) {
+      setShowMobileBooking(true);
+    } else {
+      // For new clients, show intake form first
+      if (!clientData?.clientId) {
+        setShowIntakeForm(true);
+      } else {
+        setShowBookingModal(true);
+      }
+    }
   };
 
   const handleBookingComplete = (booking: any) => {
@@ -220,7 +251,20 @@ export default function AppointmentsPage() {
 
   const handleCloseModal = () => {
     setShowBookingModal(false);
+    setShowMobileBooking(false);
+    setShowIntakeForm(false);
     setSelectedService(null);
+  };
+
+  const handleIntakeComplete = (completedClientData: any) => {
+    setClientData(completedClientData);
+    setShowIntakeForm(false);
+    setShowBookingModal(true);
+  };
+
+  const handleSlotSelect = (date: string, time: string, staffId: string) => {
+    // Handle direct slot selection from smart scheduler
+    console.log('Slot selected:', { date, time, staffId });
   };
 
   if (loading) {
@@ -244,10 +288,48 @@ export default function AppointmentsPage() {
   return (
     <MainLayout>
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Header */}
+        {/* Enhanced Header with Mode Selector */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">Book Appointment</h1>
-          <p className="text-gray-600">Choose from our premium clinic services at Australia's leading beauty destination</p>
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
+            <div>
+              <h1 className="text-3xl font-bold text-gray-900 mb-2">Book Your Treatment</h1>
+              <p className="text-gray-600">Premium treatments with real-time availability</p>
+            </div>
+            
+            {/* Booking Mode Selector */}
+            <div className="flex items-center gap-2 bg-gray-100 rounded-lg p-1 mt-4 sm:mt-0">
+              <button
+                onClick={() => setBookingMode('condition')}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                  bookingMode === 'condition'
+                    ? 'bg-white text-purple-600 shadow-sm'
+                    : 'text-gray-600 hover:text-gray-800'
+                }`}
+              >
+                By Concern
+              </button>
+              <button
+                onClick={() => setBookingMode('gallery')}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                  bookingMode === 'gallery'
+                    ? 'bg-white text-purple-600 shadow-sm'
+                    : 'text-gray-600 hover:text-gray-800'
+                }`}
+              >
+                Gallery View
+              </button>
+              <button
+                onClick={() => setBookingMode('list')}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+                  bookingMode === 'list'
+                    ? 'bg-white text-purple-600 shadow-sm'
+                    : 'text-gray-600 hover:text-gray-800'
+                }`}
+              >
+                List View
+              </button>
+            </div>
+          </div>
         </div>
 
         {/* Home Clinic Card - Pulled from Phorest */}
@@ -346,10 +428,13 @@ export default function AppointmentsPage() {
           </div>
         )}
 
-        {/* Services Grid */}
+        {/* Dynamic Service Display Based on Mode */}
         <div className="mb-8">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-bold text-gray-900">Available Services</h2>
+            <h2 className="text-2xl font-bold text-gray-900">
+              {bookingMode === 'condition' ? 'Find Your Perfect Treatment' : 
+               bookingMode === 'gallery' ? 'Treatment Gallery' : 'Available Services'}
+            </h2>
             {phorestServices.length > 0 && (
               <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-medium">
                 ✅ Live from Phorest
@@ -368,51 +453,74 @@ export default function AppointmentsPage() {
               ))}
             </div>
           ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {(phorestServices.length > 0 ? phorestServices : services).map(service => (
-              <div key={service.id} 
-                   className="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-100
-                            transform transition-all duration-300 hover:shadow-xl hover:scale-[1.02]
-                            group cursor-pointer">
-                <div className="p-6">
-                  <div className="flex justify-between items-start mb-4">
-                    <div className="flex-1">
-                      <h3 className="text-xl font-bold text-gray-900 group-hover:text-purple-600 transition-colors">
-                        {service.name}
-                      </h3>
-                      <p className="text-gray-600 mt-1 text-sm leading-relaxed">{service.description}</p>
+            <>
+              {/* Condition-Based Selector */}
+              {bookingMode === 'condition' && (
+                <ConditionBasedSelector 
+                  services={phorestServices.length > 0 ? phorestServices : services}
+                  onServiceSelect={handleBookNow}
+                  loading={servicesLoading}
+                />
+              )}
+              
+              {/* Visual Treatment Gallery */}
+              {bookingMode === 'gallery' && (
+                <VisualTreatmentGallery 
+                  services={phorestServices.length > 0 ? phorestServices : services}
+                  onServiceSelect={handleBookNow}
+                  loading={servicesLoading}
+                />
+              )}
+              
+              {/* Traditional List View */}
+              {bookingMode === 'list' && (
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {(phorestServices.length > 0 ? phorestServices : services).map(service => (
+                  <div key={service.id} 
+                       className="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-100
+                                transform transition-all duration-300 hover:shadow-xl hover:scale-[1.02]
+                                group cursor-pointer">
+                    <div className="p-6">
+                      <div className="flex justify-between items-start mb-4">
+                        <div className="flex-1">
+                          <h3 className="text-xl font-bold text-gray-900 group-hover:text-purple-600 transition-colors">
+                            {service.name}
+                          </h3>
+                          <p className="text-gray-600 mt-1 text-sm leading-relaxed">{service.description}</p>
+                        </div>
+                        <span className="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-xs font-medium ml-2">
+                          {service.category}
+                        </span>
+                      </div>
+                      
+                      <div className="flex items-center justify-between mb-6">
+                        <div className="flex items-center gap-4 text-sm text-gray-600">
+                          <span className="flex items-center gap-1">
+                            <Clock className="w-4 h-4" />
+                            {service.duration} min
+                          </span>
+                          <span className="flex items-center gap-1">
+                            <DollarSign className="w-4 h-4" />
+                            <span className="font-bold text-gray-900">${service.price}</span>
+                          </span>
+                        </div>
+                      </div>
+                      
+                      <button
+                        onClick={() => handleBookNow(service)}
+                        className="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white
+                                 font-semibold py-3 rounded-lg transform transition-all duration-300
+                                 hover:scale-105 hover:shadow-lg active:scale-95 flex items-center
+                                 justify-center gap-2 group-hover:from-purple-600 group-hover:to-pink-600">
+                        <Plus className="w-5 h-5" />
+                        Book Now
+                      </button>
                     </div>
-                    <span className="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-xs font-medium ml-2">
-                      {service.category}
-                    </span>
                   </div>
-                  
-                  <div className="flex items-center justify-between mb-6">
-                    <div className="flex items-center gap-4 text-sm text-gray-600">
-                      <span className="flex items-center gap-1">
-                        <Clock className="w-4 h-4" />
-                        {service.duration} min
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <DollarSign className="w-4 h-4" />
-                        <span className="font-bold text-gray-900">${service.price}</span>
-                      </span>
-                    </div>
-                  </div>
-                  
-                  <button
-                    onClick={() => handleBookNow(service)}
-                    className="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white
-                             font-semibold py-3 rounded-lg transform transition-all duration-300
-                             hover:scale-105 hover:shadow-lg active:scale-95 flex items-center
-                             justify-center gap-2 group-hover:from-purple-600 group-hover:to-pink-600">
-                    <Plus className="w-5 h-5" />
-                    Book Now
-                  </button>
+                  ))}
                 </div>
-              </div>
-              ))}
-            </div>
+              )}
+            </>
           )}
         </div>
 
@@ -475,8 +583,44 @@ export default function AppointmentsPage() {
           </div>
         </div>
 
-        {/* Booking Modal */}
-        {showBookingModal && selectedService && clientData && homeClinic && (
+        {/* Smart Scheduler - Desktop Alternative */}
+        {!isMobile && selectedService && homeClinic && !showBookingModal && !showIntakeForm && (
+          <div className="mt-8">
+            <SmartScheduler
+              service={selectedService}
+              homeClinic={homeClinic}
+              onSlotSelect={handleSlotSelect}
+              clientData={clientData}
+            />
+          </div>
+        )}
+
+        {/* Progressive Intake Form */}
+        {showIntakeForm && selectedService && (
+          <div className="fixed inset-0 bg-black/50 z-50 overflow-y-auto">
+            <ProgressiveIntakeForm
+              service={selectedService}
+              existingClientData={clientData || undefined}
+              onComplete={handleIntakeComplete}
+              onCancel={handleCloseModal}
+            />
+          </div>
+        )}
+
+        {/* Mobile Booking Interface */}
+        {showMobileBooking && selectedService && clientData && homeClinic && (
+          <MobileBookingInterface
+            isOpen={showMobileBooking}
+            onClose={handleCloseModal}
+            service={selectedService}
+            clientData={clientData}
+            homeClinic={homeClinic}
+            onBookingComplete={handleBookingComplete}
+          />
+        )}
+
+        {/* Enhanced Desktop Booking Modal */}
+        {showBookingModal && selectedService && clientData && homeClinic && !isMobile && (
           <BookingModal
             isOpen={showBookingModal}
             onClose={handleCloseModal}
