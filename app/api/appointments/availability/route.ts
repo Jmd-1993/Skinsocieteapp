@@ -9,9 +9,8 @@ interface AvailabilityRequest {
 }
 
 export async function POST(request: NextRequest) {
-  let body: AvailabilityRequest;
   try {
-    body = await request.json();
+    const body: AvailabilityRequest = await request.json();
     const { date, serviceId, branchId, duration = 60 } = body;
 
     // Validate required fields
@@ -190,10 +189,12 @@ export async function POST(request: NextRequest) {
     }
 
   } catch (error: any) {
-    // Log the error with context - safely handle body access
+    // Log the error with context
+    console.error('❌ Availability API error:', error);
+    
     logError(error, {
       endpoint: 'POST /api/appointments/availability',
-      body: body ? { date: body.date, serviceId: body.serviceId, branchId: body.branchId } : 'Failed to parse request body'
+      error: error.message || 'Unknown error'
     });
     
     // Handle the error and get user-friendly response

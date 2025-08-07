@@ -21,9 +21,8 @@ interface BookingRequest {
 }
 
 export async function POST(request: NextRequest) {
-  let body: BookingRequest;
   try {
-    body = await request.json();
+    const body: BookingRequest = await request.json();
     const { clientId, serviceId, staffId, startTime, notes } = body;
 
     // Validate required fields
@@ -103,10 +102,12 @@ export async function POST(request: NextRequest) {
     });
 
   } catch (error: any) {
-    // Log the error with context - safely handle body access
+    // Log the error with context
+    console.error('❌ Booking API error:', error);
+    
     logError(error, { 
       endpoint: 'POST /api/appointments',
-      body: body ? { clientId: body.clientId, serviceId: body.serviceId, staffId: body.staffId, startTime: body.startTime } : 'Failed to parse request body'
+      error: error.message || 'Unknown error'
     });
     
     // Handle the error and get user-friendly response
