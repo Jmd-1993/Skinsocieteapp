@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { handleApiError, logError, AppError, ErrorTypes } from '@/app/lib/error-handler';
 import { emailService, BookingEmailData } from '@/app/lib/email-service';
 import { format, parseISO } from 'date-fns';
+import phorestService from '@/app/services/phorestService.js';
 
 interface BookingRequest {
   clientId: string;
@@ -37,11 +38,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Import Phorest service with absolute path
-    console.log('🔧 Importing Phorest service...');
-    const phorestServiceModule = await import('@/app/services/phorestService.js');
-    const phorestService = phorestServiceModule.default;
-    console.log('✅ Phorest service imported successfully:', !!phorestService);
+    // Phorest service is now statically imported
+    console.log('✅ Phorest service available:', !!phorestService);
 
     console.log(`🎯 Creating booking for client ${clientId}`);
     console.log(`📅 Service: ${serviceId}, Staff: ${staffId}, Time: ${startTime} (Perth time → UTC conversion)`);
