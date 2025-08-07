@@ -1,0 +1,1314 @@
+{
+  "timestamp": "2025-08-07T01:51:48.931Z",
+  "phases": {
+    "navigation": {
+      "success": true,
+      "errors": [],
+      "details": {
+        "title": "Skin Societe - Australia's Premier Beauty Destination",
+        "url": "https://skinsocieteapp.onrender.com/appointments",
+        "loadTime": 2572
+      }
+    },
+    "serviceSelection": {
+      "success": false,
+      "errors": [
+        "No service could be selected"
+      ],
+      "details": {
+        "availableServices": [
+          "By Concern",
+          "Gallery View",
+          "List View",
+          "View All Services",
+          "Free Consultation"
+        ]
+      }
+    },
+    "staffVerification": {
+      "success": false,
+      "errors": [
+        "Expected staff not found"
+      ],
+      "details": {
+        "staffElements": [],
+        "isabelleFound": false,
+        "melFound": false
+      }
+    },
+    "timeSlotSelection": {
+      "success": false,
+      "errors": [
+        "No available time slots found"
+      ],
+      "details": {
+        "timeSlots": [
+          {
+            "tagName": "HTML",
+            "className": "",
+            "textContent": "Skin Societe - Australia's Premier Beauty DestinationSSSkin SocieteSign InShop All ProductsBook AppointmentRewards ProgramHomeShopBookChallengesRewardsLeaderboardHomeShopBookChallengesRewardsLeaderboardProfileBook Your TreatmentPremium treatments with real-time availabilityBy ConcernGallery ViewList ViewNext AvailableToday 2:30 PMAverage Wait15 minutesClinic Rating4.9/5 ★Find Your Perfect TreatmentNeed Something Different?Explore our full range of premium treatments and advanced skincare servicesView All ServicesFree ConsultationLoading services from Phorest... (showing demo services as fallback)Booking system integration with Phorest in progress. You can select services and will be redirected to complete your booking.(self.__next_f=self.__next_f||[]).push([0])self.__next_f.push([1,\"1:\\\"$Sreact.fragment\\\"\\n2:I[4036,[\\\"7177\\\",\\\"static/chunks/app/layout-5263945cfff4f549.js\\\"],\\\"AuthProvider\\\"]\\n3:I[7555,[],\\\"\\\"]\\n4:I[1295,[],\\\"\\\"]\\n5:I[894,[],\\\"ClientPageRoot\\\"]\\n6:I[2932,[\\\"4257\\\",\\\"static/chunks/4257-99d6a2868cd82fcc.js\\\",\\\"1224\\\",\\\"static/chunks/1224-3d764808e198f468.js\\\",\\\"3124\\\",\\\"static/chunks/3124-fe83249b2600f0f2.js\\\",\\\"4921\\\",\\\"static/chunks/app/appointments/page-92fa5723f108b9c6.js\\\"],\\\"default\\\"]\\n9:I[9665,[],\\\"OutletBoundary\\\"]\\nb:I[4911,[],\\\"AsyncMetadataOutlet\\\"]\\nd:I[9665,[],\\\"ViewportBoundary\\\"]\\nf:I[9665,[],\\\"MetadataBoundary\\\"]\\n10:\\\"$Sreact.suspense\\\"\\n12:I[8393,[],\\\"\\\"]\\n:HL[\\\"/_next/static/media/e4af272ccee01ff0-s.p.woff2\\\",\\\"font\\\",{\\\"crossOrigin\\\":\\\"\\\",\\\"type\\\":\\\"font/woff2\\\"}]\\n:HL[\\\"/_next/static/css/58eacca3250b689f.css\\\",\\\"style\\\"]\\n\"])self.__next_f.push([1,\"0:{\\\"P\\\":null,\\\"b\\\":\\\"f-hQUjMHqzk7z7c2P9IZt\\\",\\\"p\\\":\\\"\\\",\\\"c\\\":[\\\"\\\",\\\"appointments\\\"],\\\"i\\\":false,\\\"f\\\":[[[\\\"\\\",{\\\"children\\\":[\\\"appointments\\\",{\\\"children\\\":[\\\"__PAGE__\\\",{}]}]},\\\"$undefined\\\",\\\"$undefined\\\",true],[\\\"\\\",[\\\"$\\\",\\\"$1\\\",\\\"c\\\",{\\\"children\\\":[[[\\\"$\\\",\\\"link\\\",\\\"0\\\",{\\\"rel\\\":\\\"stylesheet\\\",\\\"href\\\":\\\"/_next/static/css/58eacca3250b689f.css\\\",\\\"precedence\\\":\\\"next\\\",\\\"crossOrigin\\\":\\\"$undefined\\\",\\\"nonce\\\":\\\"$undefined\\\"}]],[\\\"$\\\",\\\"html\\\",null,{\\\"lang\\\":\\\"en\\\",\\\"children\\\":[\\\"$\\\",\\\"body\\\",null,{\\\"className\\\":\\\"__className_e8ce0c antialiased bg-gray-50\\\",\\\"children\\\":[\\\"$\\\",\\\"$L2\\\",null,{\\\"children\\\":[\\\"$\\\",\\\"$L3\\\",null,{\\\"parallelRouterKey\\\":\\\"children\\\",\\\"error\\\":\\\"$undefined\\\",\\\"errorStyles\\\":\\\"$undefined\\\",\\\"errorScripts\\\":\\\"$undefined\\\",\\\"template\\\":[\\\"$\\\",\\\"$L4\\\",null,{}],\\\"templateStyles\\\":\\\"$undefined\\\",\\\"templateScripts\\\":\\\"$undefined\\\",\\\"notFound\\\":[[[\\\"$\\\",\\\"title\\\",null,{\\\"children\\\":\\\"404: This page could not be found.\\\"}],[\\\"$\\\",\\\"div\\\",null,{\\\"style\\\":{\\\"fontFamily\\\":\\\"system-ui,\\\\\\\"Segoe UI\\\\\\\",Roboto,Helvetica,Arial,sans-serif,\\\\\\\"Apple Color Emoji\\\\\\\",\\\\\\\"Segoe UI Emoji\\\\\\\"\\\",\\\"height\\\":\\\"100vh\\\",\\\"textAlign\\\":\\\"center\\\",\\\"display\\\":\\\"flex\\\",\\\"flexDirection\\\":\\\"column\\\",\\\"alignItems\\\":\\\"center\\\",\\\"justifyContent\\\":\\\"center\\\"},\\\"children\\\":[\\\"$\\\",\\\"div\\\",null,{\\\"children\\\":[[\\\"$\\\",\\\"style\\\",null,{\\\"dangerouslySetInnerHTML\\\":{\\\"__html\\\":\\\"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}\\\"}}],[\\\"$\\\",\\\"h1\\\",null,{\\\"className\\\":\\\"next-error-h1\\\",\\\"style\\\":{\\\"display\\\":\\\"inline-block\\\",\\\"margin\\\":\\\"0 20px 0 0\\\",\\\"padding\\\":\\\"0 23px 0 0\\\",\\\"fontSize\\\":24,\\\"fontWeight\\\":500,\\\"verticalAlign\\\":\\\"top\\\",\\\"lineHeight\\\":\\\"49px\\\"},\\\"children\\\":404}],[\\\"$\\\",\\\"div\\\",null,{\\\"style\\\":{\\\"display\\\":\\\"inline-block\\\"},\\\"children\\\":[\\\"$\\\",\\\"h2\\\",null,{\\\"style\\\":{\\\"fontSize\\\":14,\\\"fontWeight\\\":400,\\\"lineHeight\\\":\\\"49px\\\",\\\"margin\\\":0},\\\"children\\\":\\\"This page could not be found.\\\"}]}]]}]}]],[]],\\\"forbidden\\\":\\\"$undefined\\\",\\\"unauthorized\\\":\\\"$undefined\\\"}]}]}]}]]}],{\\\"children\\\":[\\\"appointments\\\",[\\\"$\\\",\\\"$1\\\",\\\"c\\\",{\\\"children\\\":[null,[\\\"$\\\",\\\"$L3\\\",null,{\\\"parallelRouterKey\\\":\\\"children\\\",\\\"error\\\":\\\"$undefined\\\",\\\"errorStyles\\\":\\\"$undefined\\\",\\\"errorScripts\\\":\\\"$undefined\\\",\\\"template\\\":[\\\"$\\\",\\\"$L4\\\",null,{}],\\\"templateStyles\\\":\\\"$undefined\\\",\\\"templateScripts\\\":\\\"$undefined\\\",\\\"notFound\\\":\\\"$undefined\\\",\\\"forbidden\\\":\\\"$undefined\\\",\\\"unauthorized\\\":\\\"$undefined\\\"}]]}],{\\\"children\\\":[\\\"__PAGE__\\\",[\\\"$\\\",\\\"$1\\\",\\\"c\\\",{\\\"children\\\":[[\\\"$\\\",\\\"$L5\\\",null,{\\\"Component\\\":\\\"$6\\\",\\\"searchParams\\\":{},\\\"params\\\":{},\\\"promises\\\":[\\\"$@7\\\",\\\"$@8\\\"]}],null,[\\\"$\\\",\\\"$L9\\\",null,{\\\"children\\\":[\\\"$La\\\",[\\\"$\\\",\\\"$Lb\\\",null,{\\\"promise\\\":\\\"$@c\\\"}]]}]]}],{},null,false]},null,false]},null,false],[\\\"$\\\",\\\"$1\\\",\\\"h\\\",{\\\"children\\\":[null,[[\\\"$\\\",\\\"$Ld\\\",null,{\\\"children\\\":\\\"$Le\\\"}],[\\\"$\\\",\\\"meta\\\",null,{\\\"name\\\":\\\"next-size-adjust\\\",\\\"content\\\":\\\"\\\"}]],[\\\"$\\\",\\\"$Lf\\\",null,{\\\"children\\\":[\\\"$\\\",\\\"div\\\",null,{\\\"hidden\\\":true,\\\"children\\\":[\\\"$\\\",\\\"$10\\\",null,{\\\"fallback\\\":null,\\\"children\\\":\\\"$L11\\\"}]}]}]]}],false]],\\\"m\\\":\\\"$undefined\\\",\\\"G\\\":[\\\"$12\\\",[]],\\\"s\\\":false,\\\"S\\\":true}\\n\"])self.__next_f.push([1,\"7:{}\\n8:\\\"$0:f:0:1:2:children:2:children:1:props:children:0:props:params\\\"\\n\"])self.__next_f.push([1,\"e:[[\\\"$\\\",\\\"meta\\\",\\\"0\\\",{\\\"charSet\\\":\\\"utf-8\\\"}],[\\\"$\\\",\\\"meta\\\",\\\"1\\\",{\\\"name\\\":\\\"viewport\\\",\\\"content\\\":\\\"width=device-width, initial-scale=1\\\"}]]\\na:null\\n\"])self.__next_f.push([1,\"13:I[8175,[],\\\"IconMark\\\"]\\nc:{\\\"metadata\\\":[[\\\"$\\\",\\\"title\\\",\\\"0\\\",{\\\"children\\\":\\\"Skin Societe - Australia's Premier Beauty Destination\\\"}],[\\\"$\\\",\\\"meta\\\",\\\"1\\\",{\\\"name\\\":\\\"description\\\",\\\"content\\\":\\\"Shop premium skincare, book clinic treatments, and earn rewards with Australia's first integrated beauty platform\\\"}],[\\\"$\\\",\\\"link\\\",\\\"2\\\",{\\\"rel\\\":\\\"icon\\\",\\\"href\\\":\\\"/favicon.ico\\\",\\\"type\\\":\\\"image/x-icon\\\",\\\"sizes\\\":\\\"16x16\\\"}],[\\\"$\\\",\\\"$L13\\\",\\\"3\\\",{}]],\\\"error\\\":null,\\\"digest\\\":\\\"$undefined\\\"}\\n\"])self.__next_f.push([1,\"11:\\\"$c:metadata\\\"\\n\"])",
+            "clickable": null
+          },
+          {
+            "tagName": "BODY",
+            "className": "__className_e8ce0c antialiased bg-gray-50",
+            "textContent": "SSSkin SocieteSign InShop All ProductsBook AppointmentRewards ProgramHomeShopBookChallengesRewardsLeaderboardHomeShopBookChallengesRewardsLeaderboardProfileBook Your TreatmentPremium treatments with real-time availabilityBy ConcernGallery ViewList ViewNext AvailableToday 2:30 PMAverage Wait15 minutesClinic Rating4.9/5 ★Find Your Perfect TreatmentNeed Something Different?Explore our full range of premium treatments and advanced skincare servicesView All ServicesFree ConsultationLoading services from Phorest... (showing demo services as fallback)Booking system integration with Phorest in progress. You can select services and will be redirected to complete your booking.(self.__next_f=self.__next_f||[]).push([0])self.__next_f.push([1,\"1:\\\"$Sreact.fragment\\\"\\n2:I[4036,[\\\"7177\\\",\\\"static/chunks/app/layout-5263945cfff4f549.js\\\"],\\\"AuthProvider\\\"]\\n3:I[7555,[],\\\"\\\"]\\n4:I[1295,[],\\\"\\\"]\\n5:I[894,[],\\\"ClientPageRoot\\\"]\\n6:I[2932,[\\\"4257\\\",\\\"static/chunks/4257-99d6a2868cd82fcc.js\\\",\\\"1224\\\",\\\"static/chunks/1224-3d764808e198f468.js\\\",\\\"3124\\\",\\\"static/chunks/3124-fe83249b2600f0f2.js\\\",\\\"4921\\\",\\\"static/chunks/app/appointments/page-92fa5723f108b9c6.js\\\"],\\\"default\\\"]\\n9:I[9665,[],\\\"OutletBoundary\\\"]\\nb:I[4911,[],\\\"AsyncMetadataOutlet\\\"]\\nd:I[9665,[],\\\"ViewportBoundary\\\"]\\nf:I[9665,[],\\\"MetadataBoundary\\\"]\\n10:\\\"$Sreact.suspense\\\"\\n12:I[8393,[],\\\"\\\"]\\n:HL[\\\"/_next/static/media/e4af272ccee01ff0-s.p.woff2\\\",\\\"font\\\",{\\\"crossOrigin\\\":\\\"\\\",\\\"type\\\":\\\"font/woff2\\\"}]\\n:HL[\\\"/_next/static/css/58eacca3250b689f.css\\\",\\\"style\\\"]\\n\"])self.__next_f.push([1,\"0:{\\\"P\\\":null,\\\"b\\\":\\\"f-hQUjMHqzk7z7c2P9IZt\\\",\\\"p\\\":\\\"\\\",\\\"c\\\":[\\\"\\\",\\\"appointments\\\"],\\\"i\\\":false,\\\"f\\\":[[[\\\"\\\",{\\\"children\\\":[\\\"appointments\\\",{\\\"children\\\":[\\\"__PAGE__\\\",{}]}]},\\\"$undefined\\\",\\\"$undefined\\\",true],[\\\"\\\",[\\\"$\\\",\\\"$1\\\",\\\"c\\\",{\\\"children\\\":[[[\\\"$\\\",\\\"link\\\",\\\"0\\\",{\\\"rel\\\":\\\"stylesheet\\\",\\\"href\\\":\\\"/_next/static/css/58eacca3250b689f.css\\\",\\\"precedence\\\":\\\"next\\\",\\\"crossOrigin\\\":\\\"$undefined\\\",\\\"nonce\\\":\\\"$undefined\\\"}]],[\\\"$\\\",\\\"html\\\",null,{\\\"lang\\\":\\\"en\\\",\\\"children\\\":[\\\"$\\\",\\\"body\\\",null,{\\\"className\\\":\\\"__className_e8ce0c antialiased bg-gray-50\\\",\\\"children\\\":[\\\"$\\\",\\\"$L2\\\",null,{\\\"children\\\":[\\\"$\\\",\\\"$L3\\\",null,{\\\"parallelRouterKey\\\":\\\"children\\\",\\\"error\\\":\\\"$undefined\\\",\\\"errorStyles\\\":\\\"$undefined\\\",\\\"errorScripts\\\":\\\"$undefined\\\",\\\"template\\\":[\\\"$\\\",\\\"$L4\\\",null,{}],\\\"templateStyles\\\":\\\"$undefined\\\",\\\"templateScripts\\\":\\\"$undefined\\\",\\\"notFound\\\":[[[\\\"$\\\",\\\"title\\\",null,{\\\"children\\\":\\\"404: This page could not be found.\\\"}],[\\\"$\\\",\\\"div\\\",null,{\\\"style\\\":{\\\"fontFamily\\\":\\\"system-ui,\\\\\\\"Segoe UI\\\\\\\",Roboto,Helvetica,Arial,sans-serif,\\\\\\\"Apple Color Emoji\\\\\\\",\\\\\\\"Segoe UI Emoji\\\\\\\"\\\",\\\"height\\\":\\\"100vh\\\",\\\"textAlign\\\":\\\"center\\\",\\\"display\\\":\\\"flex\\\",\\\"flexDirection\\\":\\\"column\\\",\\\"alignItems\\\":\\\"center\\\",\\\"justifyContent\\\":\\\"center\\\"},\\\"children\\\":[\\\"$\\\",\\\"div\\\",null,{\\\"children\\\":[[\\\"$\\\",\\\"style\\\",null,{\\\"dangerouslySetInnerHTML\\\":{\\\"__html\\\":\\\"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}\\\"}}],[\\\"$\\\",\\\"h1\\\",null,{\\\"className\\\":\\\"next-error-h1\\\",\\\"style\\\":{\\\"display\\\":\\\"inline-block\\\",\\\"margin\\\":\\\"0 20px 0 0\\\",\\\"padding\\\":\\\"0 23px 0 0\\\",\\\"fontSize\\\":24,\\\"fontWeight\\\":500,\\\"verticalAlign\\\":\\\"top\\\",\\\"lineHeight\\\":\\\"49px\\\"},\\\"children\\\":404}],[\\\"$\\\",\\\"div\\\",null,{\\\"style\\\":{\\\"display\\\":\\\"inline-block\\\"},\\\"children\\\":[\\\"$\\\",\\\"h2\\\",null,{\\\"style\\\":{\\\"fontSize\\\":14,\\\"fontWeight\\\":400,\\\"lineHeight\\\":\\\"49px\\\",\\\"margin\\\":0},\\\"children\\\":\\\"This page could not be found.\\\"}]}]]}]}]],[]],\\\"forbidden\\\":\\\"$undefined\\\",\\\"unauthorized\\\":\\\"$undefined\\\"}]}]}]}]]}],{\\\"children\\\":[\\\"appointments\\\",[\\\"$\\\",\\\"$1\\\",\\\"c\\\",{\\\"children\\\":[null,[\\\"$\\\",\\\"$L3\\\",null,{\\\"parallelRouterKey\\\":\\\"children\\\",\\\"error\\\":\\\"$undefined\\\",\\\"errorStyles\\\":\\\"$undefined\\\",\\\"errorScripts\\\":\\\"$undefined\\\",\\\"template\\\":[\\\"$\\\",\\\"$L4\\\",null,{}],\\\"templateStyles\\\":\\\"$undefined\\\",\\\"templateScripts\\\":\\\"$undefined\\\",\\\"notFound\\\":\\\"$undefined\\\",\\\"forbidden\\\":\\\"$undefined\\\",\\\"unauthorized\\\":\\\"$undefined\\\"}]]}],{\\\"children\\\":[\\\"__PAGE__\\\",[\\\"$\\\",\\\"$1\\\",\\\"c\\\",{\\\"children\\\":[[\\\"$\\\",\\\"$L5\\\",null,{\\\"Component\\\":\\\"$6\\\",\\\"searchParams\\\":{},\\\"params\\\":{},\\\"promises\\\":[\\\"$@7\\\",\\\"$@8\\\"]}],null,[\\\"$\\\",\\\"$L9\\\",null,{\\\"children\\\":[\\\"$La\\\",[\\\"$\\\",\\\"$Lb\\\",null,{\\\"promise\\\":\\\"$@c\\\"}]]}]]}],{},null,false]},null,false]},null,false],[\\\"$\\\",\\\"$1\\\",\\\"h\\\",{\\\"children\\\":[null,[[\\\"$\\\",\\\"$Ld\\\",null,{\\\"children\\\":\\\"$Le\\\"}],[\\\"$\\\",\\\"meta\\\",null,{\\\"name\\\":\\\"next-size-adjust\\\",\\\"content\\\":\\\"\\\"}]],[\\\"$\\\",\\\"$Lf\\\",null,{\\\"children\\\":[\\\"$\\\",\\\"div\\\",null,{\\\"hidden\\\":true,\\\"children\\\":[\\\"$\\\",\\\"$10\\\",null,{\\\"fallback\\\":null,\\\"children\\\":\\\"$L11\\\"}]}]}]]}],false]],\\\"m\\\":\\\"$undefined\\\",\\\"G\\\":[\\\"$12\\\",[]],\\\"s\\\":false,\\\"S\\\":true}\\n\"])self.__next_f.push([1,\"7:{}\\n8:\\\"$0:f:0:1:2:children:2:children:1:props:children:0:props:params\\\"\\n\"])self.__next_f.push([1,\"e:[[\\\"$\\\",\\\"meta\\\",\\\"0\\\",{\\\"charSet\\\":\\\"utf-8\\\"}],[\\\"$\\\",\\\"meta\\\",\\\"1\\\",{\\\"name\\\":\\\"viewport\\\",\\\"content\\\":\\\"width=device-width, initial-scale=1\\\"}]]\\na:null\\n\"])self.__next_f.push([1,\"13:I[8175,[],\\\"IconMark\\\"]\\nc:{\\\"metadata\\\":[[\\\"$\\\",\\\"title\\\",\\\"0\\\",{\\\"children\\\":\\\"Skin Societe - Australia's Premier Beauty Destination\\\"}],[\\\"$\\\",\\\"meta\\\",\\\"1\\\",{\\\"name\\\":\\\"description\\\",\\\"content\\\":\\\"Shop premium skincare, book clinic treatments, and earn rewards with Australia's first integrated beauty platform\\\"}],[\\\"$\\\",\\\"link\\\",\\\"2\\\",{\\\"rel\\\":\\\"icon\\\",\\\"href\\\":\\\"/favicon.ico\\\",\\\"type\\\":\\\"image/x-icon\\\",\\\"sizes\\\":\\\"16x16\\\"}],[\\\"$\\\",\\\"$L13\\\",\\\"3\\\",{}]],\\\"error\\\":null,\\\"digest\\\":\\\"$undefined\\\"}\\n\"])self.__next_f.push([1,\"11:\\\"$c:metadata\\\"\\n\"])",
+            "clickable": null
+          },
+          {
+            "tagName": "DIV",
+            "className": "min-h-screen bg-gray-50",
+            "textContent": "SSSkin SocieteSign InShop All ProductsBook AppointmentRewards ProgramHomeShopBookChallengesRewardsLeaderboardHomeShopBookChallengesRewardsLeaderboardProfileBook Your TreatmentPremium treatments with real-time availabilityBy ConcernGallery ViewList ViewNext AvailableToday 2:30 PMAverage Wait15 minutesClinic Rating4.9/5 ★Find Your Perfect TreatmentNeed Something Different?Explore our full range of premium treatments and advanced skincare servicesView All ServicesFree ConsultationLoading services from Phorest... (showing demo services as fallback)Booking system integration with Phorest in progress. You can select services and will be redirected to complete your booking.",
+            "clickable": null
+          },
+          {
+            "tagName": "MAIN",
+            "className": "pt-16 pb-20 md:pb-0 md:pl-64",
+            "textContent": "Book Your TreatmentPremium treatments with real-time availabilityBy ConcernGallery ViewList ViewNext AvailableToday 2:30 PMAverage Wait15 minutesClinic Rating4.9/5 ★Find Your Perfect TreatmentNeed Something Different?Explore our full range of premium treatments and advanced skincare servicesView All ServicesFree ConsultationLoading services from Phorest... (showing demo services as fallback)Booking system integration with Phorest in progress. You can select services and will be redirected to complete your booking.",
+            "clickable": null
+          },
+          {
+            "tagName": "DIV",
+            "className": "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6",
+            "textContent": "Book Your TreatmentPremium treatments with real-time availabilityBy ConcernGallery ViewList ViewNext AvailableToday 2:30 PMAverage Wait15 minutesClinic Rating4.9/5 ★Find Your Perfect TreatmentNeed Something Different?Explore our full range of premium treatments and advanced skincare servicesView All ServicesFree ConsultationLoading services from Phorest... (showing demo services as fallback)Booking system integration with Phorest in progress. You can select services and will be redirected to complete your booking.",
+            "clickable": null
+          },
+          {
+            "tagName": "DIV",
+            "className": "max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8",
+            "textContent": "Book Your TreatmentPremium treatments with real-time availabilityBy ConcernGallery ViewList ViewNext AvailableToday 2:30 PMAverage Wait15 minutesClinic Rating4.9/5 ★Find Your Perfect TreatmentNeed Something Different?Explore our full range of premium treatments and advanced skincare servicesView All ServicesFree ConsultationLoading services from Phorest... (showing demo services as fallback)Booking system integration with Phorest in progress. You can select services and will be redirected to complete your booking.",
+            "clickable": null
+          },
+          {
+            "tagName": "DIV",
+            "className": "grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8",
+            "textContent": "Next AvailableToday 2:30 PMAverage Wait15 minutesClinic Rating4.9/5 ★",
+            "clickable": null
+          },
+          {
+            "tagName": "DIV",
+            "className": "bg-white rounded-lg p-4 text-center shadow-sm hover:shadow-md transition-shadow",
+            "textContent": "Next AvailableToday 2:30 PM",
+            "clickable": null
+          },
+          {
+            "tagName": "DIV",
+            "className": "font-bold text-gray-900",
+            "textContent": "Today 2:30 PM",
+            "clickable": null
+          }
+        ]
+      }
+    },
+    "bookingCompletion": {
+      "success": false,
+      "errors": [
+        "No booking buttons found"
+      ],
+      "details": {
+        "bookingButtons": []
+      }
+    }
+  },
+  "errors": [],
+  "networkAnalysis": {
+    "totalRequests": 29,
+    "totalResponses": 29,
+    "apiCallsCount": 0,
+    "bookingCallsCount": 0,
+    "availabilityCallsCount": 0,
+    "errorResponsesCount": 1,
+    "errorResponses": [
+      {
+        "url": "https://skinsocieteapp.onrender.com/sign-in?_rsc=ljfiw",
+        "status": 404,
+        "statusText": "",
+        "data": null
+      }
+    ],
+    "bookingApiCalls": []
+  },
+  "conclusions": [
+    "✅ navigation completed successfully",
+    "❌ serviceSelection failed: No service could be selected",
+    "❌ staffVerification failed: Expected staff not found",
+    "❌ timeSlotSelection failed: No available time slots found",
+    "❌ bookingCompletion failed: No booking buttons found",
+    "🚨 1 API errors detected",
+    "⚠️  No booking API calls detected - booking may not be reaching the backend"
+  ],
+  "networkLogs": [
+    {
+      "type": "request",
+      "method": "GET",
+      "url": "https://skinsocieteapp.onrender.com/appointments",
+      "headers": {
+        "accept-language": "en-US,en;q=0.9",
+        "upgrade-insecure-requests": "1",
+        "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36",
+        "sec-ch-ua": "\"Chromium\";v=\"139\", \"Not;A=Brand\";v=\"99\"",
+        "sec-ch-ua-mobile": "?0",
+        "sec-ch-ua-platform": "\"macOS\""
+      },
+      "timestamp": "2025-08-07T01:51:50.704Z"
+    },
+    {
+      "type": "response",
+      "status": 200,
+      "statusText": "",
+      "url": "https://skinsocieteapp.onrender.com/appointments",
+      "headers": {
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "cache-control": "s-maxage=31536000",
+        "cf-cache-status": "DYNAMIC",
+        "cf-ray": "96b32196cb0e8673-PER",
+        "content-encoding": "gzip",
+        "content-type": "text/html; charset=utf-8",
+        "date": "Thu, 07 Aug 2025 01:51:51 GMT",
+        "etag": "\"lkebq4l1zdeqy\"",
+        "rndr-id": "5faf6f88-a148-4384",
+        "server": "cloudflare",
+        "vary": "RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Router-Segment-Prefetch, Accept-Encoding",
+        "x-nextjs-cache": "HIT",
+        "x-nextjs-prerender": "1\n1",
+        "x-nextjs-stale-time": "300",
+        "x-powered-by": "Next.js",
+        "x-render-origin-server": "Render"
+      },
+      "data": null,
+      "timestamp": "2025-08-07T01:51:51.230Z"
+    },
+    {
+      "type": "request",
+      "method": "GET",
+      "url": "https://skinsocieteapp.onrender.com/_next/static/media/e4af272ccee01ff0-s.p.woff2",
+      "headers": {
+        "origin": "https://skinsocieteapp.onrender.com",
+        "sec-ch-ua-platform": "\"macOS\"",
+        "referer": "https://skinsocieteapp.onrender.com/appointments",
+        "accept-language": "en-US,en;q=0.9",
+        "sec-ch-ua": "\"Chromium\";v=\"139\", \"Not;A=Brand\";v=\"99\"",
+        "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36",
+        "sec-ch-ua-mobile": "?0"
+      },
+      "timestamp": "2025-08-07T01:51:51.237Z"
+    },
+    {
+      "type": "request",
+      "method": "GET",
+      "url": "https://skinsocieteapp.onrender.com/_next/static/css/58eacca3250b689f.css",
+      "headers": {
+        "sec-ch-ua-platform": "\"macOS\"",
+        "referer": "https://skinsocieteapp.onrender.com/appointments",
+        "accept-language": "en-US,en;q=0.9",
+        "sec-ch-ua": "\"Chromium\";v=\"139\", \"Not;A=Brand\";v=\"99\"",
+        "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36",
+        "sec-ch-ua-mobile": "?0"
+      },
+      "timestamp": "2025-08-07T01:51:51.237Z"
+    },
+    {
+      "type": "request",
+      "method": "GET",
+      "url": "https://skinsocieteapp.onrender.com/_next/static/chunks/webpack-ba02f489b62ad467.js",
+      "headers": {
+        "sec-ch-ua-platform": "\"macOS\"",
+        "referer": "https://skinsocieteapp.onrender.com/appointments",
+        "accept-language": "en-US,en;q=0.9",
+        "sec-ch-ua": "\"Chromium\";v=\"139\", \"Not;A=Brand\";v=\"99\"",
+        "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36",
+        "sec-ch-ua-mobile": "?0"
+      },
+      "timestamp": "2025-08-07T01:51:51.237Z"
+    },
+    {
+      "type": "request",
+      "method": "GET",
+      "url": "https://skinsocieteapp.onrender.com/_next/static/chunks/4bd1b696-602635ee57868870.js",
+      "headers": {
+        "sec-ch-ua-platform": "\"macOS\"",
+        "referer": "https://skinsocieteapp.onrender.com/appointments",
+        "accept-language": "en-US,en;q=0.9",
+        "sec-ch-ua": "\"Chromium\";v=\"139\", \"Not;A=Brand\";v=\"99\"",
+        "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36",
+        "sec-ch-ua-mobile": "?0"
+      },
+      "timestamp": "2025-08-07T01:51:51.237Z"
+    },
+    {
+      "type": "request",
+      "method": "GET",
+      "url": "https://skinsocieteapp.onrender.com/_next/static/chunks/5964-65b29b990a9f3302.js",
+      "headers": {
+        "sec-ch-ua-platform": "\"macOS\"",
+        "referer": "https://skinsocieteapp.onrender.com/appointments",
+        "accept-language": "en-US,en;q=0.9",
+        "sec-ch-ua": "\"Chromium\";v=\"139\", \"Not;A=Brand\";v=\"99\"",
+        "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36",
+        "sec-ch-ua-mobile": "?0"
+      },
+      "timestamp": "2025-08-07T01:51:51.237Z"
+    },
+    {
+      "type": "request",
+      "method": "GET",
+      "url": "https://skinsocieteapp.onrender.com/_next/static/chunks/main-app-376de590c453220d.js",
+      "headers": {
+        "sec-ch-ua-platform": "\"macOS\"",
+        "referer": "https://skinsocieteapp.onrender.com/appointments",
+        "accept-language": "en-US,en;q=0.9",
+        "sec-ch-ua": "\"Chromium\";v=\"139\", \"Not;A=Brand\";v=\"99\"",
+        "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36",
+        "sec-ch-ua-mobile": "?0"
+      },
+      "timestamp": "2025-08-07T01:51:51.237Z"
+    },
+    {
+      "type": "request",
+      "method": "GET",
+      "url": "https://skinsocieteapp.onrender.com/_next/static/chunks/app/layout-5263945cfff4f549.js",
+      "headers": {
+        "sec-ch-ua-platform": "\"macOS\"",
+        "referer": "https://skinsocieteapp.onrender.com/appointments",
+        "accept-language": "en-US,en;q=0.9",
+        "sec-ch-ua": "\"Chromium\";v=\"139\", \"Not;A=Brand\";v=\"99\"",
+        "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36",
+        "sec-ch-ua-mobile": "?0"
+      },
+      "timestamp": "2025-08-07T01:51:51.237Z"
+    },
+    {
+      "type": "request",
+      "method": "GET",
+      "url": "https://skinsocieteapp.onrender.com/_next/static/chunks/4257-99d6a2868cd82fcc.js",
+      "headers": {
+        "sec-ch-ua-platform": "\"macOS\"",
+        "referer": "https://skinsocieteapp.onrender.com/appointments",
+        "accept-language": "en-US,en;q=0.9",
+        "sec-ch-ua": "\"Chromium\";v=\"139\", \"Not;A=Brand\";v=\"99\"",
+        "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36",
+        "sec-ch-ua-mobile": "?0"
+      },
+      "timestamp": "2025-08-07T01:51:51.237Z"
+    },
+    {
+      "type": "request",
+      "method": "GET",
+      "url": "https://skinsocieteapp.onrender.com/_next/static/chunks/1224-3d764808e198f468.js",
+      "headers": {
+        "sec-ch-ua-platform": "\"macOS\"",
+        "referer": "https://skinsocieteapp.onrender.com/appointments",
+        "accept-language": "en-US,en;q=0.9",
+        "sec-ch-ua": "\"Chromium\";v=\"139\", \"Not;A=Brand\";v=\"99\"",
+        "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36",
+        "sec-ch-ua-mobile": "?0"
+      },
+      "timestamp": "2025-08-07T01:51:51.237Z"
+    },
+    {
+      "type": "request",
+      "method": "GET",
+      "url": "https://skinsocieteapp.onrender.com/_next/static/chunks/3124-fe83249b2600f0f2.js",
+      "headers": {
+        "sec-ch-ua-platform": "\"macOS\"",
+        "referer": "https://skinsocieteapp.onrender.com/appointments",
+        "accept-language": "en-US,en;q=0.9",
+        "sec-ch-ua": "\"Chromium\";v=\"139\", \"Not;A=Brand\";v=\"99\"",
+        "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36",
+        "sec-ch-ua-mobile": "?0"
+      },
+      "timestamp": "2025-08-07T01:51:51.237Z"
+    },
+    {
+      "type": "request",
+      "method": "GET",
+      "url": "https://skinsocieteapp.onrender.com/_next/static/chunks/app/appointments/page-92fa5723f108b9c6.js",
+      "headers": {
+        "sec-ch-ua-platform": "\"macOS\"",
+        "referer": "https://skinsocieteapp.onrender.com/appointments",
+        "accept-language": "en-US,en;q=0.9",
+        "sec-ch-ua": "\"Chromium\";v=\"139\", \"Not;A=Brand\";v=\"99\"",
+        "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36",
+        "sec-ch-ua-mobile": "?0"
+      },
+      "timestamp": "2025-08-07T01:51:51.237Z"
+    },
+    {
+      "type": "response",
+      "status": 200,
+      "statusText": "",
+      "url": "https://skinsocieteapp.onrender.com/_next/static/css/58eacca3250b689f.css",
+      "headers": {
+        "accept-ranges": "bytes",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "cache-control": "public, max-age=31536000, immutable",
+        "cf-cache-status": "DYNAMIC",
+        "cf-ray": "96b32198fca58673-PER",
+        "content-encoding": "gzip",
+        "content-type": "text/css; charset=UTF-8",
+        "date": "Thu, 07 Aug 2025 01:51:51 GMT",
+        "etag": "W/\"11e9c-198822cc588\"",
+        "last-modified": "Thu, 07 Aug 2025 01:37:09 GMT",
+        "rndr-id": "798b6a2e-d15a-4634",
+        "server": "cloudflare",
+        "vary": "Accept-Encoding",
+        "x-render-origin-server": "Render"
+      },
+      "data": null,
+      "timestamp": "2025-08-07T01:51:51.480Z"
+    },
+    {
+      "type": "response",
+      "status": 200,
+      "statusText": "",
+      "url": "https://skinsocieteapp.onrender.com/_next/static/chunks/webpack-ba02f489b62ad467.js",
+      "headers": {
+        "accept-ranges": "bytes",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "cache-control": "public, max-age=31536000, immutable",
+        "cf-cache-status": "DYNAMIC",
+        "cf-ray": "96b32198fcad8673-PER",
+        "content-encoding": "gzip",
+        "content-type": "application/javascript; charset=UTF-8",
+        "date": "Thu, 07 Aug 2025 01:51:51 GMT",
+        "etag": "W/\"db1-198822cc588\"",
+        "last-modified": "Thu, 07 Aug 2025 01:37:09 GMT",
+        "rndr-id": "2c866222-e44a-4f0c",
+        "server": "cloudflare",
+        "vary": "Accept-Encoding",
+        "x-render-origin-server": "Render"
+      },
+      "data": null,
+      "timestamp": "2025-08-07T01:51:51.481Z"
+    },
+    {
+      "type": "response",
+      "status": 200,
+      "statusText": "",
+      "url": "https://skinsocieteapp.onrender.com/_next/static/media/e4af272ccee01ff0-s.p.woff2",
+      "headers": {
+        "accept-ranges": "bytes",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "cache-control": "public, max-age=31536000, immutable",
+        "cf-cache-status": "DYNAMIC",
+        "cf-ray": "96b32198fca78673-PER",
+        "content-length": "48432",
+        "content-type": "font/woff2",
+        "date": "Thu, 07 Aug 2025 01:51:51 GMT",
+        "etag": "W/\"bd30-198822cc588\"",
+        "last-modified": "Thu, 07 Aug 2025 01:37:09 GMT",
+        "rndr-id": "a75bb733-c1d0-4710",
+        "server": "cloudflare",
+        "x-render-origin-server": "Render"
+      },
+      "data": null,
+      "timestamp": "2025-08-07T01:51:51.493Z"
+    },
+    {
+      "type": "response",
+      "status": 200,
+      "statusText": "",
+      "url": "https://skinsocieteapp.onrender.com/_next/static/chunks/1224-3d764808e198f468.js",
+      "headers": {
+        "accept-ranges": "bytes",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "cache-control": "public, max-age=31536000, immutable",
+        "cf-cache-status": "DYNAMIC",
+        "cf-ray": "96b321990cc18673-PER",
+        "content-encoding": "gzip",
+        "content-type": "application/javascript; charset=UTF-8",
+        "date": "Thu, 07 Aug 2025 01:51:51 GMT",
+        "etag": "W/\"1b68-198822cc588\"",
+        "last-modified": "Thu, 07 Aug 2025 01:37:09 GMT",
+        "rndr-id": "0cdb44c6-e449-4628",
+        "server": "cloudflare",
+        "vary": "Accept-Encoding",
+        "x-render-origin-server": "Render"
+      },
+      "data": null,
+      "timestamp": "2025-08-07T01:51:51.494Z"
+    },
+    {
+      "type": "response",
+      "status": 200,
+      "statusText": "",
+      "url": "https://skinsocieteapp.onrender.com/_next/static/chunks/4257-99d6a2868cd82fcc.js",
+      "headers": {
+        "accept-ranges": "bytes",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "cache-control": "public, max-age=31536000, immutable",
+        "cf-cache-status": "DYNAMIC",
+        "cf-ray": "96b321990cbf8673-PER",
+        "content-encoding": "gzip",
+        "content-type": "application/javascript; charset=UTF-8",
+        "date": "Thu, 07 Aug 2025 01:51:51 GMT",
+        "etag": "W/\"d7c3-198822cc588\"",
+        "last-modified": "Thu, 07 Aug 2025 01:37:09 GMT",
+        "rndr-id": "d6ab2a98-bda1-4635",
+        "server": "cloudflare",
+        "vary": "Accept-Encoding",
+        "x-render-origin-server": "Render"
+      },
+      "data": null,
+      "timestamp": "2025-08-07T01:51:51.495Z"
+    },
+    {
+      "type": "response",
+      "status": 200,
+      "statusText": "",
+      "url": "https://skinsocieteapp.onrender.com/_next/static/chunks/4bd1b696-602635ee57868870.js",
+      "headers": {
+        "accept-ranges": "bytes",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "cache-control": "public, max-age=31536000, immutable",
+        "cf-cache-status": "DYNAMIC",
+        "cf-ray": "96b32198fcae8673-PER",
+        "content-encoding": "gzip",
+        "content-type": "application/javascript; charset=UTF-8",
+        "date": "Thu, 07 Aug 2025 01:51:51 GMT",
+        "etag": "W/\"2a2ba-198822cc588\"",
+        "last-modified": "Thu, 07 Aug 2025 01:37:09 GMT",
+        "rndr-id": "d5fe5671-84ea-4633",
+        "server": "cloudflare",
+        "vary": "Accept-Encoding",
+        "x-render-origin-server": "Render"
+      },
+      "data": null,
+      "timestamp": "2025-08-07T01:51:51.501Z"
+    },
+    {
+      "type": "response",
+      "status": 200,
+      "statusText": "",
+      "url": "https://skinsocieteapp.onrender.com/_next/static/chunks/app/layout-5263945cfff4f549.js",
+      "headers": {
+        "accept-ranges": "bytes",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "cache-control": "public, max-age=31536000, immutable",
+        "cf-cache-status": "DYNAMIC",
+        "cf-ray": "96b321990cbe8673-PER",
+        "content-encoding": "gzip",
+        "content-type": "application/javascript; charset=UTF-8",
+        "date": "Thu, 07 Aug 2025 01:51:51 GMT",
+        "etag": "W/\"acd-198822cc588\"",
+        "last-modified": "Thu, 07 Aug 2025 01:37:09 GMT",
+        "rndr-id": "b665247d-6447-4775",
+        "server": "cloudflare",
+        "vary": "Accept-Encoding",
+        "x-render-origin-server": "Render"
+      },
+      "data": null,
+      "timestamp": "2025-08-07T01:51:51.504Z"
+    },
+    {
+      "type": "response",
+      "status": 200,
+      "statusText": "",
+      "url": "https://skinsocieteapp.onrender.com/_next/static/chunks/5964-65b29b990a9f3302.js",
+      "headers": {
+        "accept-ranges": "bytes",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "cache-control": "public, max-age=31536000, immutable",
+        "cf-cache-status": "DYNAMIC",
+        "cf-ray": "96b32198fcaf8673-PER",
+        "content-encoding": "gzip",
+        "content-type": "application/javascript; charset=UTF-8",
+        "date": "Thu, 07 Aug 2025 01:51:51 GMT",
+        "etag": "W/\"2875f-198822cc588\"",
+        "last-modified": "Thu, 07 Aug 2025 01:37:09 GMT",
+        "rndr-id": "af82a197-1300-4c9a",
+        "server": "cloudflare",
+        "vary": "Accept-Encoding",
+        "x-render-origin-server": "Render"
+      },
+      "data": null,
+      "timestamp": "2025-08-07T01:51:51.504Z"
+    },
+    {
+      "type": "response",
+      "status": 200,
+      "statusText": "",
+      "url": "https://skinsocieteapp.onrender.com/_next/static/chunks/app/appointments/page-92fa5723f108b9c6.js",
+      "headers": {
+        "accept-ranges": "bytes",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "cache-control": "public, max-age=31536000, immutable",
+        "cf-cache-status": "DYNAMIC",
+        "cf-ray": "96b321990cc58673-PER",
+        "content-encoding": "gzip",
+        "content-type": "application/javascript; charset=UTF-8",
+        "date": "Thu, 07 Aug 2025 01:51:51 GMT",
+        "etag": "W/\"17e09-198822cc588\"",
+        "last-modified": "Thu, 07 Aug 2025 01:37:09 GMT",
+        "rndr-id": "ae866097-c9a9-4ad2",
+        "server": "cloudflare",
+        "vary": "Accept-Encoding",
+        "x-render-origin-server": "Render"
+      },
+      "data": null,
+      "timestamp": "2025-08-07T01:51:51.515Z"
+    },
+    {
+      "type": "response",
+      "status": 200,
+      "statusText": "",
+      "url": "https://skinsocieteapp.onrender.com/_next/static/chunks/main-app-376de590c453220d.js",
+      "headers": {
+        "accept-ranges": "bytes",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "cache-control": "public, max-age=31536000, immutable",
+        "cf-cache-status": "DYNAMIC",
+        "cf-ray": "96b321990cbc8673-PER",
+        "content-encoding": "br",
+        "content-length": "215",
+        "content-type": "application/javascript; charset=UTF-8",
+        "date": "Thu, 07 Aug 2025 01:51:51 GMT",
+        "etag": "W/\"230-198822cc588\"",
+        "last-modified": "Thu, 07 Aug 2025 01:37:09 GMT",
+        "rndr-id": "3c93791e-0fb6-470c",
+        "server": "cloudflare",
+        "vary": "Accept-Encoding\nAccept-Encoding",
+        "x-render-origin-server": "Render"
+      },
+      "data": null,
+      "timestamp": "2025-08-07T01:51:51.515Z"
+    },
+    {
+      "type": "response",
+      "status": 200,
+      "statusText": "",
+      "url": "https://skinsocieteapp.onrender.com/_next/static/chunks/3124-fe83249b2600f0f2.js",
+      "headers": {
+        "accept-ranges": "bytes",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "cache-control": "public, max-age=31536000, immutable",
+        "cf-cache-status": "DYNAMIC",
+        "cf-ray": "96b321990cc38673-PER",
+        "content-encoding": "gzip",
+        "content-type": "application/javascript; charset=UTF-8",
+        "date": "Thu, 07 Aug 2025 01:51:51 GMT",
+        "etag": "W/\"40d0-198822cc588\"",
+        "last-modified": "Thu, 07 Aug 2025 01:37:09 GMT",
+        "rndr-id": "954b5691-3b92-4598",
+        "server": "cloudflare",
+        "vary": "Accept-Encoding",
+        "x-render-origin-server": "Render"
+      },
+      "data": null,
+      "timestamp": "2025-08-07T01:51:51.536Z"
+    },
+    {
+      "type": "request",
+      "method": "GET",
+      "url": "https://skinsocieteapp.onrender.com/?_rsc=ljfiw",
+      "headers": {
+        "rsc": "1",
+        "sec-ch-ua-platform": "\"macOS\"",
+        "referer": "https://skinsocieteapp.onrender.com/appointments",
+        "accept-language": "en-US,en;q=0.9",
+        "sec-ch-ua": "\"Chromium\";v=\"139\", \"Not;A=Brand\";v=\"99\"",
+        "sec-ch-ua-mobile": "?0",
+        "next-router-prefetch": "1",
+        "next-router-state-tree": "%5B%22%22%2C%7B%22children%22%3A%5B%22appointments%22%2C%7B%22children%22%3A%5B%22__PAGE__%22%2C%7B%7D%2Cnull%2Cnull%5D%7D%2Cnull%2Cnull%5D%7D%2Cnull%2Cnull%2Ctrue%5D",
+        "next-url": "/appointments",
+        "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36"
+      },
+      "timestamp": "2025-08-07T01:51:51.578Z"
+    },
+    {
+      "type": "request",
+      "method": "GET",
+      "url": "https://skinsocieteapp.onrender.com/sign-in?_rsc=ljfiw",
+      "headers": {
+        "rsc": "1",
+        "sec-ch-ua-platform": "\"macOS\"",
+        "referer": "https://skinsocieteapp.onrender.com/appointments",
+        "accept-language": "en-US,en;q=0.9",
+        "sec-ch-ua": "\"Chromium\";v=\"139\", \"Not;A=Brand\";v=\"99\"",
+        "sec-ch-ua-mobile": "?0",
+        "next-router-prefetch": "1",
+        "next-router-state-tree": "%5B%22%22%2C%7B%22children%22%3A%5B%22appointments%22%2C%7B%22children%22%3A%5B%22__PAGE__%22%2C%7B%7D%2Cnull%2Cnull%5D%7D%2Cnull%2Cnull%5D%7D%2Cnull%2Cnull%2Ctrue%5D",
+        "next-url": "/appointments",
+        "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36"
+      },
+      "timestamp": "2025-08-07T01:51:51.578Z"
+    },
+    {
+      "type": "request",
+      "method": "GET",
+      "url": "https://skinsocieteapp.onrender.com/products?_rsc=ljfiw",
+      "headers": {
+        "rsc": "1",
+        "sec-ch-ua-platform": "\"macOS\"",
+        "referer": "https://skinsocieteapp.onrender.com/appointments",
+        "accept-language": "en-US,en;q=0.9",
+        "sec-ch-ua": "\"Chromium\";v=\"139\", \"Not;A=Brand\";v=\"99\"",
+        "sec-ch-ua-mobile": "?0",
+        "next-router-prefetch": "1",
+        "next-router-state-tree": "%5B%22%22%2C%7B%22children%22%3A%5B%22appointments%22%2C%7B%22children%22%3A%5B%22__PAGE__%22%2C%7B%7D%2Cnull%2Cnull%5D%7D%2Cnull%2Cnull%5D%7D%2Cnull%2Cnull%2Ctrue%5D",
+        "next-url": "/appointments",
+        "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36"
+      },
+      "timestamp": "2025-08-07T01:51:51.578Z"
+    },
+    {
+      "type": "request",
+      "method": "GET",
+      "url": "https://skinsocieteapp.onrender.com/challenges?_rsc=ljfiw",
+      "headers": {
+        "rsc": "1",
+        "sec-ch-ua-platform": "\"macOS\"",
+        "referer": "https://skinsocieteapp.onrender.com/appointments",
+        "accept-language": "en-US,en;q=0.9",
+        "sec-ch-ua": "\"Chromium\";v=\"139\", \"Not;A=Brand\";v=\"99\"",
+        "sec-ch-ua-mobile": "?0",
+        "next-router-prefetch": "1",
+        "next-router-state-tree": "%5B%22%22%2C%7B%22children%22%3A%5B%22appointments%22%2C%7B%22children%22%3A%5B%22__PAGE__%22%2C%7B%7D%2Cnull%2Cnull%5D%7D%2Cnull%2Cnull%5D%7D%2Cnull%2Cnull%2Ctrue%5D",
+        "next-url": "/appointments",
+        "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36"
+      },
+      "timestamp": "2025-08-07T01:51:51.578Z"
+    },
+    {
+      "type": "request",
+      "method": "GET",
+      "url": "https://skinsocieteapp.onrender.com/spending-challenges?_rsc=ljfiw",
+      "headers": {
+        "rsc": "1",
+        "sec-ch-ua-platform": "\"macOS\"",
+        "referer": "https://skinsocieteapp.onrender.com/appointments",
+        "accept-language": "en-US,en;q=0.9",
+        "sec-ch-ua": "\"Chromium\";v=\"139\", \"Not;A=Brand\";v=\"99\"",
+        "sec-ch-ua-mobile": "?0",
+        "next-router-prefetch": "1",
+        "next-router-state-tree": "%5B%22%22%2C%7B%22children%22%3A%5B%22appointments%22%2C%7B%22children%22%3A%5B%22__PAGE__%22%2C%7B%7D%2Cnull%2Cnull%5D%7D%2Cnull%2Cnull%5D%7D%2Cnull%2Cnull%2Ctrue%5D",
+        "next-url": "/appointments",
+        "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36"
+      },
+      "timestamp": "2025-08-07T01:51:51.578Z"
+    },
+    {
+      "type": "request",
+      "method": "GET",
+      "url": "https://skinsocieteapp.onrender.com/favicon.ico",
+      "headers": {
+        "sec-ch-ua-platform": "\"macOS\"",
+        "referer": "https://skinsocieteapp.onrender.com/appointments",
+        "accept-language": "en-US,en;q=0.9",
+        "sec-ch-ua": "\"Chromium\";v=\"139\", \"Not;A=Brand\";v=\"99\"",
+        "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36",
+        "sec-ch-ua-mobile": "?0"
+      },
+      "timestamp": "2025-08-07T01:51:51.578Z"
+    },
+    {
+      "type": "response",
+      "status": 200,
+      "statusText": "",
+      "url": "https://skinsocieteapp.onrender.com/?_rsc=ljfiw",
+      "headers": {
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "cache-control": "s-maxage=31536000",
+        "cf-cache-status": "DYNAMIC",
+        "cf-ray": "96b3219b1e768673-PER",
+        "content-encoding": "gzip",
+        "content-type": "text/x-component",
+        "date": "Thu, 07 Aug 2025 01:51:51 GMT",
+        "rndr-id": "6464a44f-be70-4dc4",
+        "server": "cloudflare",
+        "vary": "RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Router-Segment-Prefetch, Accept-Encoding",
+        "x-nextjs-cache": "HIT",
+        "x-nextjs-prerender": "1\n1",
+        "x-nextjs-stale-time": "300",
+        "x-render-origin-server": "Render"
+      },
+      "data": null,
+      "timestamp": "2025-08-07T01:51:51.808Z"
+    },
+    {
+      "type": "response",
+      "status": 200,
+      "statusText": "",
+      "url": "https://skinsocieteapp.onrender.com/products?_rsc=ljfiw",
+      "headers": {
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "cache-control": "s-maxage=31536000",
+        "cf-cache-status": "DYNAMIC",
+        "cf-ray": "96b3219b1e788673-PER",
+        "content-encoding": "gzip",
+        "content-type": "text/x-component",
+        "date": "Thu, 07 Aug 2025 01:51:51 GMT",
+        "rndr-id": "f742816c-a595-47d9",
+        "server": "cloudflare",
+        "vary": "RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Router-Segment-Prefetch, Accept-Encoding",
+        "x-nextjs-cache": "HIT",
+        "x-nextjs-prerender": "1\n1",
+        "x-nextjs-stale-time": "300",
+        "x-render-origin-server": "Render"
+      },
+      "data": null,
+      "timestamp": "2025-08-07T01:51:51.812Z"
+    },
+    {
+      "type": "response",
+      "status": 404,
+      "statusText": "",
+      "url": "https://skinsocieteapp.onrender.com/sign-in?_rsc=ljfiw",
+      "headers": {
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "cache-control": "private, no-cache, no-store, max-age=0, must-revalidate",
+        "cf-cache-status": "DYNAMIC",
+        "cf-ray": "96b3219b1e778673-PER",
+        "content-encoding": "gzip",
+        "content-type": "text/x-component",
+        "date": "Thu, 07 Aug 2025 01:51:51 GMT",
+        "rndr-id": "662ef1f3-9bb2-4bbc",
+        "server": "cloudflare",
+        "vary": "RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Router-Segment-Prefetch, Accept-Encoding",
+        "x-render-origin-server": "Render"
+      },
+      "data": null,
+      "timestamp": "2025-08-07T01:51:51.827Z"
+    },
+    {
+      "type": "request",
+      "method": "GET",
+      "url": "https://skinsocieteapp.onrender.com/leaderboard?_rsc=ljfiw",
+      "headers": {
+        "rsc": "1",
+        "sec-ch-ua-platform": "\"macOS\"",
+        "referer": "https://skinsocieteapp.onrender.com/appointments",
+        "accept-language": "en-US,en;q=0.9",
+        "sec-ch-ua": "\"Chromium\";v=\"139\", \"Not;A=Brand\";v=\"99\"",
+        "sec-ch-ua-mobile": "?0",
+        "next-router-prefetch": "1",
+        "next-router-state-tree": "%5B%22%22%2C%7B%22children%22%3A%5B%22appointments%22%2C%7B%22children%22%3A%5B%22__PAGE__%22%2C%7B%7D%2Cnull%2Cnull%5D%7D%2Cnull%2Cnull%5D%7D%2Cnull%2Cnull%2Ctrue%5D",
+        "next-url": "/appointments",
+        "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36"
+      },
+      "timestamp": "2025-08-07T01:51:51.827Z"
+    },
+    {
+      "type": "request",
+      "method": "GET",
+      "url": "https://skinsocieteapp.onrender.com/_next/static/chunks/app/page-322d545d944bda41.js",
+      "headers": {
+        "sec-ch-ua-platform": "\"macOS\"",
+        "referer": "https://skinsocieteapp.onrender.com/appointments",
+        "accept-language": "en-US,en;q=0.9",
+        "sec-ch-ua": "\"Chromium\";v=\"139\", \"Not;A=Brand\";v=\"99\"",
+        "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36",
+        "sec-ch-ua-mobile": "?0"
+      },
+      "timestamp": "2025-08-07T01:51:51.827Z"
+    },
+    {
+      "type": "request",
+      "method": "GET",
+      "url": "https://skinsocieteapp.onrender.com/profile?_rsc=ljfiw",
+      "headers": {
+        "rsc": "1",
+        "sec-ch-ua-platform": "\"macOS\"",
+        "referer": "https://skinsocieteapp.onrender.com/appointments",
+        "accept-language": "en-US,en;q=0.9",
+        "sec-ch-ua": "\"Chromium\";v=\"139\", \"Not;A=Brand\";v=\"99\"",
+        "sec-ch-ua-mobile": "?0",
+        "next-router-prefetch": "1",
+        "next-router-state-tree": "%5B%22%22%2C%7B%22children%22%3A%5B%22appointments%22%2C%7B%22children%22%3A%5B%22__PAGE__%22%2C%7B%7D%2Cnull%2Cnull%5D%7D%2Cnull%2Cnull%5D%7D%2Cnull%2Cnull%2Ctrue%5D",
+        "next-url": "/appointments",
+        "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36"
+      },
+      "timestamp": "2025-08-07T01:51:51.829Z"
+    },
+    {
+      "type": "request",
+      "method": "GET",
+      "url": "https://skinsocieteapp.onrender.com/_next/static/chunks/app/products/page-c8c05b88ea8ea638.js",
+      "headers": {
+        "sec-ch-ua-platform": "\"macOS\"",
+        "referer": "https://skinsocieteapp.onrender.com/appointments",
+        "accept-language": "en-US,en;q=0.9",
+        "sec-ch-ua": "\"Chromium\";v=\"139\", \"Not;A=Brand\";v=\"99\"",
+        "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36",
+        "sec-ch-ua-mobile": "?0"
+      },
+      "timestamp": "2025-08-07T01:51:51.829Z"
+    },
+    {
+      "type": "response",
+      "status": 200,
+      "statusText": "",
+      "url": "https://skinsocieteapp.onrender.com/spending-challenges?_rsc=ljfiw",
+      "headers": {
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "cache-control": "s-maxage=31536000",
+        "cf-cache-status": "DYNAMIC",
+        "cf-ray": "96b3219b2e7c8673-PER",
+        "content-encoding": "gzip",
+        "content-type": "text/x-component",
+        "date": "Thu, 07 Aug 2025 01:51:51 GMT",
+        "rndr-id": "e4ec4c23-6074-41f3",
+        "server": "cloudflare",
+        "vary": "RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Router-Segment-Prefetch, Accept-Encoding",
+        "x-nextjs-cache": "HIT",
+        "x-nextjs-prerender": "1\n1",
+        "x-nextjs-stale-time": "300",
+        "x-render-origin-server": "Render"
+      },
+      "data": null,
+      "timestamp": "2025-08-07T01:51:51.832Z"
+    },
+    {
+      "type": "response",
+      "status": 200,
+      "statusText": "",
+      "url": "https://skinsocieteapp.onrender.com/challenges?_rsc=ljfiw",
+      "headers": {
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "cache-control": "s-maxage=31536000",
+        "cf-cache-status": "DYNAMIC",
+        "cf-ray": "96b3219b2e7b8673-PER",
+        "content-encoding": "gzip",
+        "content-type": "text/x-component",
+        "date": "Thu, 07 Aug 2025 01:51:51 GMT",
+        "rndr-id": "4310c739-9c73-4a00",
+        "server": "cloudflare",
+        "vary": "RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Router-Segment-Prefetch, Accept-Encoding",
+        "x-nextjs-cache": "HIT",
+        "x-nextjs-prerender": "1\n1",
+        "x-nextjs-stale-time": "300",
+        "x-render-origin-server": "Render"
+      },
+      "data": null,
+      "timestamp": "2025-08-07T01:51:51.832Z"
+    },
+    {
+      "type": "request",
+      "method": "GET",
+      "url": "https://skinsocieteapp.onrender.com/_next/static/chunks/5478-841976f83d773f3d.js",
+      "headers": {
+        "sec-ch-ua-platform": "\"macOS\"",
+        "referer": "https://skinsocieteapp.onrender.com/appointments",
+        "accept-language": "en-US,en;q=0.9",
+        "sec-ch-ua": "\"Chromium\";v=\"139\", \"Not;A=Brand\";v=\"99\"",
+        "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36",
+        "sec-ch-ua-mobile": "?0"
+      },
+      "timestamp": "2025-08-07T01:51:51.901Z"
+    },
+    {
+      "type": "request",
+      "method": "GET",
+      "url": "https://skinsocieteapp.onrender.com/_next/static/chunks/app/spending-challenges/page-6690380ad5966d1e.js",
+      "headers": {
+        "sec-ch-ua-platform": "\"macOS\"",
+        "referer": "https://skinsocieteapp.onrender.com/appointments",
+        "accept-language": "en-US,en;q=0.9",
+        "sec-ch-ua": "\"Chromium\";v=\"139\", \"Not;A=Brand\";v=\"99\"",
+        "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36",
+        "sec-ch-ua-mobile": "?0"
+      },
+      "timestamp": "2025-08-07T01:51:51.901Z"
+    },
+    {
+      "type": "response",
+      "status": 200,
+      "statusText": "",
+      "url": "https://skinsocieteapp.onrender.com/favicon.ico",
+      "headers": {
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "cache-control": "public, max-age=0, must-revalidate",
+        "cf-cache-status": "DYNAMIC",
+        "cf-ray": "96b3219b2e7d8673-PER",
+        "content-encoding": "br",
+        "content-type": "image/x-icon",
+        "date": "Thu, 07 Aug 2025 01:51:51 GMT",
+        "rndr-id": "9261d579-e5d9-43ed",
+        "server": "cloudflare",
+        "vary": "RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Router-Segment-Prefetch",
+        "x-nextjs-cache": "HIT",
+        "x-render-origin-server": "Render"
+      },
+      "data": null,
+      "timestamp": "2025-08-07T01:51:51.906Z"
+    },
+    {
+      "type": "request",
+      "method": "GET",
+      "url": "https://skinsocieteapp.onrender.com/_next/static/chunks/app/challenges/page-9cb8a56637389967.js",
+      "headers": {
+        "sec-ch-ua-platform": "\"macOS\"",
+        "referer": "https://skinsocieteapp.onrender.com/appointments",
+        "accept-language": "en-US,en;q=0.9",
+        "sec-ch-ua": "\"Chromium\";v=\"139\", \"Not;A=Brand\";v=\"99\"",
+        "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36",
+        "sec-ch-ua-mobile": "?0"
+      },
+      "timestamp": "2025-08-07T01:51:51.907Z"
+    },
+    {
+      "type": "response",
+      "status": 200,
+      "statusText": "",
+      "url": "https://skinsocieteapp.onrender.com/_next/static/chunks/app/products/page-c8c05b88ea8ea638.js",
+      "headers": {
+        "accept-ranges": "bytes",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "cache-control": "public, max-age=31536000, immutable",
+        "cf-cache-status": "DYNAMIC",
+        "cf-ray": "96b3219caf758673-PER",
+        "content-encoding": "gzip",
+        "content-type": "application/javascript; charset=UTF-8",
+        "date": "Thu, 07 Aug 2025 01:51:52 GMT",
+        "etag": "W/\"4b4d-198822cc588\"",
+        "last-modified": "Thu, 07 Aug 2025 01:37:09 GMT",
+        "rndr-id": "cdf47a58-7bf3-4cc8",
+        "server": "cloudflare",
+        "vary": "Accept-Encoding",
+        "x-render-origin-server": "Render"
+      },
+      "data": null,
+      "timestamp": "2025-08-07T01:51:52.066Z"
+    },
+    {
+      "type": "response",
+      "status": 200,
+      "statusText": "",
+      "url": "https://skinsocieteapp.onrender.com/profile?_rsc=ljfiw",
+      "headers": {
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "cache-control": "s-maxage=31536000",
+        "cf-cache-status": "DYNAMIC",
+        "cf-ray": "96b3219caf748673-PER",
+        "content-encoding": "gzip",
+        "content-type": "text/x-component",
+        "date": "Thu, 07 Aug 2025 01:51:52 GMT",
+        "rndr-id": "ac6d461a-aff6-43c9",
+        "server": "cloudflare",
+        "vary": "RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Router-Segment-Prefetch, Accept-Encoding",
+        "x-nextjs-cache": "HIT",
+        "x-nextjs-prerender": "1\n1",
+        "x-nextjs-stale-time": "300",
+        "x-render-origin-server": "Render"
+      },
+      "data": null,
+      "timestamp": "2025-08-07T01:51:52.079Z"
+    },
+    {
+      "type": "request",
+      "method": "GET",
+      "url": "https://skinsocieteapp.onrender.com/_next/static/chunks/app/profile/page-800f57763dd13e9c.js",
+      "headers": {
+        "sec-ch-ua-platform": "\"macOS\"",
+        "referer": "https://skinsocieteapp.onrender.com/appointments",
+        "accept-language": "en-US,en;q=0.9",
+        "sec-ch-ua": "\"Chromium\";v=\"139\", \"Not;A=Brand\";v=\"99\"",
+        "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36",
+        "sec-ch-ua-mobile": "?0"
+      },
+      "timestamp": "2025-08-07T01:51:52.081Z"
+    },
+    {
+      "type": "response",
+      "status": 200,
+      "statusText": "",
+      "url": "https://skinsocieteapp.onrender.com/leaderboard?_rsc=ljfiw",
+      "headers": {
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "cache-control": "s-maxage=31536000",
+        "cf-cache-status": "DYNAMIC",
+        "cf-ray": "96b3219caf708673-PER",
+        "content-encoding": "gzip",
+        "content-type": "text/x-component",
+        "date": "Thu, 07 Aug 2025 01:51:52 GMT",
+        "rndr-id": "708a9a73-0e17-412b",
+        "server": "cloudflare",
+        "vary": "RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Router-Segment-Prefetch, Accept-Encoding",
+        "x-nextjs-cache": "HIT",
+        "x-nextjs-prerender": "1\n1",
+        "x-nextjs-stale-time": "300",
+        "x-render-origin-server": "Render"
+      },
+      "data": null,
+      "timestamp": "2025-08-07T01:51:52.084Z"
+    },
+    {
+      "type": "request",
+      "method": "GET",
+      "url": "https://skinsocieteapp.onrender.com/_next/static/chunks/app/leaderboard/page-4f7d3f363b348f08.js",
+      "headers": {
+        "sec-ch-ua-platform": "\"macOS\"",
+        "referer": "https://skinsocieteapp.onrender.com/appointments",
+        "accept-language": "en-US,en;q=0.9",
+        "sec-ch-ua": "\"Chromium\";v=\"139\", \"Not;A=Brand\";v=\"99\"",
+        "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36",
+        "sec-ch-ua-mobile": "?0"
+      },
+      "timestamp": "2025-08-07T01:51:52.084Z"
+    },
+    {
+      "type": "response",
+      "status": 200,
+      "statusText": "",
+      "url": "https://skinsocieteapp.onrender.com/_next/static/chunks/app/challenges/page-9cb8a56637389967.js",
+      "headers": {
+        "accept-ranges": "bytes",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "cache-control": "public, max-age=31536000, immutable",
+        "cf-cache-status": "DYNAMIC",
+        "cf-ray": "96b3219d2fca8673-PER",
+        "content-encoding": "gzip",
+        "content-type": "application/javascript; charset=UTF-8",
+        "date": "Thu, 07 Aug 2025 01:51:52 GMT",
+        "etag": "W/\"2b72-198822cc588\"",
+        "last-modified": "Thu, 07 Aug 2025 01:37:09 GMT",
+        "rndr-id": "0f5d383f-336d-4ca4",
+        "server": "cloudflare",
+        "vary": "Accept-Encoding",
+        "x-render-origin-server": "Render"
+      },
+      "data": null,
+      "timestamp": "2025-08-07T01:51:52.143Z"
+    },
+    {
+      "type": "response",
+      "status": 200,
+      "statusText": "",
+      "url": "https://skinsocieteapp.onrender.com/_next/static/chunks/app/page-322d545d944bda41.js",
+      "headers": {
+        "accept-ranges": "bytes",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "cache-control": "public, max-age=31536000, immutable",
+        "cf-cache-status": "DYNAMIC",
+        "cf-ray": "96b3219caf728673-PER",
+        "content-encoding": "gzip",
+        "content-type": "application/javascript; charset=UTF-8",
+        "date": "Thu, 07 Aug 2025 01:51:52 GMT",
+        "etag": "W/\"b708-198822cc588\"",
+        "last-modified": "Thu, 07 Aug 2025 01:37:09 GMT",
+        "rndr-id": "2a5aae79-3faa-49c1",
+        "server": "cloudflare",
+        "vary": "Accept-Encoding",
+        "x-render-origin-server": "Render"
+      },
+      "data": null,
+      "timestamp": "2025-08-07T01:51:52.239Z"
+    },
+    {
+      "type": "response",
+      "status": 200,
+      "statusText": "",
+      "url": "https://skinsocieteapp.onrender.com/_next/static/chunks/5478-841976f83d773f3d.js",
+      "headers": {
+        "accept-ranges": "bytes",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "cache-control": "public, max-age=31536000, immutable",
+        "cf-cache-status": "DYNAMIC",
+        "cf-ray": "96b3219d2fc28673-PER",
+        "content-encoding": "gzip",
+        "content-type": "application/javascript; charset=UTF-8",
+        "date": "Thu, 07 Aug 2025 01:51:52 GMT",
+        "etag": "W/\"2224-198822cc588\"",
+        "last-modified": "Thu, 07 Aug 2025 01:37:09 GMT",
+        "rndr-id": "1fb19275-babb-46e8",
+        "server": "cloudflare",
+        "vary": "Accept-Encoding",
+        "x-render-origin-server": "Render"
+      },
+      "data": null,
+      "timestamp": "2025-08-07T01:51:52.264Z"
+    },
+    {
+      "type": "response",
+      "status": 200,
+      "statusText": "",
+      "url": "https://skinsocieteapp.onrender.com/_next/static/chunks/app/profile/page-800f57763dd13e9c.js",
+      "headers": {
+        "accept-ranges": "bytes",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "cache-control": "public, max-age=31536000, immutable",
+        "cf-cache-status": "DYNAMIC",
+        "cf-ray": "96b3219e48948673-PER",
+        "content-encoding": "gzip",
+        "content-type": "application/javascript; charset=UTF-8",
+        "date": "Thu, 07 Aug 2025 01:51:52 GMT",
+        "etag": "W/\"6bc2-198822cc588\"",
+        "last-modified": "Thu, 07 Aug 2025 01:37:09 GMT",
+        "rndr-id": "963dc00b-9a0f-41d9",
+        "server": "cloudflare",
+        "vary": "Accept-Encoding",
+        "x-render-origin-server": "Render"
+      },
+      "data": null,
+      "timestamp": "2025-08-07T01:51:52.317Z"
+    },
+    {
+      "type": "response",
+      "status": 200,
+      "statusText": "",
+      "url": "https://skinsocieteapp.onrender.com/_next/static/chunks/app/leaderboard/page-4f7d3f363b348f08.js",
+      "headers": {
+        "accept-ranges": "bytes",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "cache-control": "public, max-age=31536000, immutable",
+        "cf-cache-status": "DYNAMIC",
+        "cf-ray": "96b3219e48998673-PER",
+        "content-encoding": "gzip",
+        "content-type": "application/javascript; charset=UTF-8",
+        "date": "Thu, 07 Aug 2025 01:51:52 GMT",
+        "etag": "W/\"3831-198822cc588\"",
+        "last-modified": "Thu, 07 Aug 2025 01:37:09 GMT",
+        "rndr-id": "7f86a8b6-b833-4a05",
+        "server": "cloudflare",
+        "vary": "Accept-Encoding",
+        "x-render-origin-server": "Render"
+      },
+      "data": null,
+      "timestamp": "2025-08-07T01:51:52.335Z"
+    },
+    {
+      "type": "response",
+      "status": 200,
+      "statusText": "",
+      "url": "https://skinsocieteapp.onrender.com/_next/static/chunks/app/spending-challenges/page-6690380ad5966d1e.js",
+      "headers": {
+        "accept-ranges": "bytes",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "cache-control": "public, max-age=31536000, immutable",
+        "cf-cache-status": "DYNAMIC",
+        "cf-ray": "96b3219d2fc98673-PER",
+        "content-encoding": "gzip",
+        "content-type": "application/javascript; charset=UTF-8",
+        "date": "Thu, 07 Aug 2025 01:51:52 GMT",
+        "etag": "W/\"654d-198822cc588\"",
+        "last-modified": "Thu, 07 Aug 2025 01:37:09 GMT",
+        "rndr-id": "6f868ace-8f85-4921",
+        "server": "cloudflare",
+        "vary": "Accept-Encoding",
+        "x-render-origin-server": "Render"
+      },
+      "data": null,
+      "timestamp": "2025-08-07T01:51:52.835Z"
+    },
+    {
+      "type": "request",
+      "method": "GET",
+      "url": "https://skinsocieteapp.onrender.com/rewards?_rsc=ljfiw",
+      "headers": {
+        "rsc": "1",
+        "sec-ch-ua-platform": "\"macOS\"",
+        "referer": "https://skinsocieteapp.onrender.com/appointments",
+        "accept-language": "en-US,en;q=0.9",
+        "sec-ch-ua": "\"Chromium\";v=\"139\", \"Not;A=Brand\";v=\"99\"",
+        "sec-ch-ua-mobile": "?0",
+        "next-router-prefetch": "1",
+        "next-router-state-tree": "%5B%22%22%2C%7B%22children%22%3A%5B%22appointments%22%2C%7B%22children%22%3A%5B%22__PAGE__%22%2C%7B%7D%2Cnull%2Cnull%5D%7D%2Cnull%2Cnull%5D%7D%2Cnull%2Cnull%2Ctrue%5D",
+        "next-url": "/appointments",
+        "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36"
+      },
+      "timestamp": "2025-08-07T01:52:00.685Z"
+    },
+    {
+      "type": "response",
+      "status": 200,
+      "statusText": "",
+      "url": "https://skinsocieteapp.onrender.com/rewards?_rsc=ljfiw",
+      "headers": {
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "cache-control": "s-maxage=31536000",
+        "cf-cache-status": "DYNAMIC",
+        "cf-ray": "96b321d40c278673-PER",
+        "content-encoding": "gzip",
+        "content-type": "text/x-component",
+        "date": "Thu, 07 Aug 2025 01:52:00 GMT",
+        "rndr-id": "dc7050fa-cdc7-455c",
+        "server": "cloudflare",
+        "vary": "RSC, Next-Router-State-Tree, Next-Router-Prefetch, Next-Router-Segment-Prefetch, Accept-Encoding",
+        "x-nextjs-cache": "HIT",
+        "x-nextjs-prerender": "1\n1",
+        "x-nextjs-stale-time": "300",
+        "x-render-origin-server": "Render"
+      },
+      "data": null,
+      "timestamp": "2025-08-07T01:52:00.942Z"
+    },
+    {
+      "type": "request",
+      "method": "GET",
+      "url": "https://skinsocieteapp.onrender.com/_next/static/chunks/app/rewards/page-d60dacb07c6ec442.js",
+      "headers": {
+        "sec-ch-ua-platform": "\"macOS\"",
+        "referer": "https://skinsocieteapp.onrender.com/appointments",
+        "accept-language": "en-US,en;q=0.9",
+        "sec-ch-ua": "\"Chromium\";v=\"139\", \"Not;A=Brand\";v=\"99\"",
+        "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36",
+        "sec-ch-ua-mobile": "?0"
+      },
+      "timestamp": "2025-08-07T01:52:00.942Z"
+    },
+    {
+      "type": "response",
+      "status": 200,
+      "statusText": "",
+      "url": "https://skinsocieteapp.onrender.com/_next/static/chunks/app/rewards/page-d60dacb07c6ec442.js",
+      "headers": {
+        "accept-ranges": "bytes",
+        "alt-svc": "h3=\":443\"; ma=86400",
+        "cache-control": "public, max-age=31536000, immutable",
+        "cf-cache-status": "DYNAMIC",
+        "cf-ray": "96b321d5ad388673-PER",
+        "content-encoding": "gzip",
+        "content-type": "application/javascript; charset=UTF-8",
+        "date": "Thu, 07 Aug 2025 01:52:01 GMT",
+        "etag": "W/\"3fde-198822cc588\"",
+        "last-modified": "Thu, 07 Aug 2025 01:37:09 GMT",
+        "rndr-id": "dd7fc2cb-3ed2-4066",
+        "server": "cloudflare",
+        "vary": "Accept-Encoding",
+        "x-render-origin-server": "Render"
+      },
+      "data": null,
+      "timestamp": "2025-08-07T01:52:01.184Z"
+    }
+  ],
+  "errorLogs": [
+    {
+      "type": "console",
+      "level": "error",
+      "text": "Failed to load resource: the server responded with a status of 404 ()",
+      "timestamp": "2025-08-07T01:51:51.827Z"
+    }
+  ],
+  "screenshots": [
+    {
+      "name": "1-initial-load",
+      "description": "Booking page loaded",
+      "filename": "screenshot-1-initial-load-1754531512869.png",
+      "timestamp": "2025-08-07T01:51:53.054Z"
+    },
+    {
+      "name": "2-service-selection-failed",
+      "description": "Service selection failed",
+      "filename": "screenshot-2-service-selection-failed-1754531520546.png",
+      "timestamp": "2025-08-07T01:52:00.755Z"
+    },
+    {
+      "name": "3-staff-verification",
+      "description": "Staff verification",
+      "filename": "screenshot-3-staff-verification-1754531525621.png",
+      "timestamp": "2025-08-07T01:52:05.823Z"
+    },
+    {
+      "name": "4-time-slot-selection",
+      "description": "Time slot selection",
+      "filename": "screenshot-4-time-slot-selection-1754531532694.png",
+      "timestamp": "2025-08-07T01:52:12.898Z"
+    },
+    {
+      "name": "5-booking-completion",
+      "description": "Booking completion attempt",
+      "filename": "screenshot-5-booking-completion-1754531537037.png",
+      "timestamp": "2025-08-07T01:52:17.253Z"
+    }
+  ]
+}

@@ -79,8 +79,22 @@ export default function AppointmentsPage() {
   // Fetch client's home clinic from Phorest
   useEffect(() => {
     async function fetchClientData() {
+      console.log('🚀 Starting client data fetch...');
+      
       try {
-        // Get Phorest client ID from authenticated user
+        // FIRST: Always set fallback services and clinic to ensure page works
+        console.log('🔧 Setting fallback services and clinic...');
+        setHomeClinic({
+          branchId: 'wQbnBjP6ztI8nuVpNT6MsQ',
+          name: 'Skin Societé Cottesloe',
+          addressLine1: '123 Marine Parade',
+          addressLine2: 'Cottesloe, WA 6011',
+          phone: '(08) 9384 1234',
+          email: 'cottesloe@skinsociete.com.au'
+        });
+        setServicesLoading(false); // Allow fallback services to show
+        
+        // THEN: Try to get real data from Phorest
         const phorestClientId = user?.phorestClientId || 'EKig-KWT5NYu4b150Fra8w'; // Josh Mills fallback
         
         // Import Phorest service dynamically to avoid SSR issues
@@ -90,91 +104,79 @@ export default function AppointmentsPage() {
         // Get client data from Phorest
         console.log('🔍 Fetching client data for:', phorestClientId);
         const client = await service.getClientById(phorestClientId);
-        setClientData(client);
+        if (client) {
+          setClientData(client);
+          console.log('✅ Client data loaded:', client?.firstName, client?.lastName);
+        }
         
         // Get branch/clinic information
         console.log('🏥 Fetching branch information...');
         const branches = await service.getBranches();
         
-        // Find the client's home branch
-        const homeBranch = branches.find((b: any) => b.branchId === client?.creatingBranchId) || branches[0];
-        setHomeClinic(homeBranch);
-        
-        console.log('✅ Client data loaded:', client?.firstName, client?.lastName);
-        console.log('✅ Home clinic:', homeBranch?.name);
+        if (branches && branches.length > 0) {
+          // Find the client's home branch
+          const homeBranch = branches.find((b: any) => b.branchId === client?.creatingBranchId) || branches[0];
+          setHomeClinic(homeBranch);
+          console.log('✅ Home clinic updated:', homeBranch?.name);
+        }
         
         // Fetch actual services from Phorest
         console.log('🔧 Fetching services from Phorest...');
-        try {
-          const services = await service.getServices();
-          console.log('✅ Found', services.length, 'services in Phorest');
+        const services = await service.getServices();
+        console.log('✅ Found', services.length, 'services in Phorest');
+        
+        // Transform Phorest services to our format with better categorization
+        const transformedServices = services.map((phorestService: any) => {
+          const serviceName = phorestService.name || phorestService.serviceName;
           
-          // Transform Phorest services to our format with better categorization
-          const transformedServices = services.map((phorestService: any) => {
-            const serviceName = phorestService.name || phorestService.serviceName;
-            
-            // Categorize services based on name
-            let category = 'Treatment';
-            let description = phorestService.description || `Professional ${serviceName} service`;
-            
-            if (serviceName.toLowerCase().includes('dermal filler')) {
-              category = 'Injectable';
-              description = `Advanced dermal filler treatment for natural enhancement and volume restoration`;
-            } else if (serviceName.toLowerCase().includes('bio remodelling') || serviceName.toLowerCase().includes('bio remodeling')) {
-              category = 'Injectable';
-              description = `Skin quality improvement with advanced bio-remodelling technology`;
-            } else if (serviceName.toLowerCase().includes('bio stimulator')) {
-              category = 'Injectable';
-              description = `Collagen stimulation treatment for natural skin rejuvenation`;
-            } else if (serviceName.toLowerCase().includes('fat dissolving')) {
-              category = 'Advanced';
-              description = `Non-surgical fat reduction treatment for targeted body contouring`;
-            } else if (serviceName.toLowerCase().includes('dissolve')) {
-              category = 'Corrective';
-              description = `Professional treatment to safely dissolve previous injectable treatments`;
-            }
-            
-            return {
-              id: phorestService.serviceId || phorestService.id,
-              name: serviceName,
-              description,
-              duration: phorestService.duration || 60,
-              price: phorestService.price || 0,
-              category
-            };
-          });
+          // Categorize services based on name
+          let category = 'Treatment';
+          let description = phorestService.description || `Professional ${serviceName} service`;
           
+          if (serviceName.toLowerCase().includes('dermal filler')) {
+            category = 'Injectable';
+            description = `Advanced dermal filler treatment for natural enhancement and volume restoration`;
+          } else if (serviceName.toLowerCase().includes('bio remodelling') || serviceName.toLowerCase().includes('bio remodeling')) {
+            category = 'Injectable';
+            description = `Skin quality improvement with advanced bio-remodelling technology`;
+          } else if (serviceName.toLowerCase().includes('bio stimulator')) {
+            category = 'Injectable';
+            description = `Collagen stimulation treatment for natural skin rejuvenation`;
+          } else if (serviceName.toLowerCase().includes('fat dissolving')) {
+            category = 'Advanced';
+            description = `Non-surgical fat reduction treatment for targeted body contouring`;
+          } else if (serviceName.toLowerCase().includes('dissolve')) {
+            category = 'Corrective';
+            description = `Professional treatment to safely dissolve previous injectable treatments`;
+          }
+          
+          return {
+            id: phorestService.serviceId || phorestService.id,
+            name: serviceName,
+            description,
+            duration: phorestService.duration || 60,
+            price: phorestService.price || 0,
+            category
+          };
+        });
+        
+        if (transformedServices.length > 0) {
           setPhorestServices(transformedServices);
-          console.log('✅ Services loaded:', transformedServices.length);
-        } catch (servicesError) {
-          console.error('⚠️ Error fetching services, using fallback:', servicesError);
-          // Keep fallback services if API fails
-        } finally {
-          setServicesLoading(false);
+          console.log('✅ Phorest services loaded and set:', transformedServices.length);
         }
         
       } catch (error) {
-        console.error('⚠️ Error fetching Phorest data:', error);
-        // Fallback data for Skin Societé Cottesloe
-        setHomeClinic({
-          branchId: 'wQbnBjP6ztI8nuVpNT6MsQ',
-          name: 'Skin Societé Cottesloe',
-          addressLine1: '123 Marine Parade',
-          addressLine2: 'Cottesloe, WA 6011',
-          phone: '(08) 9384 1234',
-          email: 'cottesloe@skinsociete.com.au'
-        });
-        setServicesLoading(false);
+        console.error('⚠️ Error fetching Phorest data (fallback will be used):', error);
+        // Fallbacks are already set above, so page will still work
       } finally {
         setLoading(false);
+        setServicesLoading(false);
+        console.log('🏁 Client data fetch completed');
       }
     }
     
-    if (user) {
-      fetchClientData();
-    } else {
-      setLoading(false);
-    }
+    // Always run fetchClientData to ensure services and clinic are set
+    fetchClientData();
   }, [user]);
 
   const services: Service[] = [

@@ -788,16 +788,48 @@ class PhorestService {
         };
       }
       
-      // For production reliability, use basic availability without appointment filtering
-      // This avoids potential issues with the appointments endpoint
-      const availableSlots = allPossibleSlots.filter((_, index) => index % 2 === 0); // Every other slot
-      console.log(`✅ ${availableSlots.length} slots available (showing every other slot for performance)`);
+      // CRITICAL FIX: Use real appointment data to calculate availability
+      console.log(`📅 Fetching existing appointments for staff ${staffId} on ${date}`);
       
-      return {
-        staffId,
-        date,
-        availableSlots: availableSlots
-      };
+      try {
+        // Get existing appointments for this staff member and date
+        const existingAppointments = await this.getAppointments({
+          staffId: staffId,
+          from_date: date,
+          to_date: date,
+          size: 100
+        });
+        
+        console.log(`📋 Found ${existingAppointments.appointments?.length || 0} existing appointments for staff ${staffId}`);
+        
+        // Filter out time slots that conflict with existing appointments
+        const availableSlots = this.filterAvailableSlots(
+          allPossibleSlots, 
+          existingAppointments.appointments || []
+        );
+        
+        console.log(`✅ ${availableSlots.length} slots available after filtering out existing appointments`);
+        
+        return {
+          staffId,
+          date,
+          availableSlots: availableSlots
+        };
+        
+      } catch (appointmentsError) {
+        console.warn(`⚠️ Could not fetch appointments for availability filtering:`, appointmentsError.message);
+        console.log(`🔄 Falling back to business hours availability (no appointment filtering)`);
+        
+        // If appointments API fails, show all business hour slots as available
+        // This is better than fake "every other slot" logic
+        console.log(`✅ ${allPossibleSlots.length} slots available (fallback: all business hours)`);
+        
+        return {
+          staffId,
+          date,
+          availableSlots: allPossibleSlots
+        };
+      }
       
     } catch (error) {
       console.error(`❌ Availability generation failed for ${staffId}:`, error);
