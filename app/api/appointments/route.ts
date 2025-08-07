@@ -39,8 +39,9 @@ export async function POST(request: NextRequest) {
 
     // Import Phorest service with absolute path
     console.log('🔧 Importing Phorest service...');
-    const { default: phorestService } = await import('@/app/services/phorestService.js');
-    console.log('✅ Phorest service imported successfully');
+    const phorestServiceModule = await import('@/app/services/phorestService.js');
+    const phorestService = phorestServiceModule.default;
+    console.log('✅ Phorest service imported successfully:', !!phorestService);
 
     console.log(`🎯 Creating booking for client ${clientId}`);
     console.log(`📅 Service: ${serviceId}, Staff: ${staffId}, Time: ${startTime} (Perth time → UTC conversion)`);

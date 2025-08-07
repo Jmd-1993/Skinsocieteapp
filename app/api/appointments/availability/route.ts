@@ -26,7 +26,10 @@ export async function POST(request: NextRequest) {
     }
 
     // Import Phorest service
-    const { default: phorestService } = await import('@/app/services/phorestService.js');
+    console.log('🔧 Importing Phorest service...');
+    const phorestServiceModule = await import('@/app/services/phorestService.js');
+    const phorestService = phorestServiceModule.default;
+    console.log('✅ Phorest service imported successfully:', !!phorestService);
 
     console.log(`🕐 Fetching availability for ${date} at branch ${branchId}`);
 
