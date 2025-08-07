@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from 'next/server';
 import { handleApiError, logError, AppError, ErrorTypes } from '@/app/lib/error-handler';
 import { emailService, BookingEmailData } from '@/app/lib/email-service';
 import { format, parseISO } from 'date-fns';
-import phorestService from '@/app/services/phorestService.js';
 
 interface BookingRequest {
   clientId: string;
@@ -38,8 +37,18 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Phorest service is now statically imported
-    console.log('✅ Phorest service available:', !!phorestService);
+    // Import Phorest service dynamically to avoid TDZ issues
+    console.log('🔄 Loading Phorest service...');
+    
+    let phorestService;
+    try {
+      const serviceModule = await import('@/app/services/phorestService.js');
+      phorestService = serviceModule.default;
+      console.log('✅ Phorest service loaded successfully');
+    } catch (importError) {
+      console.error('❌ Failed to import Phorest service:', importError);
+      throw new Error('Service initialization failed');
+    }
 
     console.log(`🎯 Creating booking for client ${clientId}`);
     console.log(`📅 Service: ${serviceId}, Staff: ${staffId}, Time: ${startTime} (Perth time → UTC conversion)`);
