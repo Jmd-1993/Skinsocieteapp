@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { handleApiError, logError } from '@/app/lib/error-handler';
 
 interface AvailabilityRequest {
   date: string;
@@ -187,14 +188,22 @@ export async function POST(request: NextRequest) {
       );
     }
 
-  } catch (error) {
-    console.error('❌ Availability API error:', error);
+  } catch (error: any) {
+    // Log the error with context
+    logError(error, {
+      endpoint: 'POST /api/appointments/availability',
+      body: { date: body.date, serviceId: body.serviceId, branchId: body.branchId }
+    });
+    
+    // Handle the error and get user-friendly response
+    const apiError = handleApiError(error);
     
     return NextResponse.json(
       { 
         success: false,
-        error: 'Failed to fetch availability',
-        message: error instanceof Error ? error.message : 'Unknown error occurred'
+        error: apiError.message,
+        code: apiError.code,
+        details: process.env.NODE_ENV === 'development' ? apiError.details : undefined
       },
       { status: 500 }
     );

@@ -8,19 +8,62 @@ services:
     startCommand: npm start
     node: 20.11.0
     envVars:
+      # Phorest API Configuration
       - key: PHOREST_USERNAME
         value: global/josh@skinsociete.com.au
       - key: PHOREST_PASSWORD
         value: ROW^pDL%kxSq
       - key: PHOREST_BUSINESS_ID
         value: IX2it2QrF0iguR-LpZ6BHQ
+      
+      # All Skin Societé Branch IDs
+      - key: PHOREST_BRANCH_ID_COTTESLOE
+        value: Z_nUKK_6R-GhRsGmJZgQ2g
+      - key: PHOREST_BRANCH_ID_KARRINYUP
+        value: NP1hf5xJTfGLMO5t6VrBxA
+      - key: PHOREST_BRANCH_ID_PERTH_CBD
+        value: placeholder-branch-id-3
+      - key: PHOREST_BRANCH_ID_FREMANTLE
+        value: placeholder-branch-id-4
+      - key: PHOREST_BRANCH_ID_JOONDALUP
+        value: placeholder-branch-id-5
+      
+      # App Configuration
       - key: NODE_ENV
         value: production
+      - key: NEXT_PUBLIC_APP_URL
+        value: https://skinsocieteapp.onrender.com
+      
+      # Firebase Configuration
       - key: FIREBASE_PROJECT_ID
-        value: placeholder-project-id
+        value: skin-societe-notifications
       - key: FIREBASE_CLIENT_EMAIL
-        value: placeholder@firebase.iam.gserviceaccount.com
+        value: firebase-adminsdk-fbsvc@skin-societe-notifications.iam.gserviceaccount.com
       - key: FIREBASE_PRIVATE_KEY
-        value: "-----BEGIN PRIVATE KEY-----\nPLACEHOLDER_KEY\n-----END PRIVATE KEY-----"
+        value: "-----BEGIN PRIVATE KEY-----\nMIIEvwIBADANBgkqhkiG9w0BAQEFAASCBKkwggSlAgEAAoIBAQC4BBVHGMFImq4u\n3tEPs3B6jgNg0btWRqRQLoY0UT1Q0Ms89f6J4o9G06XSjEzh94QlDwucEm7lurdA\nBqmBkeL+NRnIBXotyodhnc+OCRGIrlBUHxcnm8/7dzTWn3UAI/kj0HMeb8W21pyo\nMZSrN55n2sIurYnwA7nU4Xns9aMUyPIy1NcsZI7cvWNYWw1iNEa3gf60z1Kub0Xt\nMioNnpscj+dyecoGVMEbkL4cqFNcnfUPPiLKf6YQgLN43O2RbhUdhrxNVr+j6xJs\n6321WdK+goaon1attNB4HB22SOg383cjHL7/6lud6bEM5tFPqY2KR5fER3VPUyzw\nTj1MPMqBAgMBAAECggEAA7NV0fTjDKyrJm9FyyP5teY5lkqrcrcHloL0ART156RW\nRPjhtDhHlzYaBGWcxXHMwRHIEwy6GRG33hBQO/ZBB0mONdv51rZHIhD6T736EbqH\nLCTmql3PWTxOxkblQ4IlsEkgqobXBhfzZSy/k5CiFW60V1vXLXnmtJuu7/Np4tjl\nnyTzRpasqL0KieslcWZju04HJTXPmWYwe2IszjtxkPbPLE/Y1/PdZfqPBPVINg7F\nYzUTOt9LGuDMuRf4ZvNwmqW5DlBJKOXbyU9Sm0lDA2+FzkmxR0o2bLh+rnEn/b+a\n8j9UUjpC4Xp4KfMabMnKFMIKmZwpomhOpYJBR1ELQQKBgQD0OeSysHQ2SIrz7OtF\nnrxjY6CxIia2eQoXA9GUr/86zlCpiLc2+Qmsfw0mqWRC/+H2BsSEGTrXS8E2C9zV\nJbgY2S/2Y33v3pFYlQtGOIdO2Qqegd2h7bB10cjlM4AFaRUNtkZa+05Jtw5Qgd1q\npSNLDarQR3N/cZ797VMKkl5uYQKBgQDA4xuxVs/McxaXrzEEqW+VNEobU7VI/tFQ\njNB3kURdLeSysLWdbBFPYD8SoidFXGj30Fu3+oGGcMGn0NP0Wvz1V51gmLh2k+Zl\nFZAuPWpa321+ApqBMbMLybR+qC8IxtygNLuSZQLNqfE8/PT1AaxxElNb1eLI33/y\nM2c9DjqQIQKBgQCf23kfoTIgCfGx4gTJqDIlWCPpbbIrRCTfladMDLsiMcNIhO1v\ntSio2OyxvrSaykSMNjfRQ3ZpT/OivbcJaUwML7UeMFdRd7xpX/1mNEAU0yoJQHXi\ntOMI64z0wXXtlK+sLv/0M4Q16fUbqzVTxc3JJaQF+o7V/3gTO5FcXRwkYQKBgQCd\n8Ji5YksursI+G/64QYETnEheDfHwPm7oVRVSAooG/lA4nQdpSpb19upOeKZNXji5\nSkv/3sh2bBe2MQGNIX/l6QL9mK/asIpEFR8FLdbLaA3A06LtzOM98MCxwUcaGbOI\nHwXD/qAIBXJ6LOrrP56Sy52kIgPb1V5v1PVhAiij4QKBgQCdMhZClwDEOIY4g7O/\nk5aDaeJpy7cZGMKgIqad9g4cFL3528jqS1Bpm7RgoOHr2FFV56GJSbeYp9byrgd4\nHwBeuK99dOhLuDloycoFUfF6/kqtojrSFR7nhZqrA+5N2RzaVPOGGBjCMsS4dYA5\ngM1aix8NCzYnWmXG/Ebcoh/TAA==\n-----END PRIVATE KEY-----"
+      - key: NEXT_PUBLIC_FIREBASE_API_KEY
+        value: AIzaSyCr5bZAlxT3502w44YyGShXQGnUsDFbJSo
+      - key: NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN
+        value: skin-societe-notifications.firebaseapp.com
+      - key: NEXT_PUBLIC_FIREBASE_PROJECT_ID
+        value: skin-societe-notifications
+      - key: NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET
+        value: skin-societe-notifications.firebasestorage.app
+      - key: NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID
+        value: "941767879353"
+      - key: NEXT_PUBLIC_FIREBASE_APP_ID
+        value: "1:941767879353:web:c8ad601f2f812d58384968"
+      
+      # Email Configuration (configure with real values for production)
+      - key: EMAIL_FROM
+        value: noreply@skinsociete.com.au
+      - key: EMAIL_HOST
+        value: smtp.gmail.com
+      - key: EMAIL_PORT
+        value: "587"
+      - key: STAFF_NOTIFICATION_EMAILS
+        value: cottesloe@skinsociete.com.au,karrinyup@skinsociete.com.au
+      
+      # Admin API
       - key: ADMIN_API_KEY
-        value: placeholder-admin-key
+        value: sk_skin_societe_2024_secure_admin_key_notifications

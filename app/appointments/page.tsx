@@ -125,29 +125,74 @@ export default function AppointmentsPage() {
         const services = await service.getServices();
         console.log('✅ Found', services.length, 'services in Phorest');
         
-        // Transform Phorest services to our format with better categorization
+        // Transform Phorest services to our format with enhanced categorization
         const transformedServices = services.map((phorestService: any) => {
           const serviceName = phorestService.name || phorestService.serviceName;
+          const lowerName = serviceName.toLowerCase();
           
-          // Categorize services based on name
+          // Enhanced categorization logic
           let category = 'Treatment';
           let description = phorestService.description || `Professional ${serviceName} service`;
           
-          if (serviceName.toLowerCase().includes('dermal filler')) {
+          // Laser treatments
+          if (lowerName.includes('laser') || lowerName.includes('ipl') || lowerName.includes('nd:yag') || lowerName.includes('carbon')) {
+            category = 'Laser';
+            if (lowerName.includes('hair removal')) {
+              description = `Advanced laser hair removal for permanent hair reduction`;
+            } else if (lowerName.includes('carbon')) {
+              description = `Carbon laser facial for deep pore cleansing and skin rejuvenation`;
+            } else {
+              description = `Professional laser treatment for skin rejuvenation and correction`;
+            }
+          }
+          // Injectable treatments  
+          else if (lowerName.includes('filler') || lowerName.includes('botox') || lowerName.includes('dysport') || 
+                   lowerName.includes('injectable') || lowerName.includes('bio remodel') || lowerName.includes('bio stimulator')) {
             category = 'Injectable';
-            description = `Advanced dermal filler treatment for natural enhancement and volume restoration`;
-          } else if (serviceName.toLowerCase().includes('bio remodelling') || serviceName.toLowerCase().includes('bio remodeling')) {
-            category = 'Injectable';
-            description = `Skin quality improvement with advanced bio-remodelling technology`;
-          } else if (serviceName.toLowerCase().includes('bio stimulator')) {
-            category = 'Injectable';
-            description = `Collagen stimulation treatment for natural skin rejuvenation`;
-          } else if (serviceName.toLowerCase().includes('fat dissolving')) {
+            if (lowerName.includes('dermal filler')) {
+              description = `Advanced dermal filler treatment for natural enhancement and volume restoration`;
+            } else if (lowerName.includes('bio remodel')) {
+              description = `Skin quality improvement with advanced bio-remodelling technology`;
+            } else if (lowerName.includes('botox') || lowerName.includes('dysport')) {
+              description = `Anti-wrinkle injections for smooth, youthful skin`;
+            } else {
+              description = `Professional injectable treatment for facial enhancement`;
+            }
+          }
+          // Member exclusive treatments
+          else if (lowerName.includes('member') || lowerName.includes('vip') || lowerName.includes('glow society')) {
+            category = 'Member Exclusive';
+            description = `Exclusive treatment available only to Glow Society members`;
+          }
+          // Skin treatments
+          else if (lowerName.includes('facial') || lowerName.includes('peel') || lowerName.includes('microneedling') || 
+                   lowerName.includes('dermaplaning') || lowerName.includes('hydrafacial')) {
+            category = 'Skin Treatment';
+            if (lowerName.includes('hydrafacial')) {
+              description = `Multi-step facial treatment for instant glowing skin`;
+            } else if (lowerName.includes('peel')) {
+              description = `Chemical peel treatment to reveal fresh, renewed skin`;
+            } else if (lowerName.includes('microneedling')) {
+              description = `Collagen induction therapy for improved skin texture and tone`;
+            } else {
+              description = `Professional facial treatment for healthy, glowing skin`;
+            }
+          }
+          // Advanced treatments
+          else if (lowerName.includes('prp') || lowerName.includes('fat dissolv') || lowerName.includes('thread')) {
             category = 'Advanced';
-            description = `Non-surgical fat reduction treatment for targeted body contouring`;
-          } else if (serviceName.toLowerCase().includes('dissolve')) {
-            category = 'Corrective';
-            description = `Professional treatment to safely dissolve previous injectable treatments`;
+            if (lowerName.includes('fat dissolv')) {
+              description = `Non-surgical fat reduction treatment for targeted body contouring`;
+            } else if (lowerName.includes('thread')) {
+              description = `Non-surgical thread lift for facial contouring and lifting`;
+            } else {
+              description = `Advanced aesthetic treatment with cutting-edge technology`;
+            }
+          }
+          // Consultation
+          else if (lowerName.includes('consultation')) {
+            category = 'Consultation';
+            description = `Professional consultation to plan your treatment journey`;
           }
           
           return {
@@ -156,7 +201,10 @@ export default function AppointmentsPage() {
             description,
             duration: phorestService.duration || 60,
             price: phorestService.price || 0,
-            category
+            category,
+            branchId: phorestService.branchId,
+            branchName: phorestService.branchName,
+            availableAt: phorestService.availableAt || [phorestService.branchName || 'All Clinics']
           };
         });
         
@@ -495,7 +543,7 @@ export default function AppointmentsPage() {
                         </span>
                       </div>
                       
-                      <div className="flex items-center justify-between mb-6">
+                      <div className="space-y-3 mb-6">
                         <div className="flex items-center gap-4 text-sm text-gray-600">
                           <span className="flex items-center gap-1">
                             <Clock className="w-4 h-4" />
@@ -506,6 +554,16 @@ export default function AppointmentsPage() {
                             <span className="font-bold text-gray-900">${service.price}</span>
                           </span>
                         </div>
+                        
+                        {/* Show clinic availability */}
+                        {(service as any).availableAt && (service as any).availableAt.length > 0 && (
+                          <div className="text-xs text-gray-500">
+                            <span className="flex items-center gap-1">
+                              <MapPin className="w-3 h-3" />
+                              Available at: {(service as any).availableAt.join(', ')}
+                            </span>
+                          </div>
+                        )}
                       </div>
                       
                       <button

@@ -1,4 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { handleApiError, logError, AppError, ErrorTypes } from '@/app/lib/error-handler';
+import { emailService, BookingEmailData } from '@/app/lib/email-service';
+import { format, parseISO } from 'date-fns';
 
 interface BookingRequest {
   clientId: string;
@@ -6,6 +9,15 @@ interface BookingRequest {
   staffId: string;
   startTime: string;
   notes?: string;
+  clientName?: string;
+  clientEmail?: string;
+  serviceName?: string;
+  staffName?: string;
+  duration?: number;
+  price?: number;
+  clinicName?: string;
+  clinicAddress?: string;
+  clinicPhone?: string;
 }
 
 export async function POST(request: NextRequest) {
@@ -42,6 +54,36 @@ export async function POST(request: NextRequest) {
 
     console.log('✅ Booking created successfully:', booking);
 
+    // Send email notifications (non-blocking)
+    if (body.clientEmail) {
+      const appointmentDateTime = parseISO(startTime);
+      const emailData: BookingEmailData = {
+        clientName: body.clientName || 'Valued Client',
+        clientEmail: body.clientEmail,
+        serviceName: body.serviceName || 'Treatment',
+        staffName: body.staffName || 'Your Practitioner',
+        appointmentDate: format(appointmentDateTime, 'EEEE, MMMM d, yyyy'),
+        appointmentTime: format(appointmentDateTime, 'h:mm a'),
+        duration: body.duration || 60,
+        clinicName: body.clinicName || 'Skin Societé',
+        clinicAddress: body.clinicAddress,
+        clinicPhone: body.clinicPhone,
+        notes: notes,
+        price: body.price
+      };
+
+      // Send emails asynchronously (don't wait for them)
+      emailService.sendBookingConfirmation(emailData).catch(error => {
+        console.error('Failed to send confirmation email:', error);
+        // Don't throw - the booking was successful even if email fails
+      });
+
+      emailService.sendBookingNotificationToStaff(emailData).catch(error => {
+        console.error('Failed to send staff notification:', error);
+        // Don't throw - the booking was successful even if email fails
+      });
+    }
+
     return NextResponse.json({
       success: true,
       message: 'Appointment booked successfully',
@@ -52,47 +94,44 @@ export async function POST(request: NextRequest) {
         staffId,
         startTime,
         status: booking.status || 'confirmed',
+        emailSent: !!body.clientEmail,
         ...booking
       }
     });
 
-  } catch (error) {
-    console.error('❌ Booking API error:', error);
+  } catch (error: any) {
+    // Log the error with context
+    logError(error, { 
+      endpoint: 'POST /api/appointments',
+      body: { clientId: body.clientId, serviceId: body.serviceId, staffId: body.staffId, startTime: body.startTime }
+    });
     
-    // Extract meaningful error details from Phorest API responses
-    let errorMessage = 'Unknown error occurred';
-    let statusCode = 500;
+    // Handle the error and get user-friendly response
+    const apiError = handleApiError(error);
     
-    if (error instanceof Error) {
-      errorMessage = error.message;
-      
-      // Handle specific Phorest booking validation errors
-      if (error.message.includes('STAFF_NOT_WORKING') || error.message.includes('SLOT_UNAVAILABLE')) {
-        errorMessage = 'The requested staff member is not rostered for the selected time. Please choose a different time when they are working. Note: All times are automatically converted to match your local timezone.';
-        statusCode = 400;
-      } else if (error.message.includes('STAFF_DOUBLE_BOOKED')) {
-        errorMessage = 'The requested time slot is already booked';
-        statusCode = 409; // Conflict
-      } else if (error.message.includes('CLIENT_NOT_FOUND')) {
-        errorMessage = 'Client not found. Please check the client details.';
-        statusCode = 404;
-      } else if (error.message.includes('SERVICE_NOT_FOUND')) {
-        errorMessage = 'Service not found. Please check the service selection.';
-        statusCode = 404;
-      } else if (error.message.includes('400')) {
-        errorMessage = 'Invalid booking request - please check appointment details';
-        statusCode = 400;
-      }
+    // Customize error messages for specific booking scenarios
+    if (error.message?.includes('STAFF_NOT_WORKING') || error.message?.includes('SLOT_UNAVAILABLE')) {
+      apiError.message = 'The requested staff member is not rostered for the selected time. Please choose a different time when they are working.';
+      apiError.status = 400;
+    } else if (error.message?.includes('STAFF_DOUBLE_BOOKED')) {
+      apiError.message = 'The requested time slot is already booked';
+      apiError.status = 409;
+    } else if (error.message?.includes('CLIENT_NOT_FOUND')) {
+      apiError.message = 'Client not found. Please check the client details.';
+      apiError.status = 404;
+    } else if (error.message?.includes('SERVICE_NOT_FOUND')) {
+      apiError.message = 'Service not found. Please check the service selection.';
+      apiError.status = 404;
     }
     
     return NextResponse.json(
       { 
         success: false,
-        error: 'Failed to book appointment',
-        message: errorMessage,
-        details: error instanceof Error && error.stack ? error.stack : undefined
+        error: apiError.message,
+        code: apiError.code,
+        details: process.env.NODE_ENV === 'development' ? apiError.details : undefined
       },
-      { status: statusCode }
+      { status: apiError.status || 500 }
     );
   }
 }

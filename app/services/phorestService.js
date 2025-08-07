@@ -5,13 +5,16 @@ class PhorestService {
   constructor() {
     // Use environment variables in production
     this.config = {
-      baseURL: 'https://api-gateway-us.phorest.com/third-party-api-server/api/business',
+      baseURL: 'https://api-gateway-au.phorest.com/third-party-api-server/api/business',
       businessId: process.env.PHOREST_BUSINESS_ID || 'IX2it2QrF0iguR-LpZ6BHQ',
       auth: {
         username: process.env.PHOREST_USERNAME || 'global/josh@skinsociete.com.au',
         password: process.env.PHOREST_PASSWORD || 'ROW^pDL%kxSq'
       }
     };
+    
+    // Store all branches once fetched
+    this.allBranches = [];
 
     // Create axios instance with authentication
     this.api = axios.create({
@@ -29,16 +32,72 @@ class PhorestService {
     this.branchId = null;
   }
 
-  // Error handler
-  handleError(error) {
+  // Enhanced error handler with retry logic
+  handleError(error, context = '') {
+    const errorDetails = {
+      context,
+      timestamp: new Date().toISOString(),
+      url: error.config?.url,
+      method: error.config?.method
+    };
+
     if (error.response) {
+      const status = error.response.status;
+      const data = error.response.data;
+      
       console.error('Phorest API Error:', {
-        status: error.response.status,
-        data: error.response.data,
-        url: error.config?.url
+        ...errorDetails,
+        status,
+        data
       });
-      throw new Error(`Phorest API Error: ${error.response.status} - ${error.response.data?.message || error.message}`);
+      
+      // Provide specific error messages based on status
+      let message = data?.message || error.message;
+      
+      switch (status) {
+        case 400:
+          message = `Invalid request: ${message}`;
+          break;
+        case 401:
+          message = 'Authentication failed. Please check your Phorest credentials.';
+          break;
+        case 403:
+          message = 'Access denied. You may not have permission for this action.';
+          break;
+        case 404:
+          message = `Resource not found: ${context || 'Unknown resource'}`;
+          break;
+        case 429:
+          message = 'Too many requests. Please wait a moment and try again.';
+          break;
+        case 500:
+        case 502:
+        case 503:
+          message = 'Phorest service is temporarily unavailable. Please try again later.';
+          break;
+      }
+      
+      const error = new Error(message);
+      error.status = status;
+      error.details = data;
+      throw error;
     }
+    
+    // Network errors
+    if (error.code === 'ENOTFOUND') {
+      throw new Error('Cannot connect to Phorest API. Please check your internet connection.');
+    }
+    
+    if (error.code === 'ECONNREFUSED') {
+      throw new Error('Connection to Phorest API was refused. The service may be down.');
+    }
+    
+    if (error.code === 'ETIMEDOUT') {
+      throw new Error('Request to Phorest API timed out. Please try again.');
+    }
+    
+    // Unknown errors
+    console.error('Unknown Phorest Error:', errorDetails, error);
     throw error;
   }
 
@@ -48,15 +107,21 @@ class PhorestService {
       const response = await this.api.get(`/${this.config.businessId}/branch`);
       const branches = response.data._embedded?.branches || [];
       
+      // Store all branches for later use
+      this.allBranches = branches;
+      
       // Auto-set first branch ID if available
       if (branches.length > 0 && !this.branchId) {
         this.branchId = branches[0].branchId;
-        console.log(`✅ Branch ID set to: ${this.branchId} (${branches[0].name})`);
+        console.log(`✅ Found ${branches.length} branches`);
+        branches.forEach(branch => {
+          console.log(`  📍 ${branch.name} (${branch.branchId})`);
+        });
       }
       
       return branches;
     } catch (error) {
-      this.handleError(error);
+      this.handleError(error, 'fetching branches');
     }
   }
 
@@ -572,18 +637,112 @@ class PhorestService {
     return benefits[tier] || [];
   }
 
-  // SERVICES/TREATMENTS (Branch level)
-  async getServices() {
+  // SERVICES/TREATMENTS (Branch level) - Now fetches from ALL branches
+  async getServices(branchId = null) {
     try {
-      await this.ensureBranchId();
+      // If specific branch requested, use it
+      if (branchId) {
+        const response = await this.api.get(
+          `/${this.config.businessId}/branch/${branchId}/service`
+        );
+        const services = response.data._embedded?.services || [];
+        return services.map(s => ({ ...s, branchId }));
+      }
       
-      const response = await this.api.get(
-        `/${this.config.businessId}/branch/${this.branchId}/service`
-      );
-      return response.data._embedded?.services || [];
+      // Get all branches first if not already loaded
+      if (this.allBranches.length === 0) {
+        await this.getBranches();
+      }
+      
+      // Fetch services from ALL branches
+      const allServices = [];
+      const servicesByName = new Map(); // Track unique services by name
+      
+      console.log(`🔍 Fetching services from ${this.allBranches.length} branches...`);
+      
+      for (const branch of this.allBranches) {
+        try {
+          const response = await this.api.get(
+            `/${this.config.businessId}/branch/${branch.branchId}/service`
+          );
+          const branchServices = response.data._embedded?.services || [];
+          
+          console.log(`  ✅ ${branch.name}: ${branchServices.length} services`);
+          
+          branchServices.forEach(service => {
+            const serviceName = service.name || service.serviceName;
+            
+            // Add branch info to service
+            const enhancedService = {
+              ...service,
+              branchId: branch.branchId,
+              branchName: branch.name,
+              availableAt: [branch.name]
+            };
+            
+            // If we've seen this service name before, add to availability
+            if (servicesByName.has(serviceName)) {
+              const existingService = servicesByName.get(serviceName);
+              existingService.availableAt.push(branch.name);
+            } else {
+              servicesByName.set(serviceName, enhancedService);
+              allServices.push(enhancedService);
+            }
+          });
+        } catch (error) {
+          console.warn(`  ⚠️ Could not fetch services from ${branch.name}:`, error.message);
+        }
+      }
+      
+      // Sort services by category and name
+      allServices.sort((a, b) => {
+        const catA = this.categorizeService(a.name || a.serviceName);
+        const catB = this.categorizeService(b.name || b.serviceName);
+        if (catA !== catB) return catA.localeCompare(catB);
+        return (a.name || a.serviceName).localeCompare(b.name || b.serviceName);
+      });
+      
+      console.log(`📊 Total unique services: ${allServices.length}`);
+      
+      return allServices;
     } catch (error) {
-      this.handleError(error);
+      this.handleError(error, 'fetching services');
     }
+  }
+  
+  // Helper method to categorize services
+  categorizeService(serviceName) {
+    const name = serviceName.toLowerCase();
+    
+    // Laser treatments
+    if (name.includes('laser') || name.includes('ipl') || name.includes('nd:yag')) {
+      return 'Laser';
+    }
+    
+    // Injectable treatments
+    if (name.includes('filler') || name.includes('botox') || name.includes('dysport') || 
+        name.includes('injectable') || name.includes('bio remodel') || name.includes('bio stimulator')) {
+      return 'Injectable';
+    }
+    
+    // Member exclusive treatments
+    if (name.includes('member') || name.includes('vip') || name.includes('glow society')) {
+      return 'Member Exclusive';
+    }
+    
+    // Skin treatments
+    if (name.includes('facial') || name.includes('peel') || name.includes('microneedling') || 
+        name.includes('dermaplaning') || name.includes('hydrafacial')) {
+      return 'Skin Treatment';
+    }
+    
+    // Advanced treatments
+    if (name.includes('prp') || name.includes('fat dissolv') || name.includes('thread')) {
+      return 'Advanced';
+    }
+    
+    // Default category
+    return 'Treatment';
   }
 
   async getServiceById(serviceId) {
