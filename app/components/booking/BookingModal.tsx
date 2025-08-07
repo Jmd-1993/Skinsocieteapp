@@ -303,7 +303,7 @@ export function BookingModal({
 
       console.log('🔧 Booking payload:', bookingData);
 
-      const response = await fetch('/api/appointments', {
+      const response = await fetch('/api/appointments/simple-booking', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
