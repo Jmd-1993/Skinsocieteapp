@@ -1,7 +1,35 @@
-// services/phorestService.js
-import axios from 'axios';
+// services/phorestService.ts
+import axios, { AxiosInstance, AxiosError } from 'axios';
+
+interface PhorestConfig {
+  baseURL: string;
+  businessId: string;
+  auth: {
+    username: string;
+    password: string;
+  };
+}
+
+interface PhorestBranch {
+  branchId: string;
+  name: string;
+  timeZone: string;
+  latitude: number;
+  longitude: number;
+  streetAddress1: string;
+  city: string;
+  state: string;
+  postalCode: string;
+  country: string;
+  currencyCode: string;
+  accountId: number;
+}
 
 class PhorestService {
+  private config: PhorestConfig;
+  private api: AxiosInstance;
+  private allBranches: PhorestBranch[] = [];
+  private branchId: string | null = null;
   constructor() {
     // Use environment variables in production
     this.config = {

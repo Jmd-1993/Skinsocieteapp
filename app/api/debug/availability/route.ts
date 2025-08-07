@@ -5,7 +5,7 @@ export async function GET(request: NextRequest) {
     console.log('🔍 Debug availability endpoint called');
     
     // Import Phorest service
-    const { default: phorestService } = await import('@/app/services/phorestService.js');
+    const { default: phorestService } = await import('@/app/services/phorestService');
     
     const testDate = '2025-08-11'; // Monday
     const staffId = 'X-qh_VV3E41h9tghKPiRyg'; // Isabelle

@@ -10,7 +10,7 @@ export async function POST(request: NextRequest) {
     // Step 1: Test dynamic import
     try {
       console.log('🔄 Testing dynamic import...');
-      const { default: phorestService } = await import('@/app/services/phorestService.js');
+      const { default: phorestService } = await import('@/app/services/phorestService');
       console.log('✅ Dynamic import successful');
       
       // Step 2: Test Phorest service initialization

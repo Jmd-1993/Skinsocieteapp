@@ -13,7 +13,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Import Phorest service (dynamic import for server-side)
-    const { default: phorestService } = await import('../../../services/phorestService.js');
+    const { default: phorestService } = await import('../../../services/phorestService');
 
     // Sync user data from Phorest
     const syncResult = await phorestService.syncUserData(email, phone);
@@ -65,7 +65,7 @@ export async function GET(request: NextRequest) {
 
   try {
     // Import Phorest service (dynamic import for server-side)
-    const { default: phorestService } = await import('../../../services/phorestService.js');
+    const { default: phorestService } = await import('../../../services/phorestService');
 
     // Sync user data from Phorest
     const syncResult = await phorestService.syncUserData(email, phone);

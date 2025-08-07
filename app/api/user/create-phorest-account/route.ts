@@ -30,7 +30,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Import Phorest service (dynamic import for server-side)
-    const { default: phorestService } = await import('../../../services/phorestService.js');
+    const { default: phorestService } = await import('../../../services/phorestService');
 
     // Check if user already exists
     console.log(`🔍 Checking if user already exists: ${data.email}`);

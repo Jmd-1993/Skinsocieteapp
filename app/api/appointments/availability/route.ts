@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { handleApiError, logError } from '@/app/lib/error-handler';
-import phorestService from '@/app/services/phorestService.js';
+import phorestService from '@/app/services/phorestService';
 
 interface AvailabilityRequest {
   date: string;

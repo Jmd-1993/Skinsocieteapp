@@ -42,7 +42,7 @@ export async function POST(request: NextRequest) {
     
     let phorestService;
     try {
-      const serviceModule = await import('@/app/services/phorestService.js');
+      const serviceModule = await import('@/app/services/phorestService');
       phorestService = serviceModule.default;
       console.log('✅ Phorest service loaded successfully');
     } catch (importError) {
@@ -161,7 +161,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Import Phorest service with absolute path
-    const { default: phorestService } = await import('@/app/services/phorestService.js');
+    const { default: phorestService } = await import('@/app/services/phorestService');
 
     console.log(`📋 Getting appointments for client: ${clientId}`);
 
