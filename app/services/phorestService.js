@@ -374,6 +374,31 @@ class PhorestService {
       
     } catch (error) {
       console.error('❌ Booking failed:', error.response?.data || error.message);
+      
+      // Enhanced error handling for common booking issues
+      if (error.response?.data) {
+        const errorData = error.response.data;
+        console.log('🔍 Detailed Phorest error response:', JSON.stringify(errorData, null, 2));
+        
+        // Specific error messaging for common issues
+        if (errorData.detail === 'STAFF_NOT_WORKING') {
+          console.error('🚫 STAFF SCHEDULING ISSUE: Staff member not rostered for this time');
+          console.error('   → Check staff roster in Phorest admin');
+          console.error('   → Ensure staff are scheduled to work on this date/time');
+          console.error('   → Verify staff have breaks/lunch properly configured');
+        } else if (errorData.detail === 'SLOT_UNAVAILABLE') {
+          console.error('⏰ TIME SLOT ISSUE: Requested time slot not available');
+          console.error('   → Staff may have existing appointment');
+          console.error('   → Time slot may be blocked in staff calendar');
+          console.error('   → Check if time falls within staff working hours');
+        } else if (errorData.detail?.includes('DEPOSIT')) {
+          console.error('💰 DEPOSIT ISSUE: Service may require deposit');
+          console.error('   → Check if service has deposit requirement in Phorest');
+          console.error('   → May need two-stage booking process (create + activate)');
+          console.error('   → Consider implementing separate deposit collection');
+        }
+      }
+      
       this.handleError(error);
     }
   }
