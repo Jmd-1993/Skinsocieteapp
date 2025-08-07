@@ -21,8 +21,9 @@ interface BookingRequest {
 }
 
 export async function POST(request: NextRequest) {
+  let body: BookingRequest;
   try {
-    const body: BookingRequest = await request.json();
+    body = await request.json();
     const { clientId, serviceId, staffId, startTime, notes } = body;
 
     // Validate required fields
@@ -38,7 +39,9 @@ export async function POST(request: NextRequest) {
     }
 
     // Import Phorest service with absolute path
+    console.log('🔧 Importing Phorest service...');
     const { default: phorestService } = await import('@/app/services/phorestService.js');
+    console.log('✅ Phorest service imported successfully');
 
     console.log(`🎯 Creating booking for client ${clientId}`);
     console.log(`📅 Service: ${serviceId}, Staff: ${staffId}, Time: ${startTime} (Perth time → UTC conversion)`);
@@ -100,10 +103,10 @@ export async function POST(request: NextRequest) {
     });
 
   } catch (error: any) {
-    // Log the error with context
+    // Log the error with context - safely handle body access
     logError(error, { 
       endpoint: 'POST /api/appointments',
-      body: { clientId: body.clientId, serviceId: body.serviceId, staffId: body.staffId, startTime: body.startTime }
+      body: body ? { clientId: body.clientId, serviceId: body.serviceId, staffId: body.staffId, startTime: body.startTime } : 'Failed to parse request body'
     });
     
     // Handle the error and get user-friendly response
