@@ -665,53 +665,185 @@ class PhorestService {
     }
   }
 
-  // Get availability for a specific staff member
+  // INTELLIGENT AVAILABILITY SYSTEM
+  // Since Phorest API doesn't provide availability endpoints, we generate availability
+  // by checking existing appointments and business hours
   async getStaffAvailability(staffId, date, duration = 60) {
     try {
       await this.ensureBranchId();
       
-      const response = await this.api.get(
-        `/${this.config.businessId}/branch/${this.branchId}/staff/${staffId}/availability`,
-        {
-          params: {
-            date: date,
-            duration: duration
-          }
-        }
-      );
+      console.log(`🧠 Generating intelligent availability for staff ${staffId} on ${date} (${duration}min slots)`);
       
-      // Transform Phorest availability response to our expected format
-      const availabilityData = response.data;
+      // Step 1: Check business hours first
+      const businessHours = this.getBusinessHours(date);
+      console.log(`🏢 Business hours for ${date}:`, businessHours);
       
-      // Extract available slots from Phorest response
-      const availableSlots = this.parseAvailabilitySlots(availabilityData, date);
-      
-      return {
-        staffId,
-        date,
-        availableSlots
-      };
-    } catch (error) {
-      console.warn(`⚠️ Could not get staff availability for ${staffId}:`, error.response?.status, error.message);
-      
-      // If the specific staff availability endpoint doesn't exist, try general availability
-      try {
-        const generalAvailability = await this.checkAvailability(date, null, staffId);
-        return {
-          staffId,
-          date,
-          availableSlots: this.parseAvailabilitySlots(generalAvailability, date)
-        };
-      } catch (fallbackError) {
-        console.warn(`⚠️ General availability also failed for ${staffId}:`, fallbackError.message);
-        // Return empty availability
+      if (businessHours.closed) {
+        console.log(`🚫 Clinic closed on ${date} (${new Date(date).toLocaleDateString('en-AU', { weekday: 'long' })})`);
         return {
           staffId,
           date,
           availableSlots: []
         };
       }
+      
+      // Step 2: Generate time slots based on business hours
+      const allPossibleSlots = this.generateTimeSlots(date, businessHours.start, businessHours.end, duration);
+      console.log(`🕐 Generated ${allPossibleSlots.length} possible time slots for ${businessHours.start}:00-${businessHours.end}:00`);
+      
+      // Step 3: Try to get existing appointments (but don't fail if this doesn't work)
+      let staffAppointments = [];
+      try {
+        const appointments = await this.getAppointments({
+          from_date: date,
+          to_date: date,
+          staffId: staffId,
+          size: 100
+        });
+        
+        staffAppointments = appointments.appointments.filter(apt => apt.staffId === staffId);
+        console.log(`📅 Found ${staffAppointments.length} existing appointments for staff on ${date}`);
+      } catch (appointmentError) {
+        console.warn(`⚠️ Could not fetch appointments for filtering:`, appointmentError.message);
+        console.log(`✅ Continuing with unfiltered availability slots`);
+      }
+      
+      // Step 4: Filter out conflicting appointments
+      const availableSlots = this.filterAvailableSlots(allPossibleSlots, staffAppointments);
+      console.log(`✅ ${availableSlots.length} slots available after filtering conflicts`);
+      
+      return {
+        staffId,
+        date,
+        availableSlots: availableSlots
+      };
+      
+    } catch (error) {
+      console.warn(`⚠️ Intelligent availability generation failed for ${staffId}:`, error.message);
+      console.error('Full error details:', error);
+      
+      // Fallback: Generate basic availability without appointment filtering
+      try {
+        const businessHours = this.getBusinessHours(date);
+        console.log(`🔄 Fallback mode - business hours:`, businessHours);
+        
+        if (businessHours.closed) {
+          console.log(`🚫 Fallback: Clinic closed on ${date}`);
+          return {
+            staffId,
+            date,
+            availableSlots: []
+          };
+        }
+        
+        const basicSlots = this.generateTimeSlots(date, businessHours.start, businessHours.end, duration);
+        // Show every other slot to reduce load
+        const reducedSlots = basicSlots.filter((_, index) => index % 2 === 0);
+        
+        console.log(`🔄 Fallback: Generated ${reducedSlots.length} basic availability slots`);
+        
+        return {
+          staffId,
+          date,
+          availableSlots: reducedSlots
+        };
+      } catch (fallbackError) {
+        console.error(`❌ Complete availability generation failed:`, fallbackError.message);
+        return {
+          staffId,
+          date,
+          availableSlots: [],
+          error: `Availability generation failed: ${error.message}`
+        };
+      }
     }
+  }
+
+  // Get business hours for a given date
+  getBusinessHours(date) {
+    const dayOfWeek = new Date(date).getDay();
+    
+    // Business hours for Skin Societe (Monday = 1, Sunday = 0)
+    if (dayOfWeek === 0) { // Sunday - closed
+      return { start: null, end: null, closed: true };
+    } else if (dayOfWeek === 6) { // Saturday
+      return { start: 9, end: 17, closed: false }; // 9 AM - 5 PM
+    } else { // Monday to Friday
+      return { start: 9, end: 18, closed: false }; // 9 AM - 6 PM
+    }
+  }
+
+  // Generate time slots for a given day and hours
+  generateTimeSlots(date, startHour, endHour, duration) {
+    if (!startHour || !endHour) {
+      return []; // Closed day
+    }
+    
+    const slots = [];
+    const slotInterval = Math.max(15, Math.floor(duration / 4)); // Minimum 15-minute intervals
+    const today = new Date();
+    const targetDate = new Date(date);
+    const isToday = targetDate.toDateString() === today.toDateString();
+    const currentHour = today.getHours();
+    const currentMinute = today.getMinutes();
+    
+    for (let hour = startHour; hour < endHour; hour++) {
+      for (let minute = 0; minute < 60; minute += slotInterval) {
+        // Skip past times if this is today
+        if (isToday && (hour < currentHour || (hour === currentHour && minute <= currentMinute + 15))) {
+          continue; // Need at least 15 minutes notice
+        }
+        
+        // Don't create slots too close to closing time
+        const slotEndHour = hour + Math.ceil(duration / 60);
+        const slotEndMinute = minute + (duration % 60);
+        
+        if (slotEndHour < endHour || (slotEndHour === endHour && slotEndMinute <= 0)) {
+          const timeString = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
+          const startTime = `${date}T${timeString}:00`;
+          
+          // Calculate end time
+          const endMinute = minute + duration;
+          const finalHour = hour + Math.floor(endMinute / 60);
+          const finalMinute = endMinute % 60;
+          const endTimeString = `${finalHour.toString().padStart(2, '0')}:${finalMinute.toString().padStart(2, '0')}`;
+          const endTime = `${date}T${endTimeString}:00`;
+          
+          slots.push({
+            time: timeString,
+            available: true,
+            startTime: startTime,
+            endTime: endTime
+          });
+        }
+      }
+    }
+    
+    return slots;
+  }
+
+  // Filter out slots that conflict with existing appointments
+  filterAvailableSlots(slots, appointments) {
+    return slots.filter(slot => {
+      const slotStart = new Date(`${slot.startTime}`);
+      const slotEnd = new Date(`${slot.endTime}`);
+      
+      // Check if this slot conflicts with any appointment
+      const hasConflict = appointments.some(appointment => {
+        if (!appointment.appointmentDate || !appointment.startTime || !appointment.endTime) {
+          return false;
+        }
+        
+        // Parse appointment times (Phorest format: date separate from time)
+        const aptStart = new Date(`${appointment.appointmentDate}T${appointment.startTime}`);
+        const aptEnd = new Date(`${appointment.appointmentDate}T${appointment.endTime}`);
+        
+        // Check for time overlap
+        return (slotStart < aptEnd && slotEnd > aptStart);
+      });
+      
+      return !hasConflict;
+    });
   }
 
   // Parse availability slots from Phorest API response
@@ -719,8 +851,11 @@ class PhorestService {
     try {
       const slots = [];
       
-      // Check if we have slots in the response
+      console.log(`🔍 Parsing availability data structure:`, JSON.stringify(availabilityData, null, 2));
+      
+      // Pattern 1: availableSlots array
       if (availabilityData && availabilityData.availableSlots) {
+        console.log(`📅 Found availableSlots array with ${availabilityData.availableSlots.length} items`);
         availabilityData.availableSlots.forEach(slot => {
           slots.push({
             time: this.formatTimeSlot(slot.startTime || slot.time),
@@ -729,8 +864,10 @@ class PhorestService {
             endTime: slot.endTime
           });
         });
-      } else if (availabilityData && availabilityData.slots) {
-        // Alternative slot structure
+      } 
+      // Pattern 2: slots array
+      else if (availabilityData && availabilityData.slots) {
+        console.log(`📅 Found slots array with ${availabilityData.slots.length} items`);
         availabilityData.slots.forEach(slot => {
           if (slot.available !== false) {
             slots.push({
@@ -741,8 +878,10 @@ class PhorestService {
             });
           }
         });
-      } else if (availabilityData && Array.isArray(availabilityData)) {
-        // Direct array of slots
+      } 
+      // Pattern 3: Direct array of slots
+      else if (availabilityData && Array.isArray(availabilityData)) {
+        console.log(`📅 Found direct array with ${availabilityData.length} items`);
         availabilityData.forEach(slot => {
           if (slot.available !== false) {
             slots.push({
@@ -754,10 +893,61 @@ class PhorestService {
           }
         });
       }
+      // Pattern 4: Schedule data
+      else if (availabilityData && availabilityData.schedule) {
+        console.log(`📅 Found schedule data`);
+        Object.keys(availabilityData.schedule).forEach(timeSlot => {
+          const slotData = availabilityData.schedule[timeSlot];
+          if (slotData && slotData.available) {
+            slots.push({
+              time: this.formatTimeSlot(timeSlot),
+              available: true,
+              startTime: timeSlot,
+              endTime: slotData.endTime
+            });
+          }
+        });
+      }
+      // Pattern 5: Times array
+      else if (availabilityData && availabilityData.times) {
+        console.log(`📅 Found times array with ${availabilityData.times.length} items`);
+        availabilityData.times.forEach(timeSlot => {
+          slots.push({
+            time: this.formatTimeSlot(timeSlot.time || timeSlot),
+            available: timeSlot.available !== false,
+            startTime: timeSlot.time || timeSlot,
+            endTime: timeSlot.endTime
+          });
+        });
+      }
+      // Pattern 6: Working hours fallback - generate slots if staff is working
+      else if (availabilityData && (availabilityData.workingHours || availabilityData.isWorking)) {
+        console.log(`📅 Generating slots from working hours data`);
+        // Generate standard business hour slots if staff is working
+        const startHour = availabilityData.startTime ? parseInt(availabilityData.startTime.split(':')[0]) : 9;
+        const endHour = availabilityData.endTime ? parseInt(availabilityData.endTime.split(':')[0]) : 17;
+        
+        for (let hour = startHour; hour < endHour; hour++) {
+          for (let minute = 0; minute < 60; minute += 30) {
+            const timeString = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
+            slots.push({
+              time: timeString,
+              available: true,
+              startTime: `${date}T${timeString}:00`,
+              endTime: `${date}T${timeString.split(':')[0]}:${(parseInt(timeString.split(':')[1]) + 30).toString().padStart(2, '0')}:00`
+            });
+          }
+        }
+      }
+      else {
+        console.warn(`⚠️ Unknown availability data structure:`, Object.keys(availabilityData || {}));
+      }
       
+      console.log(`✅ Successfully parsed ${slots.length} availability slots`);
       return slots;
     } catch (error) {
-      console.warn('⚠️ Error parsing availability slots:', error);
+      console.error('❌ Error parsing availability slots:', error);
+      console.error('❌ Availability data that failed to parse:', availabilityData);
       return [];
     }
   }

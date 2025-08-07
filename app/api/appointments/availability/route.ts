@@ -30,9 +30,18 @@ export async function POST(request: NextRequest) {
     console.log(`🕐 Fetching availability for ${date} at branch ${branchId}`);
 
     try {
+      // Set the branch context for all Phorest operations
+      console.log(`🏥 Setting branch context to: ${branchId}`);
+      phorestService.branchId = branchId;
+      
       // Get staff members for the branch
       const staff = await phorestService.getStaff(branchId);
       console.log(`👥 Found ${staff.length} staff members for branch ${branchId}`);
+      console.log(`👥 Staff details:`, staff.map(s => ({ 
+        id: s.staffId, 
+        name: `${s.firstName} ${s.lastName}`, 
+        title: s.title || s.jobTitle 
+      })));
 
       if (staff.length === 0) {
         console.warn(`⚠️ No staff found for branch ${branchId}`);
@@ -50,7 +59,7 @@ export async function POST(request: NextRequest) {
         }
 
         try {
-          console.log(`🔍 Getting availability for ${staffName} (${staffId}) on ${date}`);
+          console.log(`🔍 Getting availability for ${staffName} (${staffId}) on ${date} with ${duration}min duration`);
           
           const availability = await phorestService.getStaffAvailability(
             staffId,
@@ -58,11 +67,18 @@ export async function POST(request: NextRequest) {
             duration
           );
           
+          console.log(`📊 Staff ${staffName} availability result:`, {
+            staffId,
+            slotsCount: availability.availableSlots?.length || 0,
+            error: availability.error || null
+          });
+          
           return {
             staffId: staffId,
             staffName: staffName || 'Unknown Staff',
             title: staffMember.jobTitle || staffMember.title || 'Beauty Therapist',
-            slots: availability.availableSlots || []
+            slots: availability.availableSlots || [],
+            error: availability.error || null
           };
         } catch (error) {
           console.warn(`⚠️ Could not get availability for ${staffName} (${staffId}):`, error.message);
@@ -72,7 +88,8 @@ export async function POST(request: NextRequest) {
             staffId: staffId,
             staffName: staffName || 'Unknown Staff',
             title: staffMember.jobTitle || staffMember.title || 'Beauty Therapist',
-            slots: []
+            slots: [],
+            error: `Availability fetch failed: ${error.message}`
           };
         }
       });
@@ -107,31 +124,22 @@ export async function POST(request: NextRequest) {
       });
 
     } catch (phorestError) {
-      console.warn('⚠️ Phorest API unavailable, using mock data:', phorestError);
+      console.warn('⚠️ Phorest API error during availability fetch:', phorestError);
       
-      // Generate mock availability data
-      const mockSlots = generateMockAvailability(date);
-      
-      return NextResponse.json({
-        success: true,
-        date,
-        slots: mockSlots,
-        staff: [
-          {
-            staffId: 'X-qh_VV3E41h9tghKPiRyg',
-            staffName: 'Isabelle Callaghan',
-            title: 'Senior Aesthetic Nurse',
-            slots: mockSlots.filter(s => s.staffId === 'X-qh_VV3E41h9tghKPiRyg')
-          },
-          {
-            staffId: 'staff-2',
-            staffName: 'Sarah Mitchell',
-            title: 'Dermal Therapist',
-            slots: mockSlots.filter(s => s.staffId === 'staff-2')
+      return NextResponse.json(
+        { 
+          success: false, 
+          error: 'Unable to fetch availability from Phorest',
+          message: phorestError.message || 'Phorest API connection failed',
+          technicalDetails: {
+            endpoint: '/api/appointments/availability',
+            phorestBusinessId: process.env.PHOREST_BUSINESS_ID || 'Not set',
+            branch: branchId,
+            date: date
           }
-        ],
-        mockData: true
-      });
+        },
+        { status: 500 }
+      );
     }
 
   } catch (error) {

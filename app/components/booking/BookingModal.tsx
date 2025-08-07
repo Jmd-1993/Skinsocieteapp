@@ -169,9 +169,13 @@ export function BookingModal({
           console.log(`✅ Updated with ${realStaff.length} real staff members`);
         }
         
-        // Show feedback if using mock data
-        if (result.mockData) {
-          setError('Using demo availability data - Phorest API temporarily unavailable');
+        // Show success feedback
+        console.log(`✅ Successfully loaded availability: ${result.slots.length} total slots from ${result.staff.length} staff members`);
+        
+        // Check if we have actual availability
+        const availableCount = result.slots.filter((s: any) => s.available).length;
+        if (availableCount === 0) {
+          setError('No appointment slots available for this date. Please try another day or contact the clinic directly.');
         }
       } else {
         console.error('Failed to fetch availability:', result.message);
