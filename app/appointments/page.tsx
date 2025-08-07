@@ -94,20 +94,33 @@ export default function AppointmentsPage() {
         });
         setServicesLoading(false); // Allow fallback services to show
         
-        // THEN: Try to get real data from Phorest
-        const phorestClientId = user?.phorestClientId || 'EKig-KWT5NYu4b150Fra8w'; // Josh Mills fallback
+        // Use logged-in user data directly for booking
+        if (user) {
+          // Create client data from user profile
+          const userData = {
+            clientId: user.uid || 'user-' + Date.now(),
+            firstName: user.displayName?.split(' ')[0] || user.email?.split('@')[0] || 'Guest',
+            lastName: user.displayName?.split(' ')[1] || '',
+            email: user.email || '',
+            phone: user.phoneNumber || '',
+            creatingBranchId: 'wQbnBjP6ztI8nuVpNT6MsQ' // Default to Cottesloe
+          };
+          setClientData(userData);
+          console.log('✅ Using logged-in user data:', userData.firstName, userData.lastName);
+        } else {
+          // For testing: Use a test client
+          setClientData({
+            clientId: 'B3muduu_Ob2yqdJdfxu-eQ',
+            firstName: 'Test',
+            lastName: 'User',
+            email: 'test@skinsociete.com.au',
+            creatingBranchId: 'wQbnBjP6ztI8nuVpNT6MsQ'
+          });
+        }
         
         // Import Phorest service dynamically to avoid SSR issues
-        const phorestService = await import('../services/phorestService.js');
+        const phorestService = await import('../services/phorestService');
         const service = phorestService.default;
-        
-        // Get client data from Phorest
-        console.log('🔍 Fetching client data for:', phorestClientId);
-        const client = await service.getClientById(phorestClientId);
-        if (client) {
-          setClientData(client);
-          console.log('✅ Client data loaded:', client?.firstName, client?.lastName);
-        }
         
         // Get branch/clinic information
         console.log('🏥 Fetching branch information...');
@@ -227,54 +240,73 @@ export default function AppointmentsPage() {
     fetchClientData();
   }, [user]);
 
+  // Real Phorest services from Skin Societé
   const services: Service[] = [
+    // Bio Treatments
     {
-      id: 'hydrating-facial',
-      name: 'Hydrating Facial',
-      description: 'Deep cleansing and hydration treatment with premium serums',
+      id: 'OFSlDmhiLAZa2uc90-IwHg',
+      name: 'Bio Remodelling',
+      description: 'Advanced skin quality improvement with bio-remodelling technology',
       duration: 60,
-      price: 180,
-      category: 'Facial'
+      price: 800,
+      category: 'Injectable'
     },
     {
-      id: 'carbon-laser',
-      name: 'Carbon Laser Facial',
-      description: 'Advanced pore cleansing and skin rejuvenation technology',
-      duration: 45,
-      price: 220,
-      category: 'Laser'
+      id: 'y4Lh2nGh0JH1Zkc49Yh5oQ',
+      name: 'Bio Stimulator',
+      description: 'Collagen stimulation for natural skin rejuvenation',
+      duration: 60,
+      price: 800,
+      category: 'Injectable'
     },
+    // Dermal Fillers
     {
-      id: 'dermaplaning',
-      name: 'Dermaplaning',
-      description: 'Gentle exfoliation for smooth, glowing skin',
+      id: 'qGBhG3kZJMrsmauQRU5pug',
+      name: 'Dermal Filler - Lips',
+      description: 'Natural lip enhancement and definition',
       duration: 30,
-      price: 120,
-      category: 'Treatment'
+      price: 500,
+      category: 'Injectable'
     },
     {
-      id: 'led-therapy',
-      name: 'LED Light Therapy',
-      description: 'Reduce inflammation and promote healing naturally',
-      duration: 20,
-      price: 80,
-      category: 'Treatment'
+      id: 'sFgCjiFWJVWDlVFwaeZNcw',
+      name: 'Dermal Filler - Cheeks',
+      description: 'Restore volume and contour to cheeks',
+      duration: 30,
+      price: 700,
+      category: 'Injectable'
     },
     {
-      id: 'microneedling',
-      name: 'Microneedling',
-      description: 'Stimulate collagen production for firmer skin',
-      duration: 75,
-      price: 280,
-      category: 'Advanced'
+      id: 'SUBjx2-r6W6Ab9Q2-S6ZyA',
+      name: 'Dermal Filler - Chin',
+      description: 'Enhance chin projection and facial balance',
+      duration: 30,
+      price: 700,
+      category: 'Injectable'
     },
     {
-      id: 'chemical-peel',
-      name: 'Chemical Peel',
-      description: 'Reveal fresh, renewed skin with professional acids',
+      id: 'BE3rBUlFG3cS7LS5RV7f8A',
+      name: 'Dermal Filler - Jawline',
+      description: 'Define and sculpt the jawline',
+      duration: 30,
+      price: 700,
+      category: 'Injectable'
+    },
+    {
+      id: 'Bop4Ga7w0Di_UdyhM26LkA',
+      name: 'Dermal Filler - Under Eyes',
+      description: 'Reduce dark circles and hollowing',
+      duration: 30,
+      price: 800,
+      category: 'Injectable'
+    },
+    {
+      id: 'taMRfgJQHmJvr966JsZf2Q',
+      name: 'Fat Dissolving',
+      description: 'Non-surgical fat reduction treatment',
       duration: 45,
-      price: 150,
-      category: 'Treatment'
+      price: 750,
+      category: 'Advanced'
     }
   ];
 
@@ -285,12 +317,8 @@ export default function AppointmentsPage() {
     if (isMobile) {
       setShowMobileBooking(true);
     } else {
-      // For new clients, show intake form first
-      if (!clientData?.clientId) {
-        setShowIntakeForm(true);
-      } else {
-        setShowBookingModal(true);
-      }
+      // Always go straight to booking modal - we have client data
+      setShowBookingModal(true);
     }
   };
 

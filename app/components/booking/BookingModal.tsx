@@ -298,7 +298,14 @@ export function BookingModal({
         serviceId: service.id,
         staffId: selectedStaff.id,
         startTime: appointmentDateTime.toISOString(),
-        notes: `Booked via Skin Societe app - Service: ${service.name}`
+        notes: `Booked via Skin Societe app - Service: ${service.name}`,
+        clientName: `${clientData.firstName || ''} ${clientData.lastName || ''}`.trim() || 'Guest',
+        clientEmail: clientData.email || '',
+        serviceName: service.name,
+        staffName: selectedStaff.name,
+        duration: service.duration,
+        price: service.price,
+        clinicName: homeClinic.name
       };
 
       console.log('🔧 Booking payload:', bookingData);
